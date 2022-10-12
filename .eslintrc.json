@@ -5,22 +5,22 @@
   ],
   "rules": {
     "comma-dangle": [
-      "error",
+      "warn",
       "never"
     ],
     "curly": [
-      "error",
+      "warn",
       "all"
     ],
     "camelcase": "off",
     "no-unused-vars": "warn",
     "no-console": "warn",
-    "jsx-quotes": ["error", "prefer-double"],
+    "jsx-quotes": ["warn", "prefer-double"],
     "import/export": "off",
     "import/named": "off",
     "import/default": "off",
     "import/order": [
-      "error",
+      "warn",
       {
         "groups": [
           "builtin",
@@ -46,10 +46,10 @@
       "warn", "always"
     ],
     "quotes": [
-      "error", "single"
+      "warn", "single"
     ],
     "quote-props": [
-      "error", "as-needed"
+      "warn", "as-needed"
     ],
     "indent": ["warn", 2],
     "semi": ["warn", "always"]

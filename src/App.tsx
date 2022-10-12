@@ -1,27 +1,24 @@
 import React from 'react';
+import { Counter } from 'stores';
+import { observer } from 'mobx-react-lite';
+import { Button } from 'antd';
 
-import logo from './logo.svg';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
+          {Counter.count}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Button type="primary" onClick={() => Counter.inc()}>
+          Up
+        </Button>
       </header>
     </div>
   );
 }
 
-export default App;
+export default observer(App);
