@@ -1,5 +1,5 @@
-import Counter from './counter';
+import userStore from './userStore';
 
 export {
-  Counter
+  userStore
 };

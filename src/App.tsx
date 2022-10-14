@@ -1,24 +1,29 @@
-import React from 'react';
-import { Counter } from 'stores';
+import React, { FC } from 'react';
+import 'layouts/layouts.scss';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Template from 'layouts/Template';
+import { IRoute, public_routes } from 'routes';
+import { LOGIN_ROUTE, SALES_DASHBOARD_ROUTE } from 'routes/consts';
+import { userStore } from 'stores';
 import { observer } from 'mobx-react-lite';
-import { Button } from 'antd';
 
-import './App.scss';
-
-function App() {
+const App: FC = () => {
+  const routes = (arr: IRoute[]) => arr.map(({ path, Component, child = false }) => <Route path={path} key={path} element={<Component />} />);
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-          {Counter.count}
-        </p>
-        <Button type="primary" onClick={() => Counter.inc()}>
-          Up
-        </Button>
-      </header>
-    </div>
+    <Routes>
+      {!!userStore.data ? (
+        <Route path="/" element={<Template />}>
+          {/* {routes(private_routes)} */}
+          <Route path="*" element={<Navigate to={SALES_DASHBOARD_ROUTE} replace />} />
+        </Route>
+      ) : (
+        <>
+          {routes(public_routes)}
+          <Route path="*" element={<Navigate to={LOGIN_ROUTE} replace />} />
+        </>
+      )}
+    </Routes>
   );
-}
+};
 
 export default observer(App);

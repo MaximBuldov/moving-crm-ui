@@ -1,0 +1,96 @@
+aside.sider {
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    padding-top: 80px;
+    z-index: 3;
+}
+header.header {
+    background: #fff;
+    z-index: 4;
+    width: 100%;
+    box-shadow: 0 4px 20px 0 #00000008;
+    position: fixed;
+}
+.header-icons svg {
+    font-size: 20px;
+    color: #1890ff;
+    cursor: pointer;
+}
+.logo {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+}
+.ant-layout-content.content {
+    margin-top: 64px;
+    margin-left: 80px;
+    padding: 24px;
+    min-height: calc(100vh - 64px)
+}
+.createContentPopover {
+    text-align: center;
+    padding: 20px 0;
+    border: 1px solid #f5f5f5;
+}
+.createContentPopover svg {
+    font-size: 25px;
+}
+.home {
+    background: #222;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.home-title {
+    font-size: 200px;
+    font-weight: bold;
+    color: #fff;
+}
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+}
+.opp-box-shadow {
+    background: #fff;
+    padding: 20px !important;
+    border: 1px solid #f0f0f0;
+    width: 100%;
+}
+.row-dragging {
+    background: #fafafa;
+    border: 1px solid #ccc;
+}
+
+.row-dragging td {
+    padding: 16px;
+}
+
+.row-dragging .drag-visible {
+    visibility: visible;
+}
+#map {
+    height: 400px;
+    width: 600px;
+}
+.ant-popover-inner-content ul.ant-menu.ant-menu-root.ant-menu-inline {
+    border-right: 0;
+}
+.step-form {
+    display: none;
+}
+.step-form.step-form-visible {
+    display: block;
+}
+.formItemWithoutPadding .ant-col.ant-form-item-label {
+    padding-bottom: 0;
+}
