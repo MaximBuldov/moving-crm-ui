@@ -1,6 +1,7 @@
 import React, { FC, useMemo } from 'react';
 import { Menu, MenuProps, Typography } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
+import styles from 'layouts/layouts.module.scss';
 
 // import { private_routes } from 'routes';
 

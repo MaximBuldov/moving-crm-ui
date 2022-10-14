@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useNavigate } from 'react-router';
 import { SALES_DASHBOARD_ROUTE } from 'routes/consts';
+import styles from 'layouts/layouts.module.scss';
 
 import Sider from './Sider';
 import Header from './Header';
@@ -24,7 +25,7 @@ const Template: FC = () => {
     <Layout>
       <Header />
       <Sider />
-      <Layout.Content className="content">
+      <Layout.Content className={styles['content']}>
         <Outlet />
       </Layout.Content>
     </Layout>

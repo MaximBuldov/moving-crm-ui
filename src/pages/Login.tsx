@@ -4,6 +4,7 @@ import { userStore } from 'stores';
 import { useMutation, useQuery } from 'react-query';
 import { observer } from 'mobx-react-lite';
 import userService from 'services/api/user.service';
+import styles from 'layouts/layouts.module.scss';
 
 export interface ILoginForm {
 	identifier: string,
@@ -23,6 +24,7 @@ const Login = () => {
   const user = useQuery('user', userService.me, {
     enabled: !!userStore.token && !userStore.data,
     onSuccess: (data) => {
+      localStorage.setItem('company', data.company.id);
       userStore.setUser(data);
       message.success('Success!');
     }
@@ -32,9 +34,9 @@ const Login = () => {
   const onFinish = (values: ILoginForm) => {
     login.mutate(values);
   };
-	console.log(userStore.data);
+
   return (
-    <div className="login-page">
+    <div className={styles['login-page']}>
       <Typography.Title>Welcome!</Typography.Title>
       <Form
         name="login-form"

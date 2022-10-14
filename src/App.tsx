@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import 'layouts/layouts.scss';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Template from 'layouts/Template';
 import { IRoute, public_routes } from 'routes';

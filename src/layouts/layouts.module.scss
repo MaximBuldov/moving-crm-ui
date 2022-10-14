@@ -14,19 +14,30 @@ header.header {
     width: 100%;
     box-shadow: 0 4px 20px 0 #00000008;
     position: fixed;
+    padding: 0 30px;
 }
 .header-icons svg {
     font-size: 20px;
     color: #1890ff;
     cursor: pointer;
 }
-.logo {
-    display: inline-block;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 20px;
+.logo-box {
+    display: flex;
+    align-items: center;
+
+    span {
+        display: inline-block;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 23px;
+    }
+
+    .logo {
+        font-size: 45px;
+        margin-right: 10px;
+    }
 }
-.ant-layout-content.content {
+.content:global(.ant-layout-content) {
     margin-top: 64px;
     margin-left: 80px;
     padding: 24px;

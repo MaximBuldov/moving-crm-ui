@@ -16,6 +16,7 @@ import {
   SALES_DASHBOARD_ROUTE, STORAGE_DASHBOARD_ROUTE,
   TASKS_ROUTE
 } from 'routes/consts';
+import styles from 'layouts/layouts.module.scss';
 
 const items: MenuProps['items'] = [
   {
@@ -56,7 +57,7 @@ const Sider: FC = () => {
 
   return (
     <Layout.Sider
-      className="sider"
+      className={styles['sider']}
       collapsed={isCollapse}
       collapsible
       onCollapse={() => setCollapse(!isCollapse)}

@@ -13,7 +13,6 @@
       "all"
     ],
     "camelcase": "off",
-    "no-unused-vars": "warn",
     "no-console": "warn",
     "jsx-quotes": ["warn", "prefer-double"],
     "import/export": "off",

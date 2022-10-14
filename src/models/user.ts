@@ -1,4 +1,4 @@
-import {ICompany} from "./company";
+import { ICompany } from './company';
 
 interface IUserAttributes {
     username: string,
@@ -9,9 +9,9 @@ interface IUserAttributes {
     createdAt: string,
     updatedAt: string,
     accountType: string,
-    fullName: string,
+    firstName: string,
+    lastName: string
 }
-
 
 export interface IUser extends IUserAttributes {
     id: number
@@ -22,7 +22,6 @@ export interface IManager {
     id: number
     attributes: IUserAttributes
 }
-
 
 export type UserState = {
     data: IUser | null,

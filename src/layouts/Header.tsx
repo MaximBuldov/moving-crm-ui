@@ -1,8 +1,9 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Avatar, Badge, Col, Layout, List, Menu, Modal, Popover, Row, MenuProps } from 'antd';
+import React, { FC, useState } from 'react';
+import { Avatar, Badge, Col, Layout, List, Menu, Modal, Popover, Row, MenuProps, Empty } from 'antd';
 import {
   AimOutlined,
   BellOutlined,
+  CloudTwoTone,
   FileAddOutlined,
   InboxOutlined,
   PlusCircleOutlined,
@@ -11,6 +12,11 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { SALES_NEW_LEADS_ROUTE } from 'routes/consts';
+import { userStore } from 'stores';
+import FormSearch from 'shared/forms/FormSearch';
+import FormCreateOpportunity from 'shared/forms/FormCreateOpportunity';
+import FormCreateLead from 'shared/forms/FormCreateLead';
+import styles from 'layouts/layouts.module.scss';
 
 const inboxData = [
   {
@@ -43,66 +49,74 @@ const inboxContent = (
     )} />
 );
 
+enum ModalTypes {
+  SEARCH = 'search',
+  OPPORTUNITY = 'opportunity',
+  LEAD = 'lead',
+  TASK = 'task',
+  FOLLOW_UP = 'follow-up',
+}
+
 const Header: FC = () => {
-  const [modal, setModal] = useState('');
-  const [popover, setPopover] = useState(false);
+  const [modal, setModal] = useState<ModalTypes | null>(null);
+  const [popover, setPopover] = useState<boolean>(false);
 
   let ModalComponent;
-  // switch (modal) {
-  // case 'search':
-  //   ModalComponent = FormSearch;
-  //   break;
-  // case 'opportunity':
-  //   ModalComponent = FormCreateOpportunity;
-  //   break;
-  // case 'lead':
-  //   ModalComponent = FormCreateLead;
-  //   break;
-  // case 'task':
-  //   ModalComponent = FormSearch;
-  //   break;
-  // case 'follow-up':
-  //   ModalComponent = FormSearch;
-  //   break;
-  // default:
-  //   ModalComponent = Empty;
-  //   break;
-  // }
+  switch (modal) {
+  case ModalTypes.SEARCH:
+    ModalComponent = FormSearch;
+    break;
+  case ModalTypes.OPPORTUNITY:
+    ModalComponent = FormCreateOpportunity;
+    break;
+  case ModalTypes.LEAD:
+    ModalComponent = FormCreateLead;
+    break;
+  case ModalTypes.TASK:
+    ModalComponent = FormSearch;
+    break;
+  case ModalTypes.FOLLOW_UP:
+    ModalComponent = FormSearch;
+    break;
+  default:
+    ModalComponent = Empty;
+    break;
+  }
 
-  const createMenuAction = (type: string) => {
+  const createMenuAction = (type: ModalTypes) => {
     setModal(type);
     setPopover(false);
   };
 
-  const closeModal = useCallback(() => {
-    setModal('');
-  }, []);
+  const closeModal = () => {
+    setModal(null);
+  };
 
   //TODO: переделать все меню и header под ts
   const items: MenuProps['items'] = [
     {
       label: 'New Opportunity',
-      key: 'opportunity',
+      key: ModalTypes.OPPORTUNITY,
       icon: <FileAddOutlined />,
-      onClick: () => createMenuAction('opportunity')
+      onClick: () => createMenuAction(ModalTypes.OPPORTUNITY)
     },
     {
       label: 'New Lead',
-      key: 'lead',
+      key: ModalTypes.LEAD,
       icon: <AimOutlined />,
-      onClick: () => createMenuAction('lead')
+      onClick: () => createMenuAction(ModalTypes.LEAD)
     },
     {
       label: 'New Task',
-      key: 'task',
+      key: ModalTypes.TASK,
       icon: <UnorderedListOutlined />,
-      onClick: () => createMenuAction('task')
+      onClick: () => createMenuAction(ModalTypes.TASK)
     },
     {
       label: 'New Follow-up',
-      key: 'follow-up',
+      key: ModalTypes.FOLLOW_UP,
       icon: <BellOutlined />,
-      onClick: () => createMenuAction('follow-up')
+      onClick: () => createMenuAction(ModalTypes.FOLLOW_UP)
     }
   ];
 
@@ -114,44 +128,53 @@ const Header: FC = () => {
     <div>
       <p>Content</p>
       <p>Content</p>
+      <p onClick={() => userStore.logout()}>Logout</p>
     </div>
   );
+
   return (
-    <Layout.Header className="header">
+    <Layout.Header className={styles['header']}>
       <Row align="middle" justify="space-between">
-        <Col><div className="logo">CRM</div></Col>
         <Col>
-          <Row align="middle" className="header-buttons" gutter={24}>
+          <div className={styles['logo-box']}>
+            <CloudTwoTone className={styles['logo']}/>
+            <span>CRM</span>
+          </div>
+        </Col>
+        <Col>
+          <Row align="middle" className={styles['header-buttons']} gutter={24}>
             <Col>
-              <SearchOutlined className="header-icons" onClick={() => setModal('search')} />
+              <SearchOutlined className={styles['header-icons']} onClick={() => setModal(ModalTypes.SEARCH)} />
             </Col>
             <Col>
-              <Link to={SALES_NEW_LEADS_ROUTE}><BellOutlined className="header-icons" /></Link>
+              <Link to={SALES_NEW_LEADS_ROUTE}>
+                <BellOutlined className={styles['header-icons']} />
+              </Link>
             </Col>
             <Col>
               <Popover title="Inbox" content={inboxContent} trigger="click" placement="bottomRight">
                 <Badge size="small" count={4}>
-                  <InboxOutlined className="header-icons" />
+                  <InboxOutlined className={styles['header-icons']} />
                 </Badge>
               </Popover>
             </Col>
             <Col>
-              <Popover trigger="click" visible={popover} content={createContent} onVisibleChange={(visible) => setPopover(visible)} placement="bottomRight">
-                <PlusCircleOutlined className="header-icons" />
+              <Popover trigger="click" open={popover} content={createContent} onOpenChange={(visible) => setPopover(visible)} placement="bottomRight">
+                <PlusCircleOutlined className={styles['header-icons']}  />
               </Popover>
             </Col>
             <Col>
               <Popover content={content} trigger="click" placement="bottomRight">
                 <Badge count={1}>
-                  <Avatar style={{ backgroundColor: '#00a2ae' }}>JZ</Avatar>
+                  <Avatar style={{ backgroundColor: '#00a2ae' }}>{userStore.initials}</Avatar>
                 </Badge>
               </Popover>
             </Col>
           </Row>
         </Col>
       </Row>
-      <Modal width={900} visible={!!modal} destroyOnClose={true} onCancel={closeModal} footer={null}>
-        {/* <ModalComponent closeModal={closeModal} /> */}
+      <Modal width={900} open={!!modal} destroyOnClose={true} onCancel={closeModal} footer={null}>
+        <ModalComponent closeModal={closeModal} />
       </Modal>
 
     </Layout.Header>
