@@ -1,5 +1,5 @@
 import { throwError } from 'utils/trowError';
-import { $apiPost } from 'services/http';
+import { $apiGet, $apiPost } from 'services/http';
 
 export default class ApiController {
   url: string;
@@ -13,6 +13,21 @@ export default class ApiController {
   createOne = async (data: any) => {
     try {
       const res = await $apiPost(this.url, { data: { data } });
+      return res.data.data;
+    } catch(error: Error | any) {
+      throwError(error);
+    }
+  };
+
+  fetchMany = async (params?: any) => {
+    try {
+      const res = await $apiGet(this.url, { 
+        params: {
+          populate: this.populate,
+          ...params
+        }
+      }
+      );
       return res.data.data;
     } catch(error: Error | any) {
       throwError(error);

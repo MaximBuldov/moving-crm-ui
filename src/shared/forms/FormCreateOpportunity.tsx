@@ -5,7 +5,7 @@ import MaskedInput from 'antd-mask-input';
 import { CarOutlined, DeleteOutlined, PieChartOutlined, PlusCircleTwoTone, TeamOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { useNavigate } from 'react-router';
-import NameAutocomplete from 'shared/forms/fields/NameAutocomplete';
+import CustomersAutocomplete from 'shared/forms/fields/CustomersAutocomplete';
 import { IJob } from 'models/job';
 import { ICustomer } from 'models/customer';
 
@@ -63,14 +63,14 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
     form.setFieldsValue({
       [field]: { address }
     });
-  }, []);
+  }, [form]);
 
   const setContacts = useCallback(({ attributes: { phones, email }, id }: ICustomer) => {
     setUser(id);
     form.setFieldsValue({
       phones, email
     });
-  }, []);
+  }, [form]);
 
   const onFinish = (values: IJob) => {
     // setIsLoading(!isLoading)
@@ -113,7 +113,7 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
         >
           <div className={`step-form ${stepIsVisible(0)}`} >
             <Item name="name" label="Name">
-              <NameAutocomplete setContacts={setContacts} />
+              <CustomersAutocomplete placeholder="Name" setContacts={setContacts} />
             </Item>
             <List name="phones">
               {(fields, { add, remove }) => (

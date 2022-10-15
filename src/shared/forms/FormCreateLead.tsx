@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import { Button, Col, DatePicker, Divider, Form, Input, message, Row, Select, Typography } from 'antd';
 import MaskedInput from 'antd-mask-input';
 import moment from 'moment';
@@ -11,6 +11,8 @@ import { ICustomer } from 'models/customer';
 import jobsService from 'services/api/jobs.service';
 import { JobsStatus } from 'models/fields';
 
+import CustomersAutocomplete from './fields/CustomersAutocomplete';
+
 const { Item, List } = Form;
 
 interface FormCreateLeadProps {
@@ -19,6 +21,7 @@ interface FormCreateLeadProps {
 
 const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
   const [form] = Form.useForm();
+  const [user, setUser] = useState<ICustomer | null>(null);
   const jobAction = useMutation(jobsService.createOne, {
     onSuccess: () => {
       message.success('New lead created');
@@ -29,21 +32,29 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
     }
   });
   const customerAction = useMutation(customersService.createOne, {
-    onSuccess: (customer, data) => {
-      jobAction.mutate({
-        ...data,
-        customer: customer.id,
-        jobStatus: JobsStatus.NEW_LEAD,
-        jobNumber: `${userStore.data?.company?.id}${customer.id}-1`
-      });
-    },
+    onSuccess: (customer, data) => createNewJob(customer, data),
     onError: (error: Error) => {
       message.error(error.message);
     }
   });
+  //создание новой работы старому клиенту, не создаля джоб намбер
+  //телефон не добавлялся 
+  function createNewJob({ attributes, id }: ICustomer, data: any) {
+    const jobNumber = attributes.jobs ? +attributes.jobs.length + 1 : 1;
+    jobAction.mutate({
+      ...data,
+      customer: id,
+      jobStatus: JobsStatus.NEW_LEAD,
+      jobNumber: `${userStore.data?.company?.id}${id}-${jobNumber}`
+    });
+  }
 
   const onFinish = (values: ICustomer) => {
-    customerAction.mutate(values);
+    if (user) {
+      createNewJob(user, values);
+    } else {
+      customerAction.mutate(values);
+    }
   };
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
@@ -53,6 +64,14 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
   const setAddress = useCallback((address: string, field: string) => {
     form.setFieldsValue({
       [field]: { address }
+    });
+  }, [form]);
+
+  const setContacts = useCallback((customer: ICustomer) => {
+    const { attributes: { phones, email } } = customer;
+    setUser(customer);
+    form.setFieldsValue({
+      phones, email
     });
   }, [form]);
 
@@ -76,7 +95,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             label="Customer Name"
             name="name"
           >
-            <Input  placeholder="Customer Name"/>
+            <CustomersAutocomplete placeholder="Customer name" setContacts={setContacts} />
           </Item>
         </Col>
         <Col span={8}>
