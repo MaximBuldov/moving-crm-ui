@@ -1,6 +1,6 @@
 import { IJob } from './job';
 
-interface IPhone {
+export interface IPhone {
     id: number,
     phone: string,
     phoneType: string
@@ -16,6 +16,6 @@ export interface ICustomer {
         address: string | null,
         source: string,
         phones?: IPhone[]
-        jobs?: IJob[]
+        jobs?: { data: IJob[] }
     }
 }

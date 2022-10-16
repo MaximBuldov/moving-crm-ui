@@ -4,7 +4,7 @@ import GoogleAutocomplete, { GoogleAutocompleteProps } from 'shared/maps/GoogleA
 
 const { Item } = Form;
 
-const FieldsAddress: FC<GoogleAutocompleteProps> = ({ field, setAddress }) => {
+const FieldsAddress: FC<GoogleAutocompleteProps> = ({ field }) => {
   return (
     <Row gutter={16}>
       {/* <Col span={24}>

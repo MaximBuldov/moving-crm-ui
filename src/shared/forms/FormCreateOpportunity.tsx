@@ -9,7 +9,7 @@ import CustomersAutocomplete from 'shared/forms/fields/CustomersAutocomplete';
 import { IJob } from 'models/job';
 import { ICustomer } from 'models/customer';
 
-import FieldsAddress from './fields/FieldsAddress';
+import FieldsAddress from './fields/Address';
 
 const { Step } = Steps;
 const { Item, List, useForm } = Form;
@@ -113,7 +113,7 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
         >
           <div className={`step-form ${stepIsVisible(0)}`} >
             <Item name="name" label="Name">
-              <CustomersAutocomplete placeholder="Name" setContacts={setContacts} />
+              {/* <CustomersAutocomplete placeholder="Name" setContacts={setContacts} /> */}
             </Item>
             <List name="phones">
               {(fields, { add, remove }) => (
@@ -200,12 +200,12 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
               </Col>
             </Row> */}
           </div>
-          <div className={`step-form ${stepIsVisible(1)}`} >
+          {/* <div className={`step-form ${stepIsVisible(1)}`} >
             <FieldsAddress field="origin" setAddress={setAddress}/>
           </div>
           <div className={`step-form ${stepIsVisible(2)}`} >
             <FieldsAddress field="destination" setAddress={setAddress} />
-          </div>
+          </div> */}
           <Divider />
           <Row justify="space-between">
             <Col>

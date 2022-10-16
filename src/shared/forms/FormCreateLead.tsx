@@ -1,6 +1,5 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Button, Col, DatePicker, Divider, Form, Input, message, Row, Select, Typography } from 'antd';
-import MaskedInput from 'antd-mask-input';
 import moment from 'moment';
 import GoogleAutocomplete from 'shared/maps/GoogleAutocomplete';
 import { RangePickerProps } from 'antd/lib/date-picker';
@@ -10,8 +9,10 @@ import customersService from 'services/api/customers.service';
 import { ICustomer } from 'models/customer';
 import jobsService from 'services/api/jobs.service';
 import { JobsStatus } from 'models/fields';
+import { formatPhoneAction, formattedPhones } from 'utils/formattedPhone';
 
 import CustomersAutocomplete from './fields/CustomersAutocomplete';
+import Phones from './fields/Phones';
 
 const { Item, List } = Form;
 
@@ -37,10 +38,9 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
       message.error(error.message);
     }
   });
-  //создание новой работы старому клиенту, не создаля джоб намбер
-  //телефон не добавлялся 
+
   function createNewJob({ attributes, id }: ICustomer, data: any) {
-    const jobNumber = attributes.jobs ? +attributes.jobs.length + 1 : 1;
+    const jobNumber = attributes.jobs ? +attributes.jobs.data.length + 1 : 1;
     jobAction.mutate({
       ...data,
       customer: id,
@@ -49,31 +49,19 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
     });
   }
 
-  const onFinish = (values: ICustomer) => {
+  const onFinish = (values: any) => {
+    const phones = formattedPhones(values.phones, formatPhoneAction.UNFORMAT);
+    const updatedValues = { ...values, phones };
     if (user) {
-      createNewJob(user, values);
+      createNewJob(user, updatedValues);
     } else {
-      customerAction.mutate(values);
+      customerAction.mutate(updatedValues);
     }
   };
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     return current && current < moment().subtract(1, 'days');
   };
-
-  const setAddress = useCallback((address: string, field: string) => {
-    form.setFieldsValue({
-      [field]: { address }
-    });
-  }, [form]);
-
-  const setContacts = useCallback((customer: ICustomer) => {
-    const { attributes: { phones, email } } = customer;
-    setUser(customer);
-    form.setFieldsValue({
-      phones, email
-    });
-  }, [form]);
 
   return (
     <Form
@@ -94,14 +82,20 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
           <Item
             label="Customer Name"
             name="name"
+            rules={[{ required: true }]}
           >
-            <CustomersAutocomplete placeholder="Customer name" setContacts={setContacts} />
+            <CustomersAutocomplete 
+              placeholder="Customer name"
+              form={form}
+              setUser={(customer) => setUser(customer)}
+            />
           </Item>
         </Col>
         <Col span={8}>
           <Item
             label="Sales Person"
             name="manager"
+            rules={[{ required: true }]}
           >
             <Select placeholder={'Sales Person'} options={fieldsStore.salesPerson}/>
           </Item>
@@ -110,6 +104,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
           <Item
             label="Branch"
             name="branch"
+            rules={[{ required: true }]}
           >
             <Select placeholder={'Branch'} options={fieldsStore.data.branches} />
           </Item>
@@ -127,41 +122,18 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             label="Email"
             name="email"
           >
-            <Input  placeholder="Email"/>
+            <Input placeholder="Email"/>
           </Item>
         </Col>
+        
         <List name="phones">
-          {(fields) => (
-            <>
-              {fields.map(({ key, name, ...restField }) => (
-                <Fragment key={key}>
-                  <Col span={8}>
-                    <Item
-                      {...restField}
-                      label="Phone"
-                      name={[name, 'phone']}
-                    >
-                      <MaskedInput placeholder="Phone" mask="(000) 000-0000"/>
-                    </Item>
-                  </Col>
-                  <Col span={8}>
-                    <Item
-                      {...restField}
-                      label="Phone Type"
-                      name={[name, 'phoneType']}
-                    >
-                      <Select placeholder={'Phone Type'} options={fieldsStore.phoneType}/>
-                    </Item>
-                  </Col>
-                </Fragment>
-              ))}
-            </>
-          )}
+          {(fields) => <Phones form={form} fields={fields} />}
         </List>
         <Col span={8}>
           <Item
             label="Move Date"
             name="moveDate"
+            rules={[{ required: true }]}
           >
             <DatePicker 
               disabledDate={disabledDate}
@@ -188,10 +160,10 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
           </Item>
         </Col>
         <Col span={12}>
-          <GoogleAutocomplete setAddress={setAddress} field="origin" />
+          <GoogleAutocomplete form={form} field="origin" />
         </Col>
         <Col span={12}>
-          <GoogleAutocomplete setAddress={setAddress} field="destination" />
+          <GoogleAutocomplete form={form} field="destination" />
         </Col>
         <Col span={24}>
           <Item label={'Notes'} name={'notes'}>
@@ -200,7 +172,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
         </Col>
         <Col>
           <Button onClick={closeModal} style={{ marginRight: 16 }}>Cancel</Button>
-          <Button loading={customerAction.isLoading} type={'primary'} htmlType={'submit'}>Save</Button>
+          <Button loading={customerAction.isLoading || jobAction.isLoading} type={'primary'} htmlType={'submit'}>Save</Button>
         </Col>
 
       </Row>
