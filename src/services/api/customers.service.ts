@@ -1,6 +1,6 @@
 import ApiController from 'services/apiController';
 
-const populate = ['phones','jobs'];
+const populate = ['phones','jobs', 'destination'];
 const url = 'customers';
 
 class CustomersService extends ApiController {

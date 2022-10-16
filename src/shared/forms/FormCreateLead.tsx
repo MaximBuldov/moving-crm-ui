@@ -1,15 +1,10 @@
-import { useState } from 'react';
-import { Button, Col, DatePicker, Divider, Form, Input, message, Row, Select, Typography } from 'antd';
+import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Typography } from 'antd';
 import moment from 'moment';
 import GoogleAutocomplete from 'shared/maps/GoogleAutocomplete';
 import { RangePickerProps } from 'antd/lib/date-picker';
-import { fieldsStore, userStore } from 'stores';
-import { useMutation } from 'react-query';
-import customersService from 'services/api/customers.service';
-import { ICustomer } from 'models/customer';
-import jobsService from 'services/api/jobs.service';
+import { fieldsStore } from 'stores';
 import { JobsStatus } from 'models/fields';
-import { formatPhoneAction, formattedPhones } from 'utils/formattedPhone';
+import useJobCustomerApi from 'hooks/useJobCustomerApi';
 
 import CustomersAutocomplete from './fields/CustomersAutocomplete';
 import Phones from './fields/Phones';
@@ -22,42 +17,7 @@ interface FormCreateLeadProps {
 
 const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
   const [form] = Form.useForm();
-  const [user, setUser] = useState<ICustomer | null>(null);
-  const jobAction = useMutation(jobsService.createOne, {
-    onSuccess: () => {
-      message.success('New lead created');
-      closeModal();
-    },
-    onError: (error: Error) => {
-      message.error(error.message);
-    }
-  });
-  const customerAction = useMutation(customersService.createOne, {
-    onSuccess: (customer, data) => createNewJob(customer, data),
-    onError: (error: Error) => {
-      message.error(error.message);
-    }
-  });
-
-  function createNewJob({ attributes, id }: ICustomer, data: any) {
-    const jobNumber = attributes.jobs ? +attributes.jobs.data.length + 1 : 1;
-    jobAction.mutate({
-      ...data,
-      customer: id,
-      jobStatus: JobsStatus.NEW_LEAD,
-      jobNumber: `${userStore.data?.company?.id}${id}-${jobNumber}`
-    });
-  }
-
-  const onFinish = (values: any) => {
-    const phones = formattedPhones(values.phones, formatPhoneAction.UNFORMAT);
-    const updatedValues = { ...values, phones };
-    if (user) {
-      createNewJob(user, updatedValues);
-    } else {
-      customerAction.mutate(updatedValues);
-    }
-  };
+  const { onFinish, setUser, isLoading } = useJobCustomerApi(JobsStatus.NEW_LEAD, closeModal);
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     return current && current < moment().subtract(1, 'days');
@@ -78,7 +38,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
       <Typography.Title level={3}>Create New Lead</Typography.Title>
       <Divider />
       <Row gutter={16}>
-        <Col span={24}>
+        <Col span={16}>
           <Item
             label="Customer Name"
             name="name"
@@ -90,6 +50,19 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
               setUser={(customer) => setUser(customer)}
             />
           </Item>
+        </Col>
+        <Col span={8}>
+          <Item
+            label="Email"
+            name="email"
+          >
+            <Input placeholder="Email"/>
+          </Item>
+        </Col>
+        <Col span={24}>
+          <List name="phones">
+            {(fields, actions) => <Phones form={form} fields={fields} actions={actions} />}
+          </List>
         </Col>
         <Col span={8}>
           <Item
@@ -117,18 +90,6 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             <Select placeholder={'Referral Source'} options={fieldsStore.data.source}/>
           </Item>
         </Col>
-        <Col span={8}>
-          <Item
-            label="Email"
-            name="email"
-          >
-            <Input placeholder="Email"/>
-          </Item>
-        </Col>
-        
-        <List name="phones">
-          {(fields) => <Phones form={form} fields={fields} />}
-        </List>
         <Col span={8}>
           <Item
             label="Move Date"
@@ -172,7 +133,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
         </Col>
         <Col>
           <Button onClick={closeModal} style={{ marginRight: 16 }}>Cancel</Button>
-          <Button loading={customerAction.isLoading || jobAction.isLoading} type={'primary'} htmlType={'submit'}>Save</Button>
+          <Button loading={isLoading} type={'primary'} htmlType={'submit'}>Save</Button>
         </Col>
 
       </Row>

@@ -1,6 +1,6 @@
-import {ICompany} from "./company";
-import {ICustomer} from "./customer";
-import {IManager} from "./user";
+import { ICompany } from './company';
+import { ICustomer } from './customer';
+import { IManager } from './user';
 
 export interface IProperty {
     id: number,

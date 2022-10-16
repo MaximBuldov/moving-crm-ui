@@ -1,0 +1,8 @@
+.create-opportunity {
+  &__step-form {
+    display: none;
+  }
+  &__step-form.step-form-visible {
+    display: block;
+  }
+}

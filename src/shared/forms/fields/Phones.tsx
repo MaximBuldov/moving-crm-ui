@@ -1,14 +1,19 @@
 import React, { Fragment } from 'react';
-import { Col, Input, Select, FormListFieldData, FormInstance, Form } from 'antd';
+import { Col, Input, Select, FormListFieldData, FormInstance, Form, Row, Button, FormListOperation } from 'antd';
 import { fieldsStore } from 'stores';
 import { formattedPhones, formatPhoneAction } from 'utils/formattedPhone';
+import { PlusCircleTwoTone, DeleteOutlined } from '@ant-design/icons';
+import { remove } from 'mobx';
 
 interface PhonesProps {
   fields: FormListFieldData[],
-  form: FormInstance
+  form: FormInstance,
+  actions: FormListOperation
 }
 
-function Phones({ form, fields }: PhonesProps) {
+function Phones({ form, fields, actions }: PhonesProps) {
+
+  const { add, remove } = actions;
 
   const handlePhone = () => {
     const phones = form.getFieldValue('phones');
@@ -16,8 +21,8 @@ function Phones({ form, fields }: PhonesProps) {
   };
 
   const list = fields.map(({ key, name, ...restField }) => (
-    <Fragment key={key}>
-      <Col span={8}>
+    <Row gutter={16} key={key} align="bottom" justify="space-between">
+      <Col span={12}>
         <Form.Item
           {...restField}
           name={[name, 'phone']}
@@ -36,10 +41,47 @@ function Phones({ form, fields }: PhonesProps) {
           <Select placeholder={'Phone Type'} options={fieldsStore.phoneType}/>
         </Form.Item>
       </Col>
-    </Fragment>
+      <Col>
+        <Form.Item>
+          {key === 0 ? (
+            <Button onClick={() => add()} icon={<PlusCircleTwoTone />} type="link" />
+          ) : (
+            <Button onClick={() => remove(name)} icon={<DeleteOutlined />} danger type="link" />
+          )}
+        </Form.Item>
+      </Col>
+    </Row>
   ));
 
   return <>{list}</>;
 }
 
 export default Phones;
+
+// {(fields, { add, remove }) => (
+//   <>
+//     {fields.map(({ key, name, ...restField }) => (
+//       <Row gutter={16} key={key} align="bottom" justify="space-between">
+//         <Col span={12}>
+//           <Item
+//             {...restField}
+//             name={[name, 'phone']}
+//             label="Phone Number"
+//           >
+//             <MaskedInput mask="(111) 111-1111" />
+//           </Item>
+//         </Col>
+//         <Col span={8}>
+//           <Item
+//             label={'Phone Type'}
+//             name={[name, 'phoneType']}
+//             {...restField}
+//           >
+//             {/* <Select placeholder="Phone Type" options={PHONE_TYPE} /> */}
+//           </Item>
+//         </Col>
+
+//       </Row>
+//     ))}
+//   </>
+// )}

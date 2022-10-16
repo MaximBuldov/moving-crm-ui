@@ -1,4 +1,4 @@
-import { IJob } from './job';
+import { IJob, IProperty } from './job';
 
 export interface IPhone {
     id: number,
@@ -13,7 +13,7 @@ export interface ICustomer {
         createdAt: string,
         updatedAt: string,
         email: string,
-        address: string | null,
+        destination: IProperty | null,
         source: string,
         phones?: IPhone[]
         jobs?: { data: IJob[] }

@@ -1,18 +1,22 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Steps, Typography } from 'antd';
 import classNames from 'classnames';
-import MaskedInput from 'antd-mask-input';
-import { CarOutlined, DeleteOutlined, PieChartOutlined, PlusCircleTwoTone, TeamOutlined } from '@ant-design/icons';
+import { CarOutlined, PieChartOutlined, TeamOutlined } from '@ant-design/icons';
 import moment from 'moment';
-import { useNavigate } from 'react-router';
 import CustomersAutocomplete from 'shared/forms/fields/CustomersAutocomplete';
 import { IJob } from 'models/job';
-import { ICustomer } from 'models/customer';
+import { fieldsStore } from 'stores';
+import s from 'shared/forms/form.module.scss';
+import { RangePickerProps } from 'antd/lib/date-picker';
+import useJobCustomerApi from 'hooks/useJobCustomerApi';
+import { JobsStatus } from 'models/fields';
 
+import Phones from './fields/Phones';
 import FieldsAddress from './fields/Address';
 
 const { Step } = Steps;
 const { Item, List, useForm } = Form;
+const CN = 'create-opportunity';
 
 interface FormCreateOpportunityProps {
 	job?: IJob,
@@ -36,58 +40,18 @@ const steps = [
 
 //TODO:
 // - загруженность на выбранную дату
-// - новый opportunity
 const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, closeModal }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [availability, setAvailability] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<number | null>(null);
   const [form] = useForm();
-  const navigate = useNavigate();
+  const { onFinish, setUser, isLoading } = useJobCustomerApi(JobsStatus.OPPORTUNITY, closeModal);
+
   const stepIsVisible = (step: number) => classNames({ 'step-form-visible': currentStep === step });
-  useEffect(() => {
-    if (job) {
-      const { attributes: { customer, moveDate } } = job;
-      form.setFieldsValue({
-        ...job.attributes,
-        phones: customer?.data.attributes.phones,
-        name: customer?.data.attributes.name,
-        email: customer?.data.attributes.email,
-        moveDate: moment(moveDate, 'YYYY-MM-DD'),
-        source: customer?.data.attributes.source
-      });
-    }
-  }, []);
 
-  const setAddress = useCallback((address: string, field: string) => {
-    form.setFieldsValue({
-      [field]: { address }
-    });
-  }, [form]);
-
-  const setContacts = useCallback(({ attributes: { phones, email }, id }: ICustomer) => {
-    setUser(id);
-    form.setFieldsValue({
-      phones, email
-    });
-  }, [form]);
-
-  const onFinish = (values: IJob) => {
-    // setIsLoading(!isLoading)
-    // const jobStatus = 'Opportunity'
-    // if (job) {
-    // 	dispatch(updateCustomerJob({values, customerId: job.attributes.customer.data.id, jobId: job.id, jobStatus}))
-    // } else if (user) {
-    // 	dispatch(updateCustomerCreateJob({customerId: user, values, jobStatus}))
-    // } else {
-    // 	dispatch(createCustomerJob({jobStatus, values}))
-    // }
+  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+    return current && current < moment().subtract(1, 'days');
   };
-  // .then(() => {
-  // 		closeModal()
-  // 	res.meta.requestStatus === "fulfilled" && message.success('New opportunity created')
-  // 		navigate(`${ESTIMATES_EDIT_ROUTE}/${job.id}`)
-  // 	}).finally(() => setIsLoading(!isLoading))
+
   return (
     <Row>
       <Col style={{ borderRight: '1px solid rgba(0, 0, 0, 0.06)', paddingRight: 24 }} span={8}>
@@ -111,46 +75,12 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
             phones: [{}]
           }}
         >
-          <div className={`step-form ${stepIsVisible(0)}`} >
-            <Item name="name" label="Name">
-              {/* <CustomersAutocomplete placeholder="Name" setContacts={setContacts} /> */}
+          <div className={classNames(s[`${CN}__step-form`], s[`${stepIsVisible(0)}`])}>
+            <Item name="name" label="Name" rules={[{ required: true }]}>
+              <CustomersAutocomplete placeholder="Name" form={form} setUser={(customer) => setUser(customer)} />
             </Item>
             <List name="phones">
-              {(fields, { add, remove }) => (
-                <>
-                  {fields.map(({ key, name, ...restField }) => (
-                    <Row gutter={16} key={key} align="bottom" justify="space-between">
-                      <Col span={12}>
-                        <Item
-                          {...restField}
-                          name={[name, 'phone']}
-                          label="Phone Number"
-                        >
-                          <MaskedInput mask="(111) 111-1111" />
-                        </Item>
-                      </Col>
-                      <Col span={8}>
-                        <Item
-                          label={'Phone Type'}
-                          name={[name, 'phoneType']}
-                          {...restField}
-                        >
-                          {/* <Select placeholder="Phone Type" options={PHONE_TYPE} /> */}
-                        </Item>
-                      </Col>
-                      <Col>
-                        <Item>
-                          {key === 0 ? (
-                            <Button onClick={() => add()} icon={<PlusCircleTwoTone />} type="link" />
-                          ) : (
-                            <Button onClick={() => remove(name)} icon={<DeleteOutlined />} danger type="link" />
-                          )}
-                        </Item>
-                      </Col>
-                    </Row>
-                  ))}
-                </>
-              )}
+              {(fields, actions) => <Phones form={form} fields={fields} actions={actions} />}  
             </List>
             <Item name="email" label="Email">
               <Input placeholder="email@gmail.com" />
@@ -159,7 +89,7 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
               <Row align="middle" gutter={16}>
                 <Col>
                   <Item name="moveDate" label="Move date">
-                    <DatePicker onChange={() => setAvailability(!availability)} placeholder="Move Date" />
+                    <DatePicker disabledDate={disabledDate} onChange={() => setAvailability(!availability)} placeholder="Move Date" />
                   </Item>
                 </Col>
                 <Col>{
@@ -174,20 +104,20 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
                 }</Col>
               </Row>
             </Item>
-            {/* <Row gutter={16}>
+            <Row gutter={16}>
               <Col span={12}>
                 <Item name="serviceType" label="Type of service">
-                  <Select placeholder={'Type of service'} options={SERVICE_TYPE}/>
+                  <Select placeholder={'Type of service'} options={fieldsStore.data.serviceType}/>
                 </Item>
               </Col>
               <Col span={12}>
                 <Item name="moveSize" label="Move size">
-                  <Select placeholder={'Move size'} options={MOVE_SIZE} />
+                  <Select placeholder={'Move size'} options={fieldsStore.moveSize} />
                 </Item>
               </Col>
               <Col span={12}>
                 <Item name="source" label="Referral Source">
-                  <Select placeholder={'Referral Source'} options={SOURCE}/>
+                  <Select placeholder={'Referral Source'} options={fieldsStore.data.source}/>
                 </Item>
               </Col>
               <Col span={12}>
@@ -195,17 +125,17 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
                   label="Sales Person"
                   name="manager"
                 >
-                  <Select placeholder={'Sales Person'} options={SALES_PERSON}/>
+                  <Select placeholder={'Sales Person'} options={fieldsStore.salesPerson}/>
                 </Item>
               </Col>
-            </Row> */}
+            </Row>
           </div>
-          {/* <div className={`step-form ${stepIsVisible(1)}`} >
-            <FieldsAddress field="origin" setAddress={setAddress}/>
+          <div className={classNames(s[`${CN}__step-form`], s[`${stepIsVisible(1)}`])}>
+            <FieldsAddress field="origin" form={form} />
           </div>
-          <div className={`step-form ${stepIsVisible(2)}`} >
-            <FieldsAddress field="destination" setAddress={setAddress} />
-          </div> */}
+          <div className={classNames(s[`${CN}__step-form`], s[`${stepIsVisible(2)}`])}>
+            <FieldsAddress field="destination" form={form} />
+          </div>
           <Divider />
           <Row justify="space-between">
             <Col>
