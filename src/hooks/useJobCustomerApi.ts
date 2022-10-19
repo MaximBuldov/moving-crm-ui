@@ -13,13 +13,41 @@ import { formattedPhones, formatPhoneAction } from 'utils/formattedPhone';
 interface useJobCustomerApiReturn {
   onFinish: (data: any) => void,
   setUser: (data: ICustomer) => void,
-  isLoading: boolean
+  isLoading: boolean,
 }
 
-function useJobCustomerApi(jobStatus: JobsStatus, closeModal?: () => void): useJobCustomerApiReturn {
+function useJobCustomerApi(
+  jobStatus: JobsStatus,
+  closeModal?: () => void,
+  jobID?: number,
+  customerID?: number
+): useJobCustomerApiReturn {
   const [user, setUser] = useState<ICustomer | null>(null);
   const navigate = useNavigate();
-  const jobAction = useMutation(jobsService.createOne, {
+
+  const customerPOST = useMutation(customersService.createOne, {
+    onSuccess: (customer, data) => createNewJob(customer, data),
+    onError: (error: Error) => {
+      message.error(error.message);
+    }
+  });
+
+  const customerUPDATE = useMutation(customersService.updateOne, {
+    onSuccess: (customer, data) => {
+      if (jobID) {
+        data.data.jobStatus = jobStatus;
+        jobUPDATE.mutate({ ...data, id: jobID }); //старый пользователь - старая работа
+      }
+      if (user) {
+        createNewJob(customer, data); //старый пользователь - новая работа
+      }
+    },
+    onError: (error: Error) => {
+      message.error(error.message);
+    }
+  });
+
+  const jobPOST = useMutation(jobsService.createOne, {
     onSuccess: (data) => {
       message.success('Created!');
       closeModal && closeModal();
@@ -29,8 +57,13 @@ function useJobCustomerApi(jobStatus: JobsStatus, closeModal?: () => void): useJ
       message.error(error.message);
     }
   });
-  const customerAction = useMutation(customersService.createOne, {
-    onSuccess: (customer, data) => createNewJob(customer, data),
+
+  const jobUPDATE = useMutation(jobsService.updateOne, {
+    onSuccess: (data) => {
+      message.success('Created!');
+      closeModal && closeModal();
+      jobStatus === JobsStatus.OPPORTUNITY && navigate(`${ESTIMATES_EDIT_ROUTE}/${data.id}`);
+    },
     onError: (error: Error) => {
       message.error(error.message);
     }
@@ -38,7 +71,7 @@ function useJobCustomerApi(jobStatus: JobsStatus, closeModal?: () => void): useJ
 
   function createNewJob({ attributes, id }: ICustomer, data: any) {
     const jobNumber = attributes.jobs ? +attributes.jobs.data.length + 1 : 1;
-    jobAction.mutate({
+    jobPOST.mutate({
       ...data,
       customer: id,
       jobStatus: jobStatus,
@@ -47,16 +80,18 @@ function useJobCustomerApi(jobStatus: JobsStatus, closeModal?: () => void): useJ
   }
 
   const onFinish = (values: any) => {
-    const phones = formattedPhones(values.phones, formatPhoneAction.UNFORMAT);
-    const updatedValues = { ...values, phones };
-    if (user) {
-      createNewJob(user, updatedValues);
+    const phones = values.phones && formattedPhones(values.phones, formatPhoneAction.UNFORMAT);
+    const data = { ...values, phones };
+    
+    if (user || customerID) {
+      const id = customerID ? customerID : user?.id;
+      id && customerUPDATE.mutate({ id, data });
     } else {
-      customerAction.mutate(updatedValues);
+      customerPOST.mutate(data); //новый пользователь - новая работа
     }
   };
 
-  const isLoading = customerAction.isLoading || jobAction.isLoading;
+  const isLoading = customerPOST.isLoading || jobPOST.isLoading;
 
   return {
     onFinish, setUser, isLoading

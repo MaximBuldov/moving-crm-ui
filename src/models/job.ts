@@ -1,5 +1,6 @@
 import { ICompany } from './company';
 import { ICustomer } from './customer';
+import { JobsStatus } from './fields';
 import { IManager } from './user';
 
 export interface IProperty {
@@ -24,7 +25,7 @@ export interface IJob {
         moveDate: string,
         moveSize: string,
         notes: string,
-        jobStatus: string,
+        jobStatus: JobsStatus,
         movePrice: number,
         company?: {
             data: ICompany

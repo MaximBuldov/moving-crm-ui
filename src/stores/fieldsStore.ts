@@ -8,19 +8,7 @@ class Fields {
   };
   moveSize = ['Room or Less', 'Studio', 'One Bedroom Apartment', 'One Bedroom House', 'Two Bedroom Apartment', 'Two Bedroom House', 'Three Bedroom Apartment', 'Three Bedroom House', 'Four Bedroom House', 'Five Bedroom House', 'Small Office', 'Medium Office', 'Large Office', 'Storage 10 x 15', 'Storage 10 x 20', 'Storage 10 x 10', 'Storage 10 x 25', 'Storage 10 x 30'].map(this.transform);
   phoneType = ['Mobile', 'Home', 'Office', 'Other'].map(this.transform);
-  jobStatus = [
-    { name: JobsStatus.LEAD_IN_PROGRESS, color: JobsStatusColors.ORANGE },
-    { name: JobsStatus.OPPORTUNITY, color: JobsStatusColors.GREEN },
-    { name: JobsStatus.NEW_LEAD, color: JobsStatusColors.RED },
-    { name: JobsStatus.BOOKED, color: JobsStatusColors.GREEN },
-    { name: JobsStatus.SCEDULED, color: JobsStatusColors.GREEN },
-    { name: JobsStatus.CONFIRMED, color: JobsStatusColors.GREEN },
-    { name: JobsStatus.IN_PROGRESS, color: JobsStatusColors.GREEN },
-    { name: JobsStatus.CLOSED, color: JobsStatusColors.BLACK },
-    { name: JobsStatus.CANCELLED, color: JobsStatusColors.GRAY },
-    { name: JobsStatus.LOST, color: JobsStatusColors.BLACK },
-    { name: JobsStatus.BAD_LEAD, color: JobsStatusColors.BLACK }
-  ];
+  jobStatus = [JobsStatus.LEAD_IN_PROGRESS, JobsStatus.OPPORTUNITY, JobsStatus.NEW_LEAD, JobsStatus.BOOKED, JobsStatus.SCEDULED, JobsStatus.CONFIRMED, JobsStatus.IN_PROGRESS, JobsStatus.CLOSED, JobsStatus.CANCELLED, JobsStatus.LOST, JobsStatus.BAD_LEAD].map(this.transform);
   propertyType = ['Apartment', 'Assisted living', 'Commercial', 'High rise', 'House',	'Storage', 'Town house', 'Warehouse', 'Other'].map(this.transform);
   parkingType = ['Street', 'Parking lot', 'Garage', 'Other', 'Private driveway'].map(this.transform);
   stairsCount = ['No stairs', 'One flight', 'Two flights', 'Three flights', 'Four flights',	'Five flights', 'Six flights'].map(this.transform);
@@ -43,6 +31,35 @@ class Fields {
       value: el
     };
   }
+
+  getStatusColor(text: JobsStatus) {
+    let color = '';
+    switch (text) {
+    case JobsStatus.LEAD_IN_PROGRESS:
+      color = JobsStatusColors.ORANGE;
+      break;
+    case JobsStatus.OPPORTUNITY:
+    case JobsStatus.BOOKED:
+    case JobsStatus.CONFIRMED:
+    case JobsStatus.SCEDULED:
+    case JobsStatus.IN_PROGRESS:
+      color = JobsStatusColors.GREEN;
+      break;
+    case JobsStatus.NEW_LEAD:
+      color = JobsStatusColors.RED;
+      break;
+    case JobsStatus.CLOSED:
+    case JobsStatus.LOST:
+    case JobsStatus.BAD_LEAD:
+      color = JobsStatusColors.BLACK;
+      break;
+    case JobsStatus.CANCELLED:
+      color = JobsStatusColors.GRAY;
+    }
+  
+    return color;
+  }
+
 }
 
 const fieldsStore = new Fields();

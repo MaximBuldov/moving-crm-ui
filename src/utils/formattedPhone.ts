@@ -18,10 +18,15 @@ export function unformattedPhone(value: string) {
   return value.replace(/[^\d]/g, '');
 }
 
-export function formattedPhones(arr: IPhone[], type: formatPhoneAction) {
-  const fn = type === formatPhoneAction.FORMAT ? formattedPhone : unformattedPhone;
-  return arr.map((el: any) => ({
-    ...el,
-    phone: fn(el.phone)
-  }));
+export function formattedPhones(arr?: IPhone[], type?: formatPhoneAction) {
+  if (arr) {
+    const fn = type === formatPhoneAction.FORMAT ? formattedPhone : unformattedPhone;
+    return arr.map((el: any) => ({
+      ...el,
+      phone: fn(el.phone)
+    }));
+  } else {
+    return [{}];
+  }
+  
 }

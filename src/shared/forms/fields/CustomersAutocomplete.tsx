@@ -11,10 +11,11 @@ const { Option } = AutoComplete;
 interface CustomersAutocompleteProps {
   placeholder: string,
   form: FormInstance,
-  setUser: (args: ICustomer) => void
+  setUser: (args: ICustomer) => void,
+  defaultName?: string
 }
 
-const CustomersAutocomplete = ({ placeholder, form, setUser }: CustomersAutocompleteProps) => {
+const CustomersAutocomplete = ({ placeholder, form, setUser, defaultName }: CustomersAutocompleteProps) => {
   const [input, setInput] = useState<string | null>(null);
   const [value] = useDebounce(input, 1000);
 
@@ -49,8 +50,9 @@ const CustomersAutocomplete = ({ placeholder, form, setUser }: CustomersAutocomp
         onSelect={onSelect}
         onSearch={onSearch}
         placeholder={placeholder}
+        defaultValue={defaultName && defaultName}
       >
-        {customersAction.data && customersAction.data.map((el: ICustomer) => (
+        {customersAction.data.data && customersAction.data.data.map((el: ICustomer) => (
           <Option key={el.id} customer={el} value={el.attributes.name}>
             <Row justify="space-between">
               <Col span={8}>{el.attributes.name}</Col>

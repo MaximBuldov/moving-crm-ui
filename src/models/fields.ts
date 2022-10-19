@@ -1,7 +1,7 @@
 export enum JobsStatusColors {
   ORANGE = '#eb8c00',
   GREEN = '#33ad00',
-  RED = '#c22404',
+  RED = '#1890ff',
   BLACK = '#222',
   GRAY = '#8b8b8b'
 }

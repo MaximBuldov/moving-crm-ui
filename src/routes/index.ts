@@ -1,4 +1,10 @@
 import { FunctionComponent } from 'react';
+import Login from 'pages/Login';
+import Home from 'pages/Home';
+import SalesDashboard from 'pages/sales/SalesDashboard';
+import SalesMyLeads from 'pages/sales/SalesMyLeads';
+import SalesOpportunities from 'pages/sales/SalesOpportunities';
+import EstimatesEdit from 'pages/sales/EstimatesEdit';
 
 import {
   CAL_JOBS_ROUTE,
@@ -17,7 +23,7 @@ import {
   SALES_FOLLOW_UPS_ROUTE,
   SALES_MY_LEADS_ROUTE,
   SALES_NEW_LEADS_ROUTE,
-  SALES_OPPORTUNITIES_ROUTE,
+  SALES_OPPORTUNITIES_ID_ROUTE,
   SALES_ROUTE,
   STORAGE_ACCOUNTS_ROUTE,
   STORAGE_AGING_ROUTE,
@@ -27,16 +33,7 @@ import {
   STORAGE_ROUTE,
   TASKS_ROUTE
 } from './consts';
-import Login from 'pages/Login';
-import Home from 'pages/Home';
-// import Profile from './pages/Profile';
-import SalesDashboard from 'pages/sales/SalesDashboard';
-// import SalesMyLeads from './pages/sales/SalesMyLeads';
-// import CalendarJobs from './pages/calendars/CalendarJobs';
-// import CalendarOffice from './pages/calendars/CalendarOffice';
-// import SalesOpportunities from './pages/sales/SalesOpportunities';
-// import CustomerDetails from './pages/customers/CustomerDetails';
-// import EstimatesEdit from './pages/EstimatesEdit';
+import SalesNewLeads from 'pages/sales/SalesNewLeads';
 
 export interface IRoute {
 	path: string,
@@ -67,28 +64,32 @@ export const private_routes: IRoute[] = [
     parent: SALES_ROUTE,
     name: 'Dashboard'
   },
-//   {
-//     path: SALES_NEW_LEADS_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: SALES_ROUTE,
-//     name: 'New leads'
-//   },
-//   {
-//     path: SALES_MY_LEADS_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: SALES_ROUTE,
-//     name: 'My leads'
-//   },
-//   {
-//     path: SALES_FOLLOW_UPS_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: SALES_ROUTE,
-//     name: 'Follow-ups'
-//   },
-//   {
-//     path: SALES_OPPORTUNITIES_ROUTE,
-//     Component: SalesOpportunities
-//   },
+  {
+    path: SALES_NEW_LEADS_ROUTE,
+    Component: SalesNewLeads,
+    parent: SALES_ROUTE,
+    name: 'New leads'
+  },
+  {
+    path: SALES_MY_LEADS_ROUTE,
+    Component: SalesMyLeads,
+    parent: SALES_ROUTE,
+    name: 'My leads'
+  },
+  {
+    path: SALES_FOLLOW_UPS_ROUTE,
+    Component: SalesMyLeads,
+    parent: SALES_ROUTE,
+    name: 'Follow-ups'
+  },
+  {
+    path: SALES_OPPORTUNITIES_ID_ROUTE,
+    Component: SalesOpportunities
+  },
+  {
+    path: ESTIMATES_EDIT_ID_ROUTE,
+    Component: EstimatesEdit
+  }
 //   {
 //     path: CAL_JOBS_ROUTE,
 //     Component: CalendarJobs,
@@ -101,11 +102,11 @@ export const private_routes: IRoute[] = [
 //     parent: CAL_ROUTE,
 //     name: 'Office calendar'
 //   },
-//   {
-//     path: TASKS_ROUTE,
-//     Component: SalesMyLeads,
-//     name: 'Tasks'
-//   },
+  // {
+  //   path: TASKS_ROUTE,
+  //   Component: SalesMyLeads,
+  //   name: 'Tasks'
+  // },
 //   {
 //     path: CUSTOMERS_ROUTE,
 //     Component: SalesMyLeads,
@@ -157,8 +158,4 @@ export const private_routes: IRoute[] = [
 //     parent: STORAGE_ROUTE,
 //     name: 'Invoices'
 //   },
-//   {
-//     path: ESTIMATES_EDIT_ID_ROUTE,
-//     Component: EstimatesEdit
-//   }
 ];

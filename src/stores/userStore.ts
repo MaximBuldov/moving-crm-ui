@@ -27,19 +27,12 @@ class User {
   }
 
   get initials() {
-    if (this.data) {
-      return `${this.data.firstName.at(0)}${this.data.lastName.at(0)}`;
+    if (this.data?.fullName) {
+      const parts = this.data.fullName.split(' ');
+      return `${parts[0].at(0)}${parts[1].at(0)}`;
     }
     return '--';
   }
-
-  get fullName() {
-    if (this.data) {
-      return `${this.data.firstName} ${this.data.lastName}`;
-    }
-    return null; 
-  }
-
 }
 
 const userStore = new User();

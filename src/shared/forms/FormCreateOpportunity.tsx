@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Steps, Typography } from 'antd';
 import classNames from 'classnames';
 import { CarOutlined, PieChartOutlined, TeamOutlined } from '@ant-design/icons';
@@ -10,6 +10,7 @@ import s from 'shared/forms/form.module.scss';
 import { RangePickerProps } from 'antd/lib/date-picker';
 import useJobCustomerApi from 'hooks/useJobCustomerApi';
 import { JobsStatus } from 'models/fields';
+import { formatPhoneAction, formattedPhones } from 'utils/formattedPhone';
 
 import Phones from './fields/Phones';
 import FieldsAddress from './fields/Address';
@@ -44,7 +45,7 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [availability, setAvailability] = useState<boolean>(false);
   const [form] = useForm();
-  const { onFinish, setUser, isLoading } = useJobCustomerApi(JobsStatus.OPPORTUNITY, closeModal);
+  const { onFinish, setUser, isLoading } = useJobCustomerApi(JobsStatus.OPPORTUNITY, closeModal, job?.id, job?.attributes.customer?.data.id );
 
   const stepIsVisible = (step: number) => classNames({ 'step-form-visible': currentStep === step });
 
@@ -52,6 +53,23 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
     return current && current < moment().subtract(1, 'days');
   };
 
+  const initialValues = () => {
+    if (job) {
+      const { attributes } = job;
+      return {
+        ...attributes,
+        ...attributes.customer?.data.attributes,
+        phones: formattedPhones(attributes.customer?.data.attributes.phones, formatPhoneAction.FORMAT),
+        manager: attributes.manager?.data.id,
+        moveDate: moment(attributes.moveDate, 'YYYY-MM-DD')
+      };
+    } else {
+      return {
+        phones: [{}]
+      };
+    }
+  };
+  
   return (
     <Row>
       <Col style={{ borderRight: '1px solid rgba(0, 0, 0, 0.06)', paddingRight: 24 }} span={8}>
@@ -71,13 +89,16 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
           layout="vertical"
           size="large"
           onFinish={onFinish}
-          initialValues={{
-            phones: [{}]
-          }}
+          initialValues={initialValues()}
         >
           <div className={classNames(s[`${CN}__step-form`], s[`${stepIsVisible(0)}`])}>
             <Item name="name" label="Name" rules={[{ required: true }]}>
-              <CustomersAutocomplete placeholder="Name" form={form} setUser={(customer) => setUser(customer)} />
+              <CustomersAutocomplete
+                placeholder="Name"
+                form={form}
+                setUser={(customer) => setUser(customer)}
+                defaultName={job?.attributes.customer?.data.attributes.name}
+              />
             </Item>
             <List name="phones">
               {(fields, actions) => <Phones form={form} fields={fields} actions={actions} />}  

@@ -9,8 +9,7 @@ interface IUserAttributes {
     createdAt: string,
     updatedAt: string,
     accountType: string,
-    firstName: string,
-    lastName: string
+    fullName: string
 }
 
 export interface IUser extends IUserAttributes {
