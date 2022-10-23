@@ -13,11 +13,11 @@ const root = ReactDOM.createRoot(
 );
 
 const queryClient = new QueryClient({
-  // defaultOptions: {
-  //   queries: {
-  //     refetchOnWindowFocus: false
-  //   }
-  // }
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
 });
 
 root.render(

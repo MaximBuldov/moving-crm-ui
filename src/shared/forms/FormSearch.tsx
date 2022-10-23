@@ -1,87 +1,77 @@
-import React, { ChangeEvent, useState } from 'react';
-import { Button, Input, Space, Table, Tabs, Tag } from 'antd';
+import { ChangeEvent } from 'react';
+import { Card, Divider, Input, Table, Tabs, Tag, Typography } from 'antd';
 import { Link } from 'react-router-dom';
+import useCustomerSearch from 'hooks/useCustomerSearch';
+import { IPhone } from 'models/customer';
+import { formattedPhone } from 'utils/formattedPhone';
+import { CarOutlined, UserOutlined } from '@ant-design/icons';
+import useJobSearchByCustomer from 'hooks/useJobSearchByCustomer';
+import moment from 'moment';
+import { fieldsStore } from 'stores';
+import { JobsStatus } from 'models/fields';
+import { ColumnsType } from 'antd/lib/table';
 
-const columns = [
+const columnsCustomer = [
   {
-    title: 'Name',
-    dataIndex: 'name',
+    dataIndex: ['attributes', 'name'],
     key: 'name',
     render: (text: string) => <Link to={text}>{text}</Link>
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age'
+    dataIndex: ['attributes', 'email'],
+    key: 'email'
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address'
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (tags: string[]) => (
-      <>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    )
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (text: string, record: any) => (
-      <Space size="middle">
-        <Button>Invite {record.name}</Button>
-        <Button>Delete</Button>
-      </Space>
-    )
+    dataIndex: ['attributes', 'phones'],
+    key: 'phones',
+    render: (phones: IPhone[]) => formattedPhone(phones[0].phone)
   }
 ];
-const data = [
+
+const columnsJob = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer']
+    dataIndex: ['attributes', 'customer', 'data', 'attributes', 'name'],
+    key: 'name',
+    render: (text: string) => <Link to={text}>{text}</Link>
   },
   {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser']
+    dataIndex: ['attributes', 'jobStatus'],
+    key: 'jobStatus',
+    render: (status: JobsStatus) => <Tag color={fieldsStore.getStatusColor(status)}>{status}</Tag>
   },
   {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher']
+    dataIndex: 'id',
+    key: 'id',
+    render: (id: string) => <Link to={id}>{id}</Link>
+  },
+  {
+    dataIndex: ['attributes', 'customer', 'data', 'attributes', 'phones'],
+    key: 'phones',
+    render: (phones: IPhone[]) => formattedPhone(phones[0].phone)
+  },
+  {
+    dataIndex: ['attributes', 'customer', 'data', 'attributes', 'email'],
+    key: 'email'
+  },
+  {
+    dataIndex: ['attributes', 'serviceType'],
+    key: 'serviceType'
+  },
+  {
+    dataIndex: ['attributes', 'moveDate'],
+    key: 'moveDate',
+    render: (date: string) => moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY')
   }
 ];
 
 const FormSearch = () => {
-  const [isTableVisible, setTableVisible] = useState(false);
+  const { customersAction, setInput: setCustomersInput } = useCustomerSearch();
+  const { jobsAction, setInput: setJobsInput } = useJobSearchByCustomer();
 
   const onMovingSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 3) {
-      setTableVisible(true);
-    } else {
-      setTableVisible(false);
+    if (e.target.value.length >= 2) {
+      setCustomersInput(e.target.value);
+      setJobsInput(e.target.value);
     }
   };
 
@@ -89,7 +79,13 @@ const FormSearch = () => {
     { 
       label: 'Moving',
       key: '1',
-      children: <Input onChange={onMovingSearch} placeholder="Enter a job number, phone number, email or partial name" />
+      children: <Input.Search 
+        loading={customersAction.isLoading || jobsAction.isLoading}
+        onChange={onMovingSearch}
+        placeholder="Enter a job number, phone number, email or partial name"
+        size="large"
+        enterButton
+      />
     },
     { 
       label: 'Storage',
@@ -101,11 +97,24 @@ const FormSearch = () => {
   return (
     <>
       <Tabs items={tabs} defaultActiveKey="1" />
-      {isTableVisible &&(
-        <Table pagination={false} columns={columns} dataSource={data}/>
-      )}
+      {customersAction?.data?.data && renderTable(customersAction?.data?.data, <><UserOutlined /> Customers</>, columnsCustomer)}
+      {jobsAction?.data?.data && renderTable(jobsAction?.data?.data, <><CarOutlined /> Jobs</>, columnsJob)}
     </>
   );
+
+  function renderTable(data: any[], title: any, columns: any) {
+    return (
+      <Card title={title} type="inner" size="small" >
+        <Table
+          pagination={false}
+          showHeader={false}
+          columns={columns}
+          dataSource={data}
+          rowKey={record => record.id}
+          size="small"
+        />
+      </Card>
+    );}
 };
 
 export default FormSearch;

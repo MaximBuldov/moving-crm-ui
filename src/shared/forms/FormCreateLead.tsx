@@ -5,6 +5,7 @@ import { RangePickerProps } from 'antd/lib/date-picker';
 import { fieldsStore } from 'stores';
 import { JobsStatus } from 'models/fields';
 import useJobCustomerApi from 'hooks/useJobCustomerApi';
+import { fieldNames } from 'stores/fieldsStore';
 
 import CustomersAutocomplete from './fields/CustomersAutocomplete';
 import Phones from './fields/Phones';
@@ -46,7 +47,6 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
           >
             <CustomersAutocomplete 
               placeholder="Customer name"
-              form={form}
               setUser={(customer) => setUser(customer)}
             />
           </Item>
@@ -70,7 +70,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             name="manager"
             rules={[{ required: true }]}
           >
-            <Select placeholder={'Sales Person'} options={fieldsStore.salesPerson}/>
+            <Select placeholder={'Sales Person'} fieldNames={{ label: 'fullName', value: 'id' }} options={fieldsStore.managers}/>
           </Item>
         </Col>
         <Col span={8}>
@@ -79,7 +79,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             name="branch"
             rules={[{ required: true }]}
           >
-            <Select placeholder={'Branch'} options={fieldsStore.data.branches} />
+            <Select placeholder={'Branch'} options={fieldsStore.branches} />
           </Item>
         </Col>
         <Col span={8}>
@@ -87,7 +87,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             label="Referral Source"
             name="source"
           >
-            <Select placeholder={'Referral Source'} options={fieldsStore.data.source}/>
+            <Select placeholder={'Referral Source'} fieldNames={fieldNames} options={fieldsStore.data?.source}/>
           </Item>
         </Col>
         <Col span={8}>
@@ -109,7 +109,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             label="Move Size"
             name="moveSize"
           >
-            <Select placeholder={'Move Size'} options={fieldsStore.moveSize} />
+            <Select placeholder={'Move Size'} fieldNames={fieldNames} options={fieldsStore.data?.moveSize} />
           </Item>
         </Col>
         <Col span={8}>
@@ -117,14 +117,14 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
             label="Service Type"
             name="serviceType"
           >
-            <Select placeholder={'Service Type'} options={fieldsStore.data.serviceType} />
+            <Select placeholder={'Service Type'} fieldNames={fieldNames} options={fieldsStore.data?.serviceType} />
           </Item>
         </Col>
         <Col span={12}>
-          <GoogleAutocomplete form={form} field="origin" />
+          <GoogleAutocomplete field="origin" />
         </Col>
         <Col span={12}>
-          <GoogleAutocomplete form={form} field="destination" />
+          <GoogleAutocomplete field="destination" />
         </Col>
         <Col span={24}>
           <Item label={'Notes'} name={'notes'}>

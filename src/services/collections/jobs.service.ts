@@ -1,9 +1,9 @@
-import ApiController from 'services/apiController';
+import CollectionController from 'services/collectionController';
 
 const populate = ['customer.phones', 'manager', 'origin', 'destination'];
 const url = 'jobs';
 
-class JobsService extends ApiController {
+class JobsService extends CollectionController {
 }
 
 const jobsService = new JobsService(url, populate);

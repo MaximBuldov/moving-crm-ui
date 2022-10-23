@@ -1,7 +1,7 @@
 import { throwError } from 'utils/trowError';
-import { $apiGet, $apiPost, $apiPut } from 'services/http';
+import { $api } from 'services/http';
 
-export default class ApiController {
+export default class CollectionController {
   url: string;
   populate: string[];
 
@@ -14,7 +14,7 @@ export default class ApiController {
   
   createOne = async (data: any) => {
     try {
-      const res = await $apiPost(this.url, { data: { data } });
+      const res = await $api.post(this.url, { data });
       return res.data.data;
     } catch(error: Error | any) {
       throwError(error);
@@ -23,7 +23,7 @@ export default class ApiController {
 
   fetchMany = async (params?: any) => {
     try {
-      const res = await $apiGet(this.url, { 
+      const res = await $api.get(this.url, { 
         params: {
           populate: this.populate,
           ...params
@@ -38,7 +38,7 @@ export default class ApiController {
 
   fetchOne = async (id: string) => {
     try {
-      const res = await $apiGet(this.urlId(id), { params: { populate: this.populate } });
+      const res = await $api.get(this.urlId(id), { params: { populate: this.populate } });
       return res.data.data;
     } catch(error: Error | any) {
       throwError(error);
@@ -47,7 +47,7 @@ export default class ApiController {
 
   updateOne = async ({ id, data }: {id: string | number, data: any}) => {
     try {
-      const res = await $apiPut(this.urlId(id), { data: { data } });
+      const res = await $api.put(this.urlId(id), { data });
       return res.data.data;
     } catch(error: Error | any) {
       throwError(error);

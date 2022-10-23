@@ -1,22 +1,25 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
-import { Input, Form, Skeleton, FormInstance } from 'antd';
+import { Input, Form, Skeleton } from 'antd';
 import { useGoogleMaps } from 'hooks/useGoogleMaps';
 
 export interface GoogleAutocompleteProps {
-	form: FormInstance,
 	field: string
 }
 
-const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ form, field }) => {
+const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ field }) => {
   const { map, isLoaded, onLoad, onUnmount, loadError } = useGoogleMaps();
+  const form = Form.useFormInstance();
+  const [val, setVal] = useState<number>();
 
   const onPlaceChanged = () => {
     if (map !== null) {
       const address = map.getPlace()?.formatted_address;
       form.setFieldValue(field, { address });
+      setVal(11);
     }
   };
+
   const capitalize = (s: string) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };

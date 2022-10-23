@@ -13,7 +13,7 @@ import {
 } from '@ant-design/icons';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import jobsService from 'services/api/jobs.service';
+import jobsService from 'services/collections/jobs.service';
 import CustomerContact from 'shared/components/CustomerContact';
 import QuoteInfo from 'components/estimates/QuoteInfo';
 import EstimateJobs from 'components/estimates/EstimateJobs';

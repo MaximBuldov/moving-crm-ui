@@ -5,11 +5,11 @@ import { fieldsStore } from 'stores';
 
 const { Item } = Form;
 
-const FieldsAddress = ({ field, form }: GoogleAutocompleteProps) => {
+const FieldsAddress = ({ field }: GoogleAutocompleteProps) => {
   return (
     <Row gutter={16}>
       <Col span={24}>
-        <GoogleAutocomplete field={field} form={form} />
+        <GoogleAutocomplete field={field} />
       </Col>
       <Col span={12}>
         <Item name={[field, 'propertyName']} label="Property Name">

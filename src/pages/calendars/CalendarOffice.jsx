@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Badge, Button, Calendar, Col, Drawer, Row, Select, Space } from 'antd';
-
-import Heading from '../../components/layouts/Heading';
-import CreateEventForm from '../../components/calendars/CreateEventForm';
+import Heading from 'layouts/Heading';
+import CreateEventForm from 'components/calendars/CreateEventForm';
 const { Option } = Select;
 
 const CalendarOffice = () => {

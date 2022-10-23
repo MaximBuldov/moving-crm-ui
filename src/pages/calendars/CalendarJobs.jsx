@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { Badge, Button, Calendar, Col, Drawer, Progress, Row, Select, Space } from 'antd';
+import { useState } from 'react';
+import { Button, Calendar, Drawer, Progress, Space } from 'antd';
 import { CalendarOutlined, CoffeeOutlined, SettingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-
-import { getRandomInt } from '../../utils/consts';
-import Heading from '../../components/layouts/Heading';
-import DrawerPrices from '../../components/calendars/DrawerPrices';
-import DrawerJobs from '../../components/calendars/DrawerJobs';
-import CalendarFilters from '../../components/calendars/CalendarFilters';
+import { getRandomInt } from 'utils/getRandomInt';
+import Heading from 'layouts/Heading';
+import DrawerPrices from 'components/calendars/DrawerPrices';
+import DrawerJobs from 'components/calendars/DrawerJobs';
 
 const CalendarJobs = () => {
   const [drawerData, setDrawerData] = useState(null);

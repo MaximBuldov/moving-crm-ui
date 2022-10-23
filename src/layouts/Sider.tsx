@@ -6,6 +6,7 @@ import {
   CalendarOutlined,
   DropboxOutlined,
   PhoneOutlined,
+  SettingOutlined,
   TeamOutlined,
   UnorderedListOutlined
 } from '@ant-design/icons';
@@ -14,7 +15,8 @@ import {
   CUSTOMER_SERVICE_TICKET_ROUTE,
   CUSTOMERS_ROUTE,
   SALES_DASHBOARD_ROUTE, STORAGE_DASHBOARD_ROUTE,
-  TASKS_ROUTE
+  TASKS_ROUTE,
+  SETTINGS_ROUTE
 } from 'routes/consts';
 import styles from 'layouts/layouts.module.scss';
 
@@ -48,6 +50,11 @@ const items: MenuProps['items'] = [
     label: 	<NavLink to={STORAGE_DASHBOARD_ROUTE}>Storage</NavLink>,
     key: STORAGE_DASHBOARD_ROUTE,
     icon: <DropboxOutlined />
+  },
+  {
+    label: 	<NavLink to={SETTINGS_ROUTE}>Settings</NavLink>,
+    key: SETTINGS_ROUTE,
+    icon: <SettingOutlined />
   }
 ];
 

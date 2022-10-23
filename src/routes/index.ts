@@ -5,6 +5,10 @@ import SalesDashboard from 'pages/sales/SalesDashboard';
 import SalesMyLeads from 'pages/sales/SalesMyLeads';
 import SalesOpportunities from 'pages/sales/SalesOpportunities';
 import EstimatesEdit from 'pages/sales/EstimatesEdit';
+import SalesNewLeads from 'pages/sales/SalesNewLeads';
+import CalendarJobs from 'pages/calendars/CalendarJobs';
+import CalendarOffice from 'pages/calendars/CalendarOffice';
+import CustomerDetails from 'pages/customers/CustomerDetails';
 
 import {
   CAL_JOBS_ROUTE,
@@ -31,9 +35,10 @@ import {
   STORAGE_DASHBOARD_ROUTE,
   STORAGE_INVOICES_ROUTE,
   STORAGE_ROUTE,
-  TASKS_ROUTE
+  TASKS_ROUTE,
+  SETTINGS_ROUTE
 } from './consts';
-import SalesNewLeads from 'pages/sales/SalesNewLeads';
+import Settings from 'pages/settings/Settings';
 
 export interface IRoute {
 	path: string,
@@ -89,73 +94,86 @@ export const private_routes: IRoute[] = [
   {
     path: ESTIMATES_EDIT_ID_ROUTE,
     Component: EstimatesEdit
+  },
+  {
+    path: CAL_JOBS_ROUTE,
+    Component: CalendarJobs,
+    parent: CAL_ROUTE,
+    name: 'Job calendar'
+  },
+  {
+    path: CAL_OFFICE_ROUTE,
+    Component: CalendarOffice,
+    parent: CAL_ROUTE,
+    name: 'Office calendar'
+  },
+  {
+    path: TASKS_ROUTE,
+    Component: SalesMyLeads,
+    name: 'Tasks'
+  },
+  {
+    path: CUSTOMERS_ROUTE,
+    Component: SalesMyLeads,
+    name: 'Customers'
+  },
+  {
+    path: CUSTOMERS_DETAILS_ROUTE,
+    Component: CustomerDetails
+  },
+  {
+    path: CUSTOMER_SERVICE_TICKET_ROUTE,
+    Component: SalesMyLeads,
+    parent: CUSTOMER_SERVICE_ROUTE,
+    name: 'Tickets'
+  },
+  {
+    path: CUSTOMER_SERVICE_RATINGS_ROUTE,
+    Component: SalesMyLeads,
+    parent: CUSTOMER_SERVICE_ROUTE,
+    name: 'Ratings'
+  },
+  {
+    path: STORAGE_DASHBOARD_ROUTE,
+    Component: SalesDashboard,
+    parent: STORAGE_ROUTE,
+    name: 'Dashboard'
+  },
+  {
+    path: STORAGE_ACCOUNTS_ROUTE,
+    Component: SalesMyLeads,
+    parent: STORAGE_ROUTE,
+    name: 'Accounts'
+  },
+  {
+    path: STORAGE_CONTAINERS_ROUTE,
+    Component: SalesMyLeads,
+    parent: STORAGE_ROUTE,
+    name: 'Containers'
+  },
+  {
+    path: STORAGE_AGING_ROUTE,
+    Component: SalesMyLeads,
+    parent: STORAGE_ROUTE,
+    name: 'Aging'
+  },
+  {
+    path: STORAGE_INVOICES_ROUTE,
+    Component: SalesMyLeads,
+    parent: STORAGE_ROUTE,
+    name: 'Invoices'
+  },
+  {
+    path: SETTINGS_ROUTE,
+    Component: Settings,
+    name: 'Settings'
   }
-//   {
-//     path: CAL_JOBS_ROUTE,
-//     Component: CalendarJobs,
-//     parent: CAL_ROUTE,
-//     name: 'Job calendar'
-//   },
-//   {
-//     path: CAL_OFFICE_ROUTE,
-//     Component: CalendarOffice,
-//     parent: CAL_ROUTE,
-//     name: 'Office calendar'
-//   },
-  // {
-  //   path: TASKS_ROUTE,
-  //   Component: SalesMyLeads,
-  //   name: 'Tasks'
-  // },
-//   {
-//     path: CUSTOMERS_ROUTE,
-//     Component: SalesMyLeads,
-//     name: 'Customers'
-//   },
-//   {
-//     path: CUSTOMERS_DETAILS_ROUTE,
-//     Component: CustomerDetails
-//   },
-//   {
-//     path: CUSTOMER_SERVICE_TICKET_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: CUSTOMER_SERVICE_ROUTE,
-//     name: 'Tickets'
-//   },
-//   {
-//     path: CUSTOMER_SERVICE_RATINGS_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: CUSTOMER_SERVICE_ROUTE,
-//     name: 'Ratings'
-//   },
-//   {
-//     path: STORAGE_DASHBOARD_ROUTE,
-//     Component: SalesDashboard,
-//     parent: STORAGE_ROUTE,
-//     name: 'Dashboard'
-//   },
-//   {
-//     path: STORAGE_ACCOUNTS_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: STORAGE_ROUTE,
-//     name: 'Accounts'
-//   },
-//   {
-//     path: STORAGE_CONTAINERS_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: STORAGE_ROUTE,
-//     name: 'Containers'
-//   },
-//   {
-//     path: STORAGE_AGING_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: STORAGE_ROUTE,
-//     name: 'Aging'
-//   },
-//   {
-//     path: STORAGE_INVOICES_ROUTE,
-//     Component: SalesMyLeads,
-//     parent: STORAGE_ROUTE,
-//     name: 'Invoices'
-//   },
+];
+
+export const settings_routes: IRoute[] = [
+  {
+    path: SETTINGS_ROUTE,
+    Component: Settings,
+    name: 'Settings'
+  }
 ];

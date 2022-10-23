@@ -9,7 +9,7 @@ import { fieldsStore } from 'stores';
 import { JobsStatus } from 'models/fields';
 import { ESTIMATES_EDIT_ROUTE } from 'routes/consts';
 import { useMutation } from 'react-query';
-import jobsService from 'services/api/jobs.service';
+import jobsService from 'services/collections/jobs.service';
 
 interface OpportunitiesHeadingProps {
 	job: IJob

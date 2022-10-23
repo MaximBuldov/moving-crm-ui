@@ -1,14 +1,14 @@
 import { ILoginForm } from 'pages/Login';
 import { throwError } from 'utils/trowError';
 
-import { $apiGet, $auth } from '../http';
+import { $api, $auth } from '../http';
 
 class UserService {
 
   async login(data: ILoginForm) {
     try {
       const res = await $auth('auth/local', { data });
-      return res.data.jwt;
+      return res.data;
     } catch (error: Error | any) {
       throwError(error);
     }
@@ -16,7 +16,7 @@ class UserService {
 
   async me() {
     try {
-      const res = await $apiGet('users/me', {
+      const res = await $api.get('users/me', {
         params: {
           populate: '*'
         }

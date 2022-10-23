@@ -3,11 +3,12 @@ import { Col, Input, Row, Select, Space } from 'antd';
 import Heading from 'layouts/Heading';
 import userStore from 'stores/userStore';
 import { useQuery } from 'react-query';
-import jobsService from 'services/api/jobs.service';
+import jobsService from 'services/collections/jobs.service';
 import { fieldsStore } from 'stores';
 import { SALES_ROUTE } from 'routes/consts';
 import LeadsTable from 'components/sales/leadsTable';
 import { useDebounce } from 'use-debounce';
+import { fieldNames } from 'stores/fieldsStore';
 
 //TODO: Revenue
 const SalesMyLeads: FC = () => {
@@ -38,7 +39,7 @@ const SalesMyLeads: FC = () => {
           <Select
             onChange={(id: number) => setMangerID(id)}
             defaultValue={userStore.data?.id}
-            options={fieldsStore.salesPerson}
+            options={fieldsStore.managers}
             allowClear
             placeholder="Any manager"
           />
@@ -50,8 +51,9 @@ const SalesMyLeads: FC = () => {
           />
           <Select
             placeholder="Any Source"
-            options={fieldsStore.data.source}
+            options={fieldsStore.data?.source}
             allowClear
+            fieldNames={fieldNames}
             onChange={(source) => setSource(source)}
           />
         </Col>

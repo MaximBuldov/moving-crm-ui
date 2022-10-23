@@ -27,3 +27,5 @@ export const ESTIMATES_EDIT_ID_ROUTE = `${ESTIMATES_EDIT_ROUTE}/:id`;
 export const PROFILE_ROUTE = '/profile';
 export const LOGIN_ROUTE = '/login';
 export const HOME_ROUTE = '/';
+export const SETTINGS_ROUTE = '/settings';
+export const SETTINGS_COMPANY_ROUTE = `${SETTINGS_ROUTE}/company`;

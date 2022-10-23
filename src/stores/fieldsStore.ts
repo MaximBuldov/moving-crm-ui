@@ -1,29 +1,57 @@
-import { JobsStatus, JobsStatusColors } from 'models/fields';
+import { makeAutoObservable } from 'mobx';
+import { makePersistable } from 'mobx-persist-store';
+import { IBranch } from 'models/branch';
+import { IField, JobsStatus, JobsStatusColors } from 'models/fields';
+import { IManager } from 'models/user';
+
+export interface IFieldsData {
+  source: IField[];
+  moveSize: IField[];
+  serviceType: IField[];
+  tags: IField[];
+}
+
+export const fieldNames = { label: 'label', value: 'label' };
 
 class Fields {
-  data = {
-    branches: ['San Diego', 'Las Vegas', 'Los Angeles'].map(this.transform),
-    serviceType: ['Moving', 'Packing', 'Moving and Packing', 'Unpacking', 'Load Only', 'Upload Only', 'Load truck/POD/trailers', 'Labor Only'].map(this.transform),
-    source: ['Google', 'Yelp', 'Facebook', 'Instagram', 'Thumbtack'].map(this.transform)
-  };
-  moveSize = ['Room or Less', 'Studio', 'One Bedroom Apartment', 'One Bedroom House', 'Two Bedroom Apartment', 'Two Bedroom House', 'Three Bedroom Apartment', 'Three Bedroom House', 'Four Bedroom House', 'Five Bedroom House', 'Small Office', 'Medium Office', 'Large Office', 'Storage 10 x 15', 'Storage 10 x 20', 'Storage 10 x 10', 'Storage 10 x 25', 'Storage 10 x 30'].map(this.transform);
+  data: null | IFieldsData = null;
+  branches: IBranch[] = [];
+  managers: IManager[] = [];
+
+  constructor() {
+    makeAutoObservable(this);
+    makePersistable(this, { name: 'fields', properties: ['data', 'branches', 'managers'], storage: window.localStorage });
+  }
+
   phoneType = ['Mobile', 'Home', 'Office', 'Other'].map(this.transform);
   jobStatus = [JobsStatus.LEAD_IN_PROGRESS, JobsStatus.OPPORTUNITY, JobsStatus.NEW_LEAD, JobsStatus.BOOKED, JobsStatus.SCEDULED, JobsStatus.CONFIRMED, JobsStatus.IN_PROGRESS, JobsStatus.CLOSED, JobsStatus.CANCELLED, JobsStatus.LOST, JobsStatus.BAD_LEAD].map(this.transform);
-  propertyType = ['Apartment', 'Assisted living', 'Commercial', 'High rise', 'House',	'Storage', 'Town house', 'Warehouse', 'Other'].map(this.transform);
+  propertyType = ['Apartment', 'Assisted living', 'Commercial', 'High rise', 'House', 'Storage', 'Town house', 'Warehouse', 'Other'].map(this.transform);
   parkingType = ['Street', 'Parking lot', 'Garage', 'Other', 'Private driveway'].map(this.transform);
-  stairsCount = ['No stairs', 'One flight', 'Two flights', 'Three flights', 'Four flights',	'Five flights', 'Six flights'].map(this.transform);
-  walkDistance = ['Less than 100 feet', 'From 100 to 199 feet', 'From 200 to 299 feet', 'From 300 to 399 feet',	'From 400 to 499 feet',	'From 500 to 599 feet', 'From 600 to 699 feet', 'From 700 to 799 feet', 'From 800 to 899 feet',	'From 900 to 999 feet', 'More than 1000 feet'].map(this.transform);
+  stairsCount = ['No stairs', 'One flight', 'Two flights', 'Three flights', 'Four flights', 'Five flights', 'Six flights'].map(this.transform);
+  walkDistance = ['Less than 100 feet', 'From 100 to 199 feet', 'From 200 to 299 feet', 'From 300 to 399 feet', 'From 400 to 499 feet', 'From 500 to 599 feet', 'From 600 to 699 feet', 'From 700 to 799 feet', 'From 800 to 899 feet', 'From 900 to 999 feet', 'More than 1000 feet'].map(this.transform);
   elevator = ['Yes', 'No'].map(this.transform);
 
-  salesPerson = [
-    {
-      label: 'Maxim',
-      value: 1
-    }, {
-      label: 'Jane',
-      value: 2
-    }
-  ];
+  setData(data: any) {
+    this.data = data;
+  }
+
+  setBranches(data: any) {
+    data = data.map((branch: any) => ({
+      ...branch.attributes,
+      id: branch.id,
+      value: branch.id
+    }));
+    this.branches = data;
+  }
+
+  setManagers(data: any) {
+    data = data.map((manager: any) => ({
+      ...manager,
+      value: manager.id,
+      label: manager.fullName
+    }));
+    this.managers = data;
+  }
 
   transform(el: string) {
     return {
@@ -56,7 +84,7 @@ class Fields {
     case JobsStatus.CANCELLED:
       color = JobsStatusColors.GRAY;
     }
-  
+
     return color;
   }
 

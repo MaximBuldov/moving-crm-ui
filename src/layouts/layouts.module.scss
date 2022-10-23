@@ -21,6 +21,9 @@ header.header {
     color: #1890ff;
     cursor: pointer;
 }
+.header-icon-col {
+    display: flex;
+}
 .logo-box {
     display: flex;
     align-items: center;
@@ -70,6 +73,7 @@ header.header {
     justify-content: center;
     height: 100vh;
     flex-direction: column;
+    background: #f4f4f4;
 }
 .row-dragging {
     background: #fafafa;
@@ -92,4 +96,48 @@ header.header {
 }
 .formItemWithoutPadding .ant-col.ant-form-item-label {
     padding-bottom: 0;
+}
+
+.profile-menu {
+    &__user-contact {
+        background-color: #1890ff;
+        color: #fff;
+        padding: 10px 5px;
+        width: 250px;
+
+        .profile-menu__user-avatar:global(.ant-avatar) {
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+    }
+
+    &__user-avatar:global(.ant-avatar) {
+        cursor: pointer;
+        background-color: #1890ff;
+    }
+
+    :global(.ant-menu-item) {
+        line-height: 30px;
+        height: 30px;
+        padding: 0 10px;
+    }
+}
+
+.settings-sider {
+    background: #fff;
+    height: 100%;
+
+    :global(.ant-menu) {
+        height: 100%;
+    }
+}
+
+.settings-container:global(.ant-layout) {
+    //background: #fff;
+    height: 100%;
+}
+
+.settings-content {
+    padding: 0 24px;
+    overflow-y: auto;
 }

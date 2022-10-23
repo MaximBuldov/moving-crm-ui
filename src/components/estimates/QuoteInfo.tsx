@@ -10,7 +10,7 @@ interface QuoteInfoProps {
 	data: IJob
 }
 
-const QuoteInfo: FC<QuoteInfoProps> = ({ data: { attributes } }) => {
+const QuoteInfo: FC<QuoteInfoProps> = ({ data: { attributes, id } }) => {
   return (
     <Card
       title={<span><InfoCircleOutlined /> Quote Info</span>}
@@ -21,7 +21,7 @@ const QuoteInfo: FC<QuoteInfoProps> = ({ data: { attributes } }) => {
         size="small"
         labelAlign="left" labelCol={{ span: 8 }}
         initialValues={{
-          number: attributes.jobNumber,
+          number: id,
           type: 'local',
           source: attributes.customer?.data.attributes.source,
           sales: attributes.manager?.data.id,

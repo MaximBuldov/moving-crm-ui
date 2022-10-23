@@ -2,11 +2,12 @@ import { FC, useState } from 'react';
 import { Select, Space } from 'antd';
 import Heading from 'layouts/Heading';
 import { useQuery } from 'react-query';
-import jobsService from 'services/api/jobs.service';
+import jobsService from 'services/collections/jobs.service';
 import { fieldsStore } from 'stores';
 import { SALES_ROUTE } from 'routes/consts';
 import LeadsTable from 'components/sales/leadsTable';
 import { JobsStatus } from 'models/fields';
+import { fieldNames } from 'stores/fieldsStore';
 
 //TODO: Revenue
 const SalesMyLeads: FC = () => {
@@ -27,7 +28,8 @@ const SalesMyLeads: FC = () => {
       <Heading parent={SALES_ROUTE} />
       <Select
         placeholder="Any Source"
-        options={fieldsStore.data.source}
+        options={fieldsStore.data?.source}
+        fieldNames={fieldNames}
         allowClear
         onChange={(source) => setSource(source)}
       />

@@ -18,7 +18,6 @@ export interface IProperty {
 export interface IJob {
     id: number,
     attributes: {
-        jobNumber: number,
         serviceType: string,
         createdAt: string,
         updatedAt: string,

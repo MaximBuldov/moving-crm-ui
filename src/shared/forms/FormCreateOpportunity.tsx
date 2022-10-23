@@ -11,6 +11,7 @@ import { RangePickerProps } from 'antd/lib/date-picker';
 import useJobCustomerApi from 'hooks/useJobCustomerApi';
 import { JobsStatus } from 'models/fields';
 import { formatPhoneAction, formattedPhones } from 'utils/formattedPhone';
+import { fieldNames } from 'stores/fieldsStore';
 
 import Phones from './fields/Phones';
 import FieldsAddress from './fields/Address';
@@ -95,7 +96,6 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
             <Item name="name" label="Name" rules={[{ required: true }]}>
               <CustomersAutocomplete
                 placeholder="Name"
-                form={form}
                 setUser={(customer) => setUser(customer)}
                 defaultName={job?.attributes.customer?.data.attributes.name}
               />
@@ -128,17 +128,17 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
             <Row gutter={16}>
               <Col span={12}>
                 <Item name="serviceType" label="Type of service">
-                  <Select placeholder={'Type of service'} options={fieldsStore.data.serviceType}/>
+                  <Select placeholder={'Type of service'} fieldNames={fieldNames} options={fieldsStore.data?.serviceType}/>
                 </Item>
               </Col>
               <Col span={12}>
                 <Item name="moveSize" label="Move size">
-                  <Select placeholder={'Move size'} options={fieldsStore.moveSize} />
+                  <Select placeholder={'Move size'} fieldNames={fieldNames} options={fieldsStore.data?.moveSize} />
                 </Item>
               </Col>
               <Col span={12}>
                 <Item name="source" label="Referral Source">
-                  <Select placeholder={'Referral Source'} options={fieldsStore.data.source}/>
+                  <Select placeholder={'Referral Source'} fieldNames={fieldNames} options={fieldsStore.data?.source}/>
                 </Item>
               </Col>
               <Col span={12}>
@@ -146,16 +146,16 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
                   label="Sales Person"
                   name="manager"
                 >
-                  <Select placeholder={'Sales Person'} options={fieldsStore.salesPerson}/>
+                  <Select placeholder={'Sales Person'} options={fieldsStore.managers}/>
                 </Item>
               </Col>
             </Row>
           </div>
           <div className={classNames(s[`${CN}__step-form`], s[`${stepIsVisible(1)}`])}>
-            <FieldsAddress field="origin" form={form} />
+            <FieldsAddress field="origin" />
           </div>
           <div className={classNames(s[`${CN}__step-form`], s[`${stepIsVisible(2)}`])}>
-            <FieldsAddress field="destination" form={form} />
+            <FieldsAddress field="destination" />
           </div>
           <Divider />
           <Row justify="space-between">

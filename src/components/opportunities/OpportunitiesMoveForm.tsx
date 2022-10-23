@@ -4,8 +4,9 @@ import { Col, DatePicker, Form, Row, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import { IJob } from 'models/job';
-import jobsService from 'services/api/jobs.service';
+import jobsService from 'services/collections/jobs.service';
 import { fieldsStore } from 'stores';
+import { fieldNames } from 'stores/fieldsStore';
 
 const { Item } = Form;
 
@@ -14,7 +15,7 @@ interface OpportunitiesMoveFormProps {
 }
 
 const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
-  const { attributes: { customer, serviceType, moveDate, jobNumber, manager, moveSize }, id } = props.job;
+  const { attributes: { customer, serviceType, moveDate, manager, moveSize }, id } = props.job;
   const [form] = Form.useForm();
   const { mutate } = useMutation(jobsService.updateOne);
   const onValuesChange = (data: any) => {
@@ -36,22 +37,28 @@ const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
       <Row gutter={24}>
         <Col span={8}>
           <Item label="Service Type" name="serviceType">
-            <Select style={{ color: '#1890ff' }} bordered={false} size="small" options={fieldsStore.data.serviceType} />
+            <Select
+              style={{ color: '#1890ff' }}
+              bordered={false}
+              size="small"
+              options={fieldsStore.data?.serviceType}
+              fieldNames={fieldNames}
+            />
           </Item></Col>
         <Col span={8}>
           <Item label="Service Date" name="moveDate">
             <DatePicker style={{ color: '#1890ff' }} bordered={false} size="small" />
           </Item>
         </Col>
-        <Col span={8}><Item label="Quote Number"><Link to={`/estimates/edit/${id}`}>{jobNumber}</Link></Item></Col>
+        <Col span={8}><Item label="Quote Number"><Link to={`/estimates/edit/${id}`}>{id}</Link></Item></Col>
         <Col span={8}>
           <Item label="Branch" name="branch">
-            <Select style={{ color: '#1890ff' }} bordered={false} size="small" options={fieldsStore.data.branches} />
+            <Select style={{ color: '#1890ff' }} bordered={false} size="small" options={fieldsStore.branches} />
           </Item>
         </Col>
         <Col span={8}>
           <Item label="Source" name="source">
-            <Select style={{ color: '#1890ff' }} bordered={false} size="small" options={fieldsStore.data.source} />
+            <Select style={{ color: '#1890ff' }} bordered={false} size="small" fieldNames={fieldNames} options={fieldsStore.data?.source} />
           </Item>
         </Col>
         <Col span={8}><Item label="Assigned To">
@@ -59,7 +66,7 @@ const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
         </Item></Col>
         <Col span={8}>
           <Item label="Estimator" name="estimator">
-            <Select placeholder="Unassigned" style={{ color: '#1890ff' }} bordered={false} size="small" options={fieldsStore.salesPerson} />
+            <Select placeholder="Unassigned" style={{ color: '#1890ff' }} bordered={false} size="small" options={fieldsStore.managers} />
           </Item>
         </Col>
         <Col span={8}><Item label="Move size">{moveSize}</Item></Col>

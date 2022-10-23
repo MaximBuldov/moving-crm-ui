@@ -5,9 +5,8 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { ESTIMATES_EDIT_ROUTE } from 'routes/consts';
-import customersService from 'services/api/customers.service';
-import jobsService from 'services/api/jobs.service';
-import { userStore } from 'stores';
+import customersService from 'services/collections/customers.service';
+import jobsService from 'services/collections/jobs.service';
 import { formattedPhones, formatPhoneAction } from 'utils/formattedPhone';
 
 interface useJobCustomerApiReturn {
@@ -39,7 +38,7 @@ function useJobCustomerApi(
         jobUPDATE.mutate({ ...data, id: jobID }); //старый пользователь - старая работа
       }
       if (user) {
-        createNewJob(customer, data); //старый пользователь - новая работа
+        createNewJob(customer, data.data); //старый пользователь - новая работа
       }
     },
     onError: (error: Error) => {
@@ -69,20 +68,17 @@ function useJobCustomerApi(
     }
   });
 
-  function createNewJob({ attributes, id }: ICustomer, data: any) {
-    const jobNumber = attributes.jobs ? +attributes.jobs.data.length + 1 : 1;
+  function createNewJob({ id }: ICustomer, data: any) {
     jobPOST.mutate({
       ...data,
       customer: id,
-      jobStatus: jobStatus,
-      jobNumber: `${userStore.data?.company?.id}${id}-${jobNumber}`
+      jobStatus: jobStatus
     });
   }
 
   const onFinish = (values: any) => {
     const phones = values.phones && formattedPhones(values.phones, formatPhoneAction.UNFORMAT);
     const data = { ...values, phones };
-    
     if (user || customerID) {
       const id = customerID ? customerID : user?.id;
       id && customerUPDATE.mutate({ id, data });

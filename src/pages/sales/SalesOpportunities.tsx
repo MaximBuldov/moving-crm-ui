@@ -6,7 +6,7 @@ import OpportunitiesHeading from 'components/opportunities/OpportunitiesHeading'
 import OpportunitiesTabs from 'components/opportunities/OpportunitiesTabs';
 import OpportunitiesActivity from 'components/opportunities/OpportunitiesActivity';
 import OpportunitiesInfo from 'components/opportunities/OpportunitiesInfo';
-import jobsService from 'services/api/jobs.service';
+import jobsService from 'services/collections/jobs.service';
 
 type Params = {
 	id: any

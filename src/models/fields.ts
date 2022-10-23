@@ -19,3 +19,9 @@ export enum JobsStatus {
   BAD_LEAD = 'Bad lead',
   CLOSED = 'Closed'
 }
+
+export interface IField {
+  id: number;
+  label: string;
+  active: boolean
+}

@@ -4,7 +4,7 @@ import { IUser } from 'models/user';
 
 class User {
   data: IUser | null = null;
-  token: string | null = null;
+  isAuth: boolean = false;
   
   constructor() {
     makeAutoObservable(this);
@@ -15,15 +15,15 @@ class User {
     this.data = data;
   }
 
-  setToken(token: string) {
+  setAuth(token: string) {
     localStorage.setItem('token', token);
-    this.token = token;
+    this.isAuth = true;
   }
 
   logout() {
     localStorage.clear();
+    this.isAuth = false;
     this.data = null;
-    this.token = null;
   }
 
   get initials() {

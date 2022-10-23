@@ -1,31 +1,19 @@
-import React, { useState } from 'react';
-import { AutoComplete, Col, FormInstance, Row, Spin } from 'antd';
-import { useQuery } from 'react-query';
+import { AutoComplete, Col, Form, Row, Spin } from 'antd';
 import { ICustomer } from 'models/customer';
-import customersService from 'services/api/customers.service';
-import { useDebounce } from 'use-debounce';
 import { formatPhoneAction, formattedPhone, formattedPhones } from 'utils/formattedPhone';
+import useCustomerSearchByName from 'hooks/useCustomerSearchByName';
 
 const { Option } = AutoComplete;
 
 interface CustomersAutocompleteProps {
   placeholder: string,
-  form: FormInstance,
   setUser: (args: ICustomer) => void,
   defaultName?: string
 }
 
-const CustomersAutocomplete = ({ placeholder, form, setUser, defaultName }: CustomersAutocompleteProps) => {
-  const [input, setInput] = useState<string | null>(null);
-  const [value] = useDebounce(input, 1000);
-
-  const customersAction = useQuery(['customers', value], () => customersService.fetchMany({
-    filters: {
-      $and: [{ name: { $contains: value } }]
-    }
-  }), {
-    enabled: !!value
-  });
+const CustomersAutocomplete = ({ placeholder, setUser, defaultName }: CustomersAutocompleteProps) => {
+  const { customersAction, setInput } = useCustomerSearchByName();
+  const form = Form.useFormInstance();
 
   const setContacts = (customer: ICustomer) => {
     const { attributes: { phones, email, destination } } = customer;
@@ -52,7 +40,7 @@ const CustomersAutocomplete = ({ placeholder, form, setUser, defaultName }: Cust
         placeholder={placeholder}
         defaultValue={defaultName && defaultName}
       >
-        {customersAction.data.data && customersAction.data.data.map((el: ICustomer) => (
+        {customersAction?.data?.data && customersAction?.data?.data?.map((el: ICustomer) => (
           <Option key={el.id} customer={el} value={el.attributes.name}>
             <Row justify="space-between">
               <Col span={8}>{el.attributes.name}</Col>
