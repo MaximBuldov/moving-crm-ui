@@ -8,6 +8,7 @@ import { SALES_ROUTE } from 'routes/consts';
 import LeadsTable from 'components/sales/leadsTable';
 import { JobsStatus } from 'models/fields';
 import { fieldNames } from 'stores/fieldsStore';
+import { private_routes } from 'routes';
 
 //TODO: Revenue
 const SalesMyLeads: FC = () => {
@@ -25,7 +26,7 @@ const SalesMyLeads: FC = () => {
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      <Heading parent={SALES_ROUTE} />
+      <Heading routes={private_routes} parent={SALES_ROUTE} />
       <Select
         placeholder="Any Source"
         options={fieldsStore.data?.source}

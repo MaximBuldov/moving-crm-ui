@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Select, FormListFieldData, FormInstance, Form, Row, Button, FormListOperation } from 'antd';
 import { fieldsStore } from 'stores';
-import { formattedPhones, formatPhoneAction } from 'utils/formattedPhone';
+import { formattedPhone } from 'utils/formattedPhone';
 import { PlusCircleTwoTone, DeleteOutlined } from '@ant-design/icons';
 
 interface PhonesProps {
@@ -10,14 +10,9 @@ interface PhonesProps {
   actions: FormListOperation
 }
 
-function Phones({ form, fields, actions }: PhonesProps) {
+function Phones({ fields, actions }: PhonesProps) {
 
   const { add, remove } = actions;
-
-  const handlePhone = () => {
-    const phones = form.getFieldValue('phones');
-    form.setFieldValue('phones', formattedPhones(phones, formatPhoneAction.FORMAT));
-  };
 
   const list = fields.map(({ key, name, ...restField }) => (
     <Row gutter={16} key={key} align="bottom" justify="space-between">
@@ -27,8 +22,9 @@ function Phones({ form, fields, actions }: PhonesProps) {
           name={[name, 'phone']}
           label={`Phone ${key + 1}`}
           rules={[{ required: true }]}
+          normalize={(val: string) => formattedPhone(val)}
         >
-          <Input placeholder="Phone" onChange={handlePhone} />
+          <Input placeholder="Phone" />
         </Form.Item>
       </Col>
       <Col span={8}>

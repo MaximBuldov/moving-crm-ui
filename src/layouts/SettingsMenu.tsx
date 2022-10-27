@@ -1,96 +1,28 @@
-import { Layout, Menu, MenuProps } from 'antd';
 import React, { useState } from 'react';
+import { Layout, Menu, MenuProps } from 'antd';
 import { useLocation } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { CAL_JOBS_ROUTE, TASKS_ROUTE, SALES_DASHBOARD_ROUTE, CUSTOMERS_ROUTE, CUSTOMER_SERVICE_TICKET_ROUTE, STORAGE_DASHBOARD_ROUTE, SETTINGS_ROUTE } from 'routes/consts';
 import styles from 'layouts/layouts.module.scss';
-
-const items: MenuProps['items'] = [
-  {
-    label: 	<NavLink to={CAL_JOBS_ROUTE}>Calendar</NavLink>,
-    key: CAL_JOBS_ROUTE,
-    children: [
-      {
-        label: <NavLink to={TASKS_ROUTE}>Tasks</NavLink>,
-        key: TASKS_ROUTE
-      },
-      {
-        label: 	<NavLink to={SALES_DASHBOARD_ROUTE}>Sales</NavLink>,
-        key: SALES_DASHBOARD_ROUTE
-      },
-      {
-        label: 	<NavLink to={CUSTOMERS_ROUTE}>Customers</NavLink>,
-        key: CUSTOMERS_ROUTE
-      },
-      {
-        label: 	<NavLink to={CUSTOMER_SERVICE_TICKET_ROUTE}>Customer service</NavLink>,
-        key: CUSTOMER_SERVICE_TICKET_ROUTE
-      },
-      {
-        label: 	<NavLink to={STORAGE_DASHBOARD_ROUTE}>Storage</NavLink>,
-        key: STORAGE_DASHBOARD_ROUTE
-      },
-      {
-        label: 	<NavLink to={SETTINGS_ROUTE}>Settings</NavLink>,
-        key: SETTINGS_ROUTE
-      }
-    ]
-  },
-  {
-    label: <NavLink to={TASKS_ROUTE}>Tasks</NavLink>,
-    key: TASKS_ROUTE,
-    children: [
-      {
-        label: <NavLink to={TASKS_ROUTE}>Tasks</NavLink>,
-        key: TASKS_ROUTE
-      },
-      {
-        label: 	<NavLink to={SALES_DASHBOARD_ROUTE}>Sales</NavLink>,
-        key: SALES_DASHBOARD_ROUTE
-      },
-      {
-        label: 	<NavLink to={CUSTOMERS_ROUTE}>Customers</NavLink>,
-        key: CUSTOMERS_ROUTE
-      },
-      {
-        label: 	<NavLink to={CUSTOMER_SERVICE_TICKET_ROUTE}>Customer service</NavLink>,
-        key: CUSTOMER_SERVICE_TICKET_ROUTE
-      },
-      {
-        label: 	<NavLink to={STORAGE_DASHBOARD_ROUTE}>Storage</NavLink>,
-        key: STORAGE_DASHBOARD_ROUTE
-      },
-      {
-        label: 	<NavLink to={SETTINGS_ROUTE}>Settings</NavLink>,
-        key: SETTINGS_ROUTE
-      }
-    ]
-  },
-  {
-    label: 	<NavLink to={SALES_DASHBOARD_ROUTE}>Sales</NavLink>,
-    key: SALES_DASHBOARD_ROUTE
-  },
-  {
-    label: 	<NavLink to={CUSTOMERS_ROUTE}>Customers</NavLink>,
-    key: CUSTOMERS_ROUTE
-  },
-  {
-    label: 	<NavLink to={CUSTOMER_SERVICE_TICKET_ROUTE}>Customer service</NavLink>,
-    key: CUSTOMER_SERVICE_TICKET_ROUTE
-  },
-  {
-    label: 	<NavLink to={STORAGE_DASHBOARD_ROUTE}>Storage</NavLink>,
-    key: STORAGE_DASHBOARD_ROUTE
-  },
-  {
-    label: 	<NavLink to={SETTINGS_ROUTE}>Settings</NavLink>,
-    key: SETTINGS_ROUTE
-  }
-];
+import { IRoute, settings_routes } from 'routes';
 
 export default function SettingsMenu() {
   const location = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
+
+  const items: MenuProps['items'] = React.useMemo(() => {
+    return settings_routes
+      .filter((route: IRoute) => !!route.child === false)
+      .map((route: IRoute) => ({
+        label: route.name,
+        key: route.path,
+        children: settings_routes
+          .filter((child: IRoute) => child.parent === route.path)
+          .map((child: IRoute) => ({
+            label: <NavLink to={child.path}>{child.name}</NavLink>,
+            key: child.path
+          }))
+      }));
+  }, []);
 
   const onOpenChange: MenuProps['onOpenChange'] = keys => {
     const latestOpenKey = keys.find(key => openKeys.indexOf(key) === -1);
@@ -98,7 +30,7 @@ export default function SettingsMenu() {
   };
   
   return (
-    <Layout.Sider className={styles['settings-sider']}>
+    <Layout.Sider className={styles['settings-sider']} width={250}>
       <Menu
         theme="light"
         items={items}

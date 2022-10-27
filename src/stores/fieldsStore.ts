@@ -37,11 +37,20 @@ class Fields {
 
   setBranches(data: any) {
     data = data.map((branch: any) => ({
-      ...branch.attributes,
       id: branch.id,
-      value: branch.id
+      value: branch.id,
+      label: branch.label
     }));
     this.branches = data;
+  }
+
+  addBranch(data: any) {
+    data = {
+      label: data.attributes.label,
+      id: data.id,
+      value: data.id,
+    };
+    this.branches.push(data);
   }
 
   setManagers(data: any) {

@@ -2,7 +2,7 @@ import { throwError } from 'utils/trowError';
 import { $api } from 'services/http';
 
 export default class SingleController {
-  url: string;
+  private url: string;
 
   constructor(url: string) {
     this.url = url;
@@ -19,7 +19,7 @@ export default class SingleController {
 
   update = async (data: any) => {
     try {
-      const res = await $api.put(this.url, { data: { data } });
+      const res = await $api.put(this.url, { data });
       return res.data;
     } catch(error: Error | any) {
       throwError(error);

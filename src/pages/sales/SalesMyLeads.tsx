@@ -9,6 +9,7 @@ import { SALES_ROUTE } from 'routes/consts';
 import LeadsTable from 'components/sales/leadsTable';
 import { useDebounce } from 'use-debounce';
 import { fieldNames } from 'stores/fieldsStore';
+import { private_routes } from 'routes';
 
 //TODO: Revenue
 const SalesMyLeads: FC = () => {
@@ -33,7 +34,7 @@ const SalesMyLeads: FC = () => {
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      <Heading parent={SALES_ROUTE} />
+      <Heading routes={private_routes} parent={SALES_ROUTE} />
       <Row justify="space-between" align="middle">
         <Col>
           <Select

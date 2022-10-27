@@ -1,25 +1,27 @@
 import React, { FC, useMemo } from 'react';
 import { Menu, MenuProps, Typography } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
-import { private_routes } from 'routes';
+import { IRoute } from 'routes';
 
 interface HeadingProps {
-	parent: boolean | string
+	parent?: boolean | string,
+  routes: IRoute[]
 }
 
-const Heading: FC<HeadingProps> = ({ parent = false }) => {
+const Heading: FC<HeadingProps> = ({ routes, parent = false }) => {
   const location = useLocation();
-  const sortedRoutes: MenuProps['items'] = useMemo(() => parent ? private_routes.filter(el => el.parent === parent).map(el => ({
+  const sortedRoutes: MenuProps['items'] = useMemo(() => parent ? routes.filter(el => el.parent === parent).map(el => ({
     label: <NavLink to={el.path}>{el.name}</NavLink>,
     key: el.path
-  })) : [], [parent]);
-  const title: string = useMemo(() => {
-    const name = private_routes.find(el => el.path === location.pathname)?.name;
-    return name ? name : 'Error in heading';
-  }, [location.pathname]);
+  })) : [], [parent, routes]);
+  const title: string | undefined = useMemo(() => {
+    const name = routes.find(el => el.path === location.pathname)?.name;
+    !name && console.error('Error in heading');
+    return name;
+  }, [location.pathname, routes]);
   return (
     <>
-      <Typography.Title level={2}>{title}</Typography.Title>
+      {title && <Typography.Title level={2}>{title}</Typography.Title>}
       {parent && <Menu mode="horizontal" defaultSelectedKeys={['0']} selectedKeys={[location.pathname]} items={sortedRoutes} />}
     </>
   );

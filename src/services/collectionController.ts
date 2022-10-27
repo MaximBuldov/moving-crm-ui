@@ -2,8 +2,8 @@ import { throwError } from 'utils/trowError';
 import { $api } from 'services/http';
 
 export default class CollectionController {
-  url: string;
-  populate: string[];
+  private url: string;
+  private populate: string[];
 
   constructor(url: string, populate: string[]) {
     this.url = url;
@@ -48,6 +48,15 @@ export default class CollectionController {
   updateOne = async ({ id, data }: {id: string | number, data: any}) => {
     try {
       const res = await $api.put(this.urlId(id), { data });
+      return res.data.data;
+    } catch(error: Error | any) {
+      throwError(error);
+    }
+  };
+
+  deleteOne = async (id: number) => {
+    try {
+      const res = await $api.delete(this.urlId(id));
       return res.data.data;
     } catch(error: Error | any) {
       throwError(error);

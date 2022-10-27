@@ -9,6 +9,11 @@ import SalesNewLeads from 'pages/sales/SalesNewLeads';
 import CalendarJobs from 'pages/calendars/CalendarJobs';
 import CalendarOffice from 'pages/calendars/CalendarOffice';
 import CustomerDetails from 'pages/customers/CustomerDetails';
+import Settings from 'pages/settings/company/Settings';
+import Company from 'pages/settings/company/Company';
+import CompanyAuditActivity from 'pages/settings/company/CompanyAuditActivity';
+import Branches from 'pages/settings/company/Branches';
+import EditBranch from 'pages/settings/company/EditBranch';
 
 import {
   CAL_JOBS_ROUTE,
@@ -36,9 +41,12 @@ import {
   STORAGE_INVOICES_ROUTE,
   STORAGE_ROUTE,
   TASKS_ROUTE,
-  SETTINGS_ROUTE
+  SETTINGS_ROUTE,
+  SETTINGS_COMPANY_ROUTE,
+  SETTINGS_COMPANY_AUDIT_ACTIVITY_ROUTE,
+  SETTINGS_BRANCHES_ROUTE,
+  SETTINGS_BRANCH_ID_ROUTE
 } from './consts';
-import Settings from 'pages/settings/Settings';
 
 export interface IRoute {
 	path: string,
@@ -162,11 +170,6 @@ export const private_routes: IRoute[] = [
     Component: SalesMyLeads,
     parent: STORAGE_ROUTE,
     name: 'Invoices'
-  },
-  {
-    path: SETTINGS_ROUTE,
-    Component: Settings,
-    name: 'Settings'
   }
 ];
 
@@ -175,5 +178,32 @@ export const settings_routes: IRoute[] = [
     path: SETTINGS_ROUTE,
     Component: Settings,
     name: 'Settings'
+  },
+  {
+    path: SETTINGS_COMPANY_ROUTE,
+    Component: Company,
+    name: 'Company Details',
+    child: true,
+    parent: SETTINGS_ROUTE
+  },
+  {
+    path: SETTINGS_COMPANY_AUDIT_ACTIVITY_ROUTE,
+    Component: CompanyAuditActivity,
+    name: 'Company Audit Activity',
+    child: true,
+    parent: SETTINGS_ROUTE
+  },
+  {
+    path: SETTINGS_BRANCHES_ROUTE,
+    Component: Branches,
+    name: 'Branches',
+    child: true,
+    parent: SETTINGS_ROUTE
+  },
+  {
+    path: SETTINGS_BRANCH_ID_ROUTE,
+    Component: EditBranch,
+    name: 'Edit Branch',
+    child: true
   }
 ];

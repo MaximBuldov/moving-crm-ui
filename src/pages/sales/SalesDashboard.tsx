@@ -7,11 +7,13 @@ import JobRevenue from 'components/dashboard/JobRevenue';
 import OpenItems from 'components/dashboard/OpenItems';
 import Referral from 'components/dashboard/Referral';
 import Heading from 'layouts/Heading';
+import { private_routes } from 'routes';
 
 const SalesDashboard = () => {
+
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      <Heading parent="/sales"/>
+      <Heading routes={private_routes} parent="/sales"/>
       <Row gutter={[8, 8]}>
         <DashboardCard title="Moves" icon={<CheckOutlined />} span={6} color="#65c87a" />
         <DashboardCard title="Booked" icon={<UnorderedListOutlined />} span={6} color="#74d5c8" />

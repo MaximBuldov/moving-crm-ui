@@ -1,6 +1,6 @@
 import CollectionController from 'services/collectionController';
 
-const populate = ['address'];
+const populate = ['mailingAddress'];
 const url = 'branches';
 
 class BranchesService extends CollectionController {
