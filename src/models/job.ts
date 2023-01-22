@@ -1,7 +1,6 @@
-import { ICompany } from './company';
 import { ICustomer } from './customer';
 import { JobsStatus } from './fields';
-import { IManager } from './user';
+import { IUser } from './user';
 
 export interface IProperty {
     id: number,
@@ -26,14 +25,11 @@ export interface IJob {
         notes: string,
         jobStatus: JobsStatus,
         movePrice: number,
-        company?: {
-            data: ICompany
-        },
         customer?: {
             data: ICustomer
         },
         manager?: {
-            data: IManager
+            data: IUser
         },
         origin: IProperty,
         destination: IProperty,

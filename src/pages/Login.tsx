@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { Button, Form, Input, message, Typography } from 'antd';
 import { fieldsStore, userStore } from 'stores';
-import { useMutation, useQueries } from 'react-query';
+import { useMutation, useQueries } from '@tanstack/react-query';
 import { observer } from 'mobx-react-lite';
 import userService from 'services/single/user.service';
 import styles from 'layouts/layouts.module.scss';
 import fieldsService from 'services/single/fields.service';
 import branchesService from 'services/collections/branches.service';
-import managersService from 'services/collections/managers.service';
+import usersService from 'services/collections/users.service';
+import { IAccountTypes } from 'models/user';
 
 export interface ILoginForm {
 	identifier: string,
@@ -24,11 +25,17 @@ const Login = () => {
     }
   });
 
-  const fields = useQueries([
-    { queryKey: ['fields'], queryFn: fieldsService.fetch, enabled: userStore.isAuth },
-    { queryKey: ['branches'], queryFn: branchesService.fetchMany, enabled: userStore.isAuth },
-    { queryKey: ['managers'], queryFn: managersService.fetchMany, enabled: userStore.isAuth }
-  ]);
+  const fields = useQueries({
+    queries: [
+      { queryKey: ['fields'], queryFn: fieldsService.fetch, enabled: userStore.isAuth, staleTime: Infinity },
+      { queryKey: ['branches'], queryFn: branchesService.fetchMany, enabled: userStore.isAuth, staleTime: Infinity },
+      { queryKey: ['managers'], queryFn: () => usersService.fetchMany({
+        filters:  { $and: [
+          { accountType: { $eq: IAccountTypes.MANAGER } }
+        ] }
+      }), enabled: userStore.isAuth, staleTime: Infinity }
+    ]
+  });
 
   useEffect(() => {
     if (fields.every(query => query.isSuccess && userStore.isAuth)) {
@@ -72,7 +79,7 @@ const Login = () => {
           <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Button loading={login.isLoading || fields.some(query => query.isLoading)} type="primary" htmlType="submit">Submit</Button>
+          <Button loading={login.isLoading || fields.some(query => query.isFetching)} type="primary" htmlType="submit">Submit</Button>
         </Form.Item>
       </Form>
     </div>

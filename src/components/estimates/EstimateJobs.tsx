@@ -8,7 +8,7 @@ import {
   PlusCircleTwoTone,
   PlusOutlined
 } from '@ant-design/icons';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const jobsData = [
   {
@@ -16,8 +16,8 @@ const jobsData = [
     type: 'Scheduled',
     name: 'Moving',
     confirmed: true,
-    data: moment(),
-    time: moment(),
+    data: dayjs(),
+    time: dayjs(),
     price: 809
   },
   {
@@ -25,8 +25,8 @@ const jobsData = [
     type: 'Unscheduled',
     name: 'Packing',
     confirmed: false,
-    date: moment(),
-    time: moment(),
+    date: dayjs(),
+    time: dayjs(),
     price: 401
   }
 ];

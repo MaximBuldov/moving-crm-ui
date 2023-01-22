@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 import { IBranch } from 'models/branch';
 import { IField, JobsStatus, JobsStatusColors } from 'models/fields';
-import { IManager } from 'models/user';
+import { IUser } from 'models/user';
 
 export interface IFieldsData {
   source: IField[];
@@ -16,7 +16,7 @@ export const fieldNames = { label: 'label', value: 'label' };
 class Fields {
   data: null | IFieldsData = null;
   branches: IBranch[] = [];
-  managers: IManager[] = [];
+  managers: IUser[] = [];
 
   constructor() {
     makeAutoObservable(this);

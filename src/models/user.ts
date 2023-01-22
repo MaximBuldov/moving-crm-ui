@@ -1,6 +1,12 @@
-import { ICompany } from './company';
+export enum IAccountTypes {
+    OWNER = 'owner',
+    MANAGER = 'manager',
+    FOREMAN = 'foreman',
+    HELPER = 'helper'
+}
 
-interface IUserAttributes {
+export interface IUserAttributes {
+    id: number,
     username: string,
     email: string,
     provider: string,
@@ -8,16 +14,12 @@ interface IUserAttributes {
     blocked: false,
     createdAt: string,
     updatedAt: string,
-    accountType: string,
-    fullName: string
+    accountType: IAccountTypes,
+    fullName: string,
+    phone: string
 }
 
-export interface IUser extends IUserAttributes {
-    id: number
-    company?: ICompany
-}
-
-export interface IManager {
+export interface IUser {
     id: number
     attributes: IUserAttributes
 }

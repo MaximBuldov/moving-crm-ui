@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import jobsService from 'services/collections/jobs.service';
 
 import useDebounceState from './useDebounceState';

@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Steps, Typography } from 'antd';
 import classNames from 'classnames';
 import { CarOutlined, PieChartOutlined, TeamOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import CustomersAutocomplete from 'shared/forms/fields/CustomersAutocomplete';
 import { IJob } from 'models/job';
 import { fieldsStore } from 'stores';
@@ -51,7 +51,7 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
   const stepIsVisible = (step: number) => classNames({ 'step-form-visible': currentStep === step });
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    return current && current < moment().subtract(1, 'days');
+    return current && current < dayjs().subtract(1, 'days');
   };
 
   const initialValues = () => {
@@ -62,7 +62,7 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
         ...attributes.customer?.data.attributes,
         phones: formattedPhones(attributes.customer?.data.attributes.phones, formatPhoneAction.FORMAT),
         manager: attributes.manager?.data.id,
-        moveDate: moment(attributes.moveDate, 'YYYY-MM-DD')
+        moveDate: dayjs(attributes.moveDate, 'YYYY-MM-DD')
       };
     } else {
       return {

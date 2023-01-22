@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { Button, Calendar, Drawer, Progress, Space } from 'antd';
 import { CalendarOutlined, CoffeeOutlined, SettingOutlined } from '@ant-design/icons';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import { getRandomInt } from 'utils/getRandomInt';
 import Heading from 'layouts/Heading';
 import DrawerPrices from 'components/calendars/DrawerPrices';
 import DrawerJobs from 'components/calendars/DrawerJobs';
+import { private_routes } from 'routes';
 
 const CalendarJobs = () => {
-  const [drawerData, setDrawerData] = useState(null);
+  const [drawerData, setDrawerData] = useState<any>(null);
   const dateCellRender = () => {
     const morning = getRandomInt(4);
     const afternoon = getRandomInt(4);
@@ -23,15 +24,15 @@ const CalendarJobs = () => {
       </div>
     );
   };
-  const onSelect = (date) => {
+  const onSelect = (date: any) => {
     setDrawerData({
-      date: moment(date).format('MMMM DD YYYY')
+      date: dayjs(date).format('MMMM DD YYYY')
     });
   };
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      <Heading parent="/calendars"/>
+      <Heading routes={private_routes} parent="/calendars"/>
       <Calendar onSelect={onSelect} dateCellRender={dateCellRender} />
       {!!drawerData && (
         <Drawer

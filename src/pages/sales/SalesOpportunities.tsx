@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Col, Row, Skeleton, Space } from 'antd';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import OpportunitiesHeading from 'components/opportunities/OpportunitiesHeading';
 import OpportunitiesTabs from 'components/opportunities/OpportunitiesTabs';
 import OpportunitiesActivity from 'components/opportunities/OpportunitiesActivity';

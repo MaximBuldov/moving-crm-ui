@@ -6,7 +6,7 @@ import { IPhone } from 'models/customer';
 import { formattedPhone } from 'utils/formattedPhone';
 import { CarOutlined, UserOutlined } from '@ant-design/icons';
 import useJobSearchByCustomer from 'hooks/useJobSearchByCustomer';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { fieldsStore } from 'stores';
 import { JobsStatus } from 'models/fields';
 import { ColumnsType } from 'antd/lib/table';
@@ -60,7 +60,7 @@ const columnsJob = [
   {
     dataIndex: ['attributes', 'moveDate'],
     key: 'moveDate',
-    render: (date: string) => moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY')
+    render: (date: string) => dayjs(date, 'YYYY-MM-DD').format('MM/DD/YYYY')
   }
 ];
 

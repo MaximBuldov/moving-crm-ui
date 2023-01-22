@@ -1,7 +1,7 @@
 import { InboxOutlined, LeftOutlined, PercentageOutlined } from '@ant-design/icons';
 import { Button, Card, CardProps, Checkbox, Col, Form, Input, InputNumber, message, Row, Space, Typography, Upload } from 'antd';
 import { observer } from 'mobx-react-lite';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router';
 import branchesService from 'services/collections/branches.service';
 import { formattedPhone, unformattedPhone } from 'utils/formattedPhone';

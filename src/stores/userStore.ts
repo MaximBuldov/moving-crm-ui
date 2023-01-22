@@ -1,9 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
-import { IUser } from 'models/user';
+import { IUser, IUserAttributes } from 'models/user';
 
 class User {
-  data: IUser | null = null;
+  data: IUserAttributes | null = null;
   isAuth: boolean = false;
   
   constructor() {
@@ -11,7 +11,7 @@ class User {
     makePersistable(this, { name: 'User', properties: ['data'], storage: window.localStorage });
   }
 
-  setUser(data: IUser) {
+  setUser(data: IUserAttributes) {
     this.data = data;
   }
 

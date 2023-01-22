@@ -1,13 +1,13 @@
+import dayjs from 'dayjs';
 import React, { FC } from 'react';
 import { Bar, Tooltip, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import moment from 'moment';
 
 const JobRevenue: FC = () => {
 
   let data = [];
   for (let i = 1; i < 31; i++) {
     data.push({
-      name: `${moment().format('MMMM')} ${i}`,
+      name: `${dayjs().format('MMMM')} ${i}`,
       value: Math.floor(Math.random() * 8000)
     });
   }

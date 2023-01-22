@@ -2,7 +2,7 @@ import { message } from 'antd';
 import { ICustomer } from 'models/customer';
 import { JobsStatus } from 'models/fields';
 import { useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
 import { ESTIMATES_EDIT_ROUTE } from 'routes/consts';
 import customersService from 'services/collections/customers.service';

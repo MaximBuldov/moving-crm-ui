@@ -1,6 +1,7 @@
 import { Key, useState } from 'react';
 import { Table, Tag } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { Link } from 'react-router-dom';
 import { LinkOutlined } from '@ant-design/icons';
 import { ColumnsType } from 'antd/es/table';
@@ -8,7 +9,8 @@ import { IJob } from 'models/job';
 import { fieldsStore } from 'stores';
 import { CUSTOMERS_DETAILS_ROUTE, SALES_OPPORTUNITIES_ROUTE } from 'routes/consts';
 import { IStrapiMeta } from 'models/response';
-import { IManager } from 'models/user';
+
+dayjs.extend(relativeTime);
 
 const columns: ColumnsType<IJob> = [
   {
@@ -41,7 +43,7 @@ const columns: ColumnsType<IJob> = [
   {
     title: 'Service date',
     dataIndex: ['attributes', 'moveDate'],
-    render: date => moment(date, 'YYYY-MM-DD').format('MM/DD/YYYY'),
+    render: date => dayjs(date, 'YYYY-MM-DD').format('MM/DD/YYYY'),
     sorter: (a, b) => a.attributes.jobStatus.length - b.attributes.jobStatus.length
   },
   {
@@ -65,12 +67,12 @@ const columns: ColumnsType<IJob> = [
   {
     title: 'Create date',
     dataIndex: ['attributes', 'createdAt'],
-    render: date => moment(date).format('MM/DD/YYYY')
+    render: date => dayjs(date).format('MM/DD/YYYY')
   },
   {
     title: 'Last contact',
     dataIndex: ['attributes', 'updatedAt'],
-    render: date => moment(date).fromNow(true)
+    render: date => dayjs(date).fromNow(true)
   },
   {
     title: 'Source',

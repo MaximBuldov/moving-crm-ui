@@ -11,7 +11,7 @@ import {
   PlusOutlined,
   UnorderedListOutlined
 } from '@ant-design/icons';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import jobsService from 'services/collections/jobs.service';
 import CustomerContact from 'shared/components/CustomerContact';
@@ -31,7 +31,7 @@ type Params = {
 
 const EstimatesEdit: FC = () => {
   const params = useParams<Params>();
-  const { data, isSuccess, isLoading } = useQuery('job', () => jobsService.fetchOne(params.id));
+  const { data, isSuccess, isLoading } = useQuery(['job'], () => jobsService.fetchOne(params.id));
 
   return isSuccess ? (
     <Space direction="vertical" style={{ width:'100%' }}>

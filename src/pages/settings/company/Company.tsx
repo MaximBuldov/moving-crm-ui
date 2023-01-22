@@ -1,7 +1,7 @@
 import { LockOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Empty, Form, Input, message, Row, Select } from 'antd';
 import React from 'react';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import companyService from 'services/single/company.service';
 import { formattedPhone, unformattedPhone } from 'utils/formattedPhone';
 

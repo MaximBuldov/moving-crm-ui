@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Col, Input, Row, Select, Space } from 'antd';
 import Heading from 'layouts/Heading';
 import userStore from 'stores/userStore';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import jobsService from 'services/collections/jobs.service';
 import { fieldsStore } from 'stores';
 import { SALES_ROUTE } from 'routes/consts';

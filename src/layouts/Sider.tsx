@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { Layout, Menu, MenuProps } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
+  ApartmentOutlined,
   BarChartOutlined,
   CalendarOutlined,
   DropboxOutlined,
@@ -16,7 +17,8 @@ import {
   CUSTOMERS_ROUTE,
   SALES_DASHBOARD_ROUTE, STORAGE_DASHBOARD_ROUTE,
   TASKS_ROUTE,
-  SETTINGS_ROUTE
+  SETTINGS_ROUTE,
+  DISPATCH_SCHEDULE_DAY_ROUTE
 } from 'routes/consts';
 import styles from 'layouts/layouts.module.scss';
 
@@ -40,6 +42,11 @@ const items: MenuProps['items'] = [
     label: 	<NavLink to={CUSTOMERS_ROUTE}>Customers</NavLink>,
     key: CUSTOMERS_ROUTE,
     icon: <TeamOutlined />
+  },
+  {
+    label: 	<NavLink to={DISPATCH_SCHEDULE_DAY_ROUTE}>Dispatch</NavLink>,
+    key: DISPATCH_SCHEDULE_DAY_ROUTE,
+    icon: <ApartmentOutlined />
   },
   {
     label: 	<NavLink to={CUSTOMER_SERVICE_TICKET_ROUTE}>Customer service</NavLink>,

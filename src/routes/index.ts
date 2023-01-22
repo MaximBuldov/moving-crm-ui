@@ -45,8 +45,12 @@ import {
   SETTINGS_COMPANY_ROUTE,
   SETTINGS_COMPANY_AUDIT_ACTIVITY_ROUTE,
   SETTINGS_BRANCHES_ROUTE,
-  SETTINGS_BRANCH_ID_ROUTE
+  SETTINGS_BRANCH_ID_ROUTE,
+  DISPATCH_SCHEDULE_DAY_ROUTE,
+  DISPATCH_ROUTE,
+  DISPATCH_CALENDAR_ROUTE
 } from './consts';
+import Schedule from 'pages/dispatch/Schedule';
 
 export interface IRoute {
 	path: string,
@@ -170,6 +174,18 @@ export const private_routes: IRoute[] = [
     Component: SalesMyLeads,
     parent: STORAGE_ROUTE,
     name: 'Invoices'
+  },
+  {
+    path: DISPATCH_SCHEDULE_DAY_ROUTE,
+    Component: Schedule,
+    parent: DISPATCH_ROUTE,
+    name: 'Dispatch Schedule'
+  },
+  {
+    path: DISPATCH_CALENDAR_ROUTE,
+    Component: Schedule,
+    parent: DISPATCH_ROUTE,
+    name: 'Dispatch calendar'
   }
 ];
 

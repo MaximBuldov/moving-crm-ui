@@ -1,5 +1,5 @@
 import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Typography } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import GoogleAutocomplete from 'shared/maps/GoogleAutocomplete';
 import { RangePickerProps } from 'antd/lib/date-picker';
 import { fieldsStore } from 'stores';
@@ -21,7 +21,7 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
   const { onFinish, setUser, isLoading } = useJobCustomerApi(JobsStatus.NEW_LEAD, closeModal);
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    return current && current < moment().subtract(1, 'days');
+    return current && current < dayjs().subtract(1, 'days');
   };
 
   return (

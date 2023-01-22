@@ -8,8 +8,8 @@ aside.sider {
     padding-top: 80px;
     z-index: 3;
 }
-header.header {
-    background: #fff;
+:global(.ant-layout) header.header {
+    background-color: #fff;
     z-index: 4;
     width: 100%;
     box-shadow: 0 4px 20px 0 #00000008;
@@ -42,7 +42,6 @@ header.header {
 }
 .content:global(.ant-layout-content) {
     margin-top: 64px;
-    margin-left: 80px;
     padding: 24px;
     min-height: calc(100vh - 64px)
 }

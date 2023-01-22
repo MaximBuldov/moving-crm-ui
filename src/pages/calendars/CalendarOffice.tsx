@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Badge, Button, Calendar, Col, Drawer, Row, Select, Space } from 'antd';
 import Heading from 'layouts/Heading';
 import CreateEventForm from 'components/calendars/CreateEventForm';
+import { PresetStatusColorType } from 'antd/lib/_util/colors';
+import { private_routes } from 'routes';
 const { Option } = Select;
 
 const CalendarOffice = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  function getListData(value) {
+  function getListData(value: any) {
     let listData;
     switch (value.date()) {
     case 8:
@@ -37,17 +39,17 @@ const CalendarOffice = () => {
     }
     return listData || [];
   }
-  function dateCellRender(value) {
+  function dateCellRender(value: any) {
     const listData = getListData(value);
     return (
       <div>
         {listData.map(item => (
-          <Badge onClick={onClick} key={item.content} status={item.type} text={item.content} />
+          <Badge key={item.content} status={item.type as PresetStatusColorType} text={item.content} />
         ))}
       </div>
     );
   }
-  const CalendarFilters = ({ value, onChange }) => {
+  const CalendarFilters = ({ value, onChange }: { value: any, onChange: any }) => {
     const start = 0;
     const end = 12;
     const monthOptions = [];
@@ -130,12 +132,10 @@ const CalendarOffice = () => {
       </div>
     );
   };
-  const onClick = (e) => {
-    console.log(e);
-  };
+
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      <Heading parent="/calendars"/>
+      <Heading routes={private_routes} parent="/calendars"/>
       <Calendar
         dateCellRender={dateCellRender}
         headerRender={CalendarFilters}

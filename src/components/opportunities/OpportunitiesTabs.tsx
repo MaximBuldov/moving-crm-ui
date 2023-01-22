@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Col, DatePicker, Form, Input, Row, Select, Tabs, TimePicker } from 'antd';
 import { FileTextTwoTone, MailTwoTone, MessageTwoTone, PhoneTwoTone } from '@ant-design/icons';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import s from './opportunities.module.scss';
 import OpportunitiesMessage from './OpportunitiesMessage';
@@ -79,12 +79,12 @@ const OpportunitiesTabs: FC = () => {
             <Row>
               <Col>
                 <Item>
-                  <DatePicker defaultValue={moment()} format="MM/DD/YYYY" bordered={false}/>
+                  <DatePicker defaultValue={dayjs()} format="MM/DD/YYYY" bordered={false}/>
                 </Item>
               </Col>
               <Col>
                 <Item>
-                  <TimePicker hideDisabledOptions disabledHours={disabledHours} defaultValue={moment()} format="HH:mm" bordered={false} minuteStep={5}/>
+                  <TimePicker hideDisabledOptions disabledHours={disabledHours} defaultValue={dayjs()} format="HH:mm" bordered={false} minuteStep={5}/>
                 </Item>
               </Col>
             </Row>

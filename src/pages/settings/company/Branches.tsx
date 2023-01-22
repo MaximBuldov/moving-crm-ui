@@ -1,6 +1,6 @@
 import { DeleteTwoTone, DollarCircleOutlined, EditOutlined, MoreOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Popconfirm, Table } from 'antd';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { SETTINGS_BRANCHES_ROUTE, SETTINGS_BRANCH_CREW_RATES_ROUTE } from 'routes/consts';
 import branchesService from 'services/collections/branches.service';

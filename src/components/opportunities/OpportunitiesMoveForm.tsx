@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import moment from 'moment';
 import { Col, DatePicker, Form, Row, Select } from 'antd';
 import { Link } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation } from '@tanstack/react-query';
 import { IJob } from 'models/job';
 import jobsService from 'services/collections/jobs.service';
 import { fieldsStore } from 'stores';
 import { fieldNames } from 'stores/fieldsStore';
+import dayjs from 'dayjs';
 
 const { Item } = Form;
 
@@ -31,7 +31,7 @@ const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
         source: customer?.data && customer?.data.attributes.source,
         estimator: 'Unassigned',
         serviceType,
-        moveDate: moment(moveDate, 'YYYY-MM-DD')
+        moveDate: dayjs(moveDate, 'YYYY-MM-DD')
       }}
     >
       <Row gutter={24}>
