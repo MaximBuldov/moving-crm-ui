@@ -55,11 +55,10 @@ const columns = [
   }
 ];
 
-const DashboardActions: FC = () => {
+export const DashboardActions: FC = () => {
 
   return (
     <Table size="middle" dataSource={dataSource} columns={columns} pagination={false} />
   );
 };
 
-export default DashboardActions;

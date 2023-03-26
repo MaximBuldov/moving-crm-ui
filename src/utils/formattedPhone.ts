@@ -1,4 +1,4 @@
-import { IPhone } from 'models/customer';
+import { IPhone } from 'models';
 
 export enum formatPhoneAction {
   FORMAT = 'format',

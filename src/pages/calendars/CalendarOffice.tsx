@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Badge, Button, Calendar, Col, Drawer, Row, Select, Space } from 'antd';
-import Heading from 'layouts/Heading';
-import CreateEventForm from 'components/calendars/CreateEventForm';
 import { PresetStatusColorType } from 'antd/lib/_util/colors';
 import { private_routes } from 'routes';
+import { CreateEventForm } from 'components';
+import { Heading } from 'layouts';
 const { Option } = Select;
 
-const CalendarOffice = () => {
+export const CalendarOffice = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   function getListData(value: any) {
@@ -147,4 +147,3 @@ const CalendarOffice = () => {
   );
 };
 
-export default CalendarOffice;

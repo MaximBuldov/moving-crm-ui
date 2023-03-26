@@ -10,11 +10,11 @@ import {
   PlusCircleTwoTone,
   TeamOutlined
 } from '@ant-design/icons';
-import CustomerContact from 'shared/components/CustomerContact';
-import { IJob } from 'models/job';
+import { CustomerContact } from 'shared';
+import { IJob } from 'models';
 
 import s from './opportunities.module.scss'; 
-import OpportunitiesMoveForm from './OpportunitiesMoveForm';
+import { OpportunitiesMoveForm } from './OpportunitiesMoveForm';
 
 //TODO: - estimator count
 // 		- truck and crew
@@ -27,7 +27,7 @@ interface OpportunitiesInfoProps {
 
 const CN = 'opportunities-info';
 
-const OpportunitiesInfo: FC<OpportunitiesInfoProps> = ({ job }) => {
+export const OpportunitiesInfo: FC<OpportunitiesInfoProps> = ({ job }) => {
 
   return (
     <div className={s['opp-box-shadow']}>
@@ -141,4 +141,3 @@ const OpportunitiesInfo: FC<OpportunitiesInfoProps> = ({ job }) => {
   );
 };
 
-export default OpportunitiesInfo;

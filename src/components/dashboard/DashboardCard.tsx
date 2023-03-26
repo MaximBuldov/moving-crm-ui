@@ -13,7 +13,7 @@ interface DashboardCardProps {
 	icon: ReactNode
 }
 
-const DashboardCard: FC<DashboardCardProps> = ({ span, title, data = { count: 42, value: 58421 }, color, icon }) => {
+export const DashboardCard: FC<DashboardCardProps> = ({ span, title, data = { count: 42, value: 58421 }, color, icon }) => {
   const info = 'Combination of estimated and completed revenue of booked moves for the month based on Service Date (does not include taxes or tips).';
   return (
     <Col span={span}>
@@ -28,5 +28,3 @@ const DashboardCard: FC<DashboardCardProps> = ({ span, title, data = { count: 42
     </Col>
   );
 };
-
-export default DashboardCard;

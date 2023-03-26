@@ -1,7 +1,6 @@
 import React, { memo, useState } from 'react';
 import { DirectionsRenderer, DirectionsService, GoogleMap } from '@react-google-maps/api';
-
-import { useGoogleMaps } from '../../hooks/useGoogleMaps';
+import { useGoogleMaps } from 'hooks';
 
 const containerStyle = {
   width: '100%',
@@ -20,7 +19,7 @@ enum TravelMode {
 	WALKING = 'WALKING',
 }
 
-const EstimateStopsFullMap = ({ addresses }: { addresses: any }) => {
+export const EstimateStopsFullMap = memo(({ addresses }: { addresses: any }) => {
   const [directions, setDirections] = useState(null);
   const { isLoaded, onLoad, onUnmount } = useGoogleMaps();
   const directionsCallback = (response: any) => {
@@ -66,6 +65,4 @@ const EstimateStopsFullMap = ({ addresses }: { addresses: any }) => {
       }
     </GoogleMap>
   ) : <></>;
-};
-
-export default memo(EstimateStopsFullMap);
+});

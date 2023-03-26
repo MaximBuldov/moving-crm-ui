@@ -3,7 +3,7 @@ import { Button, Col, DatePicker, Form, Input, Row, Select, TimePicker } from 'a
 const { Item } = Form;
 const  { Option } = Select;
 
-const CreateEventForm = () => {
+export const CreateEventForm = () => {
   const onFinish = () => {
     console.log();
   };
@@ -82,5 +82,3 @@ const CreateEventForm = () => {
     </Form>
   );
 };
-
-export default CreateEventForm;

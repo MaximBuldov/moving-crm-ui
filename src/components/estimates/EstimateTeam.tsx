@@ -5,7 +5,7 @@ import s from 'components/opportunities/opportunities.module.scss';
 
 const { Item } = Form;
 
-const EstimateTeam = () => {
+export const EstimateTeam = () => {
   return (
     <Form
       initialValues={{
@@ -37,4 +37,3 @@ const EstimateTeam = () => {
   );
 };
 
-export default EstimateTeam;

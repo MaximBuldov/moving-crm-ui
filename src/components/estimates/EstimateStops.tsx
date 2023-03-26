@@ -10,8 +10,8 @@ import {
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import { arrayMoveImmutable } from 'array-move';
 
-import EstimateStopsFullMap from './EstimateStopsFullMap';
-import EstimateAddAddress from './EstimateAddAddress';
+import { EstimateStopsFullMap } from './EstimateStopsFullMap';
+import { EstimateAddAddress } from './EstimateAddAddress';
 
 const DragHandle = SortableHandle(() => <MenuOutlined style={{ cursor: 'grab', color: '#999' }} />);
 
@@ -58,7 +58,7 @@ const data = [
 const SortableItem = SortableElement((props: any) => <tr {...props} />);
 const SortableBody = SortableContainer((props: any) => <tbody {...props} />);
 
-const EstimateStops = () => {
+export const EstimateStops = () => {
   const [dataSource, setDataSource] = useState<any>(data);
   const [modalContent, setModalContent] = useState<string | null>(null);
   const onSortEnd = ({ oldIndex, newIndex }: any) => {
@@ -135,4 +135,3 @@ const EstimateStops = () => {
   );
 };
 
-export default EstimateStops;

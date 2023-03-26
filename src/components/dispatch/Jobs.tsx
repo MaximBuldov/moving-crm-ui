@@ -1,6 +1,6 @@
 import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { Button, Collapse, Typography } from 'antd';
-import JobCard from 'shared/components/JobCard';
+import { JobCard } from 'shared';
 
 interface EL {
   id: number,
@@ -33,7 +33,7 @@ const jobs = [
   }
 ];
 
-export default function Jobs() {
+export function Jobs() {
   const filterButton = () => (
     <Button
       size="small"

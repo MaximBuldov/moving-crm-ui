@@ -1,4 +1,4 @@
-import { Card, Table } from 'antd';
+import { Table } from 'antd';
 import React from 'react';
 
 const dataSource = [
@@ -34,6 +34,6 @@ const columns = [
   }
 ];
 
-export default function CompanyAuditActivity() {
+export function CompanyAuditActivity() {
   return <Table dataSource={dataSource} columns={columns} />;
 }

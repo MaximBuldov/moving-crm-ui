@@ -19,7 +19,7 @@ import {
   TASKS_ROUTE,
   SETTINGS_ROUTE,
   DISPATCH_SCHEDULE_DAY_ROUTE
-} from 'routes/consts';
+} from 'routes';
 import styles from 'layouts/layouts.module.scss';
 
 const items: MenuProps['items'] = [

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Col, Row, Statistic } from 'antd';
 
-const DrawerPrices = ({ title }) => {
+export const DrawerPrices = ({ title }) => {
   return (
     <Card title={title} size="small" bordered={false} style={{ backgroundColor: '#fbfbfb' }}>
       <Row gutter={16}>
@@ -22,4 +22,3 @@ const DrawerPrices = ({ title }) => {
   );
 };
 
-export default DrawerPrices;

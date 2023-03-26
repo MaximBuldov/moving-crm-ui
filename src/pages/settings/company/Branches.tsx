@@ -2,11 +2,11 @@ import { DeleteTwoTone, DollarCircleOutlined, EditOutlined, MoreOutlined } from 
 import { Dropdown, Menu, Popconfirm, Table } from 'antd';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { SETTINGS_BRANCHES_ROUTE, SETTINGS_BRANCH_CREW_RATES_ROUTE } from 'routes/consts';
-import branchesService from 'services/collections/branches.service';
-import { formattedPhone } from 'utils/formattedPhone';
+import { SETTINGS_BRANCHES_ROUTE, SETTINGS_BRANCH_CREW_RATES_ROUTE } from 'routes';
+import { branchesService } from 'services';
+import { formattedPhone } from 'utils';
 
-export default function Branches() {
+export function Branches() {
   const getBranches = useQuery(['branches'], branchesService.fetchMany);
   const deleteBranch = useMutation(['branches'], branchesService.deleteOne);
 

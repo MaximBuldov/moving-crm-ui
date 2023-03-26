@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import React, { FC } from 'react';
 import { Bar, Tooltip, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
-const JobRevenue: FC = () => {
+export const JobRevenue: FC = () => {
 
   let data = [];
   for (let i = 1; i < 31; i++) {
@@ -25,4 +25,3 @@ const JobRevenue: FC = () => {
   );
 };
 
-export default JobRevenue;

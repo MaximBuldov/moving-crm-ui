@@ -1,15 +1,12 @@
 import { ChangeEvent } from 'react';
-import { Card, Divider, Input, Table, Tabs, Tag, Typography } from 'antd';
+import { Card, Input, Table, Tabs, Tag } from 'antd';
 import { Link } from 'react-router-dom';
-import useCustomerSearch from 'hooks/useCustomerSearch';
-import { IPhone } from 'models/customer';
-import { formattedPhone } from 'utils/formattedPhone';
 import { CarOutlined, UserOutlined } from '@ant-design/icons';
-import useJobSearchByCustomer from 'hooks/useJobSearchByCustomer';
 import dayjs from 'dayjs';
 import { fieldsStore } from 'stores';
-import { JobsStatus } from 'models/fields';
-import { ColumnsType } from 'antd/lib/table';
+import { useCustomerSearch, useJobSearchByCustomer } from 'hooks';
+import { IPhone, JobsStatus } from 'models';
+import { formattedPhone } from 'utils';
 
 const columnsCustomer = [
   {
@@ -64,7 +61,7 @@ const columnsJob = [
   }
 ];
 
-const FormSearch = () => {
+export const FormSearch = () => {
   const { customersAction, setInput: setCustomersInput } = useCustomerSearch();
   const { jobsAction, setInput: setJobsInput } = useJobSearchByCustomer();
 
@@ -117,4 +114,3 @@ const FormSearch = () => {
     );}
 };
 
-export default FormSearch;

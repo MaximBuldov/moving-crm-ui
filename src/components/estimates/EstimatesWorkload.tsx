@@ -9,7 +9,7 @@ const apAdRooms = ['Patio', 'Garage', 'Office', 'Living Room'];
 
 const options = (arr: string[]) => arr.map(el => <Option key={el} value={el}>{el}</Option>);
 
-const EstimatesWorkload = () => {
+export const EstimatesWorkload = () => {
 
   return (
     <Form
@@ -53,4 +53,3 @@ const EstimatesWorkload = () => {
   );
 };
 
-export default EstimatesWorkload;

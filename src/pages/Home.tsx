@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import styles from 'layouts/layouts.module.scss';
 
-const Home: FC = () => {
+export const Home: FC = () => {
   return (
     <div className={styles['home']}>
       <div>
@@ -14,4 +14,3 @@ const Home: FC = () => {
   );
 };
 
-export default Home;

@@ -1,11 +1,9 @@
 import React from 'react';
-import { Card, Divider, Select, Space } from 'antd';
-import { Link } from 'react-router-dom';
-import { AppstoreTwoTone, CarTwoTone, HomeTwoTone, LinkOutlined, SmileTwoTone } from '@ant-design/icons';
-import JobCard from 'shared/components/JobCard';
+import { Divider, Select, Space } from 'antd';
+import { JobCard } from 'shared';
 
 const { Option } = Select;
-const DrawerJobs = () => {
+export const DrawerJobs = () => {
   return (
     <div>
       <Divider orientation="left">3 jobs</Divider>
@@ -34,5 +32,3 @@ const DrawerJobs = () => {
     </div>
   );
 };
-
-export default DrawerJobs;

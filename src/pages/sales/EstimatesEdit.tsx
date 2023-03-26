@@ -13,25 +13,19 @@ import {
 } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import jobsService from 'services/collections/jobs.service';
-import CustomerContact from 'shared/components/CustomerContact';
-import QuoteInfo from 'components/estimates/QuoteInfo';
-import EstimateJobs from 'components/estimates/EstimateJobs';
-import EstimateStops from 'components/estimates/EstimateStops';
-import EstimateNotes from 'components/estimates/EstimateNotes';
-import EstimatesRecalculate from 'components/estimates/EstimatesRecalculate';
-import EstimatesWorkload from 'components/estimates/EstimatesWorkload';
-import EstimateTeam from 'components/estimates/EstimateTeam';
-import EstimatePrice from 'components/estimates/EstimatePrice';
+import { QueryType } from 'models';
+import { CustomerContact } from 'shared';
+import { jobsService } from 'services';
+import { EstimateJobs, EstimateNotes, EstimatePrice, EstimatesRecalculate, EstimateStops, EstimatesWorkload, EstimateTeam, QuoteInfo } from 'components';
 import s from 'components/opportunities/opportunities.module.scss';
 
 type Params = {
 	id: any
 }
 
-const EstimatesEdit: FC = () => {
+export const EstimatesEdit: FC = () => {
   const params = useParams<Params>();
-  const { data, isSuccess, isLoading } = useQuery(['job'], () => jobsService.fetchOne(params.id));
+  const { data, isSuccess, isLoading } = useQuery([QueryType.JOBS, params.id], () => jobsService.fetchOne(params.id));
 
   return isSuccess ? (
     <Space direction="vertical" style={{ width:'100%' }}>
@@ -114,4 +108,3 @@ const EstimatesEdit: FC = () => {
   );
 };
 
-export default EstimatesEdit;

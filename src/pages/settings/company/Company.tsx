@@ -2,12 +2,12 @@ import { LockOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Empty, Form, Input, message, Row, Select } from 'antd';
 import React from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import companyService from 'services/single/company.service';
-import { formattedPhone, unformattedPhone } from 'utils/formattedPhone';
+import { companyService } from 'services';
+import { unformattedPhone, formattedPhone } from 'utils';
 
 const { Item, useForm } = Form;
 
-export default function Company() {
+export function Company() {
   const [form] = useForm();
   const settingsGet = useQuery(['company'], companyService.fetch);
   const settingsUpdate = useMutation(['company'], companyService.update, {

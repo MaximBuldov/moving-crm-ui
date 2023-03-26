@@ -99,6 +99,4 @@ class Fields {
 
 }
 
-const fieldsStore = new Fields();
-
-export default fieldsStore;
+export const fieldsStore = new Fields();

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { FileAddOutlined, AimOutlined, UnorderedListOutlined, BellOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { MenuProps, Menu, Popover, Modal, Empty } from 'antd';
-import FormCreateLead from 'shared/forms/FormCreateLead';
-import FormCreateOpportunity from 'shared/forms/FormCreateOpportunity';
-import FormSearch from 'shared/forms/FormSearch';
 import styles from 'layouts/layouts.module.scss';
+import { FormCreateLead, FormCreateOpportunity, FormSearch } from 'shared';
 
 enum ModalTypes {
   SEARCH = 'search',
@@ -14,7 +12,7 @@ enum ModalTypes {
   FOLLOW_UP = 'follow-up',
 }
 
-export default function FormMenu() {
+export function FormMenu() {
   const [modal, setModal] = useState<ModalTypes | null>(null);
   const [popover, setPopover] = useState<boolean>(false);
 

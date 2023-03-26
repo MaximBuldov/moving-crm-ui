@@ -3,18 +3,14 @@ import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Steps, Typo
 import classNames from 'classnames';
 import { CarOutlined, PieChartOutlined, TeamOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import CustomersAutocomplete from 'shared/forms/fields/CustomersAutocomplete';
-import { IJob } from 'models/job';
-import { fieldsStore } from 'stores';
+import { fieldNames, fieldsStore } from 'stores';
 import s from 'shared/forms/form.module.scss';
 import { RangePickerProps } from 'antd/lib/date-picker';
-import useJobCustomerApi from 'hooks/useJobCustomerApi';
-import { JobsStatus } from 'models/fields';
-import { formatPhoneAction, formattedPhones } from 'utils/formattedPhone';
-import { fieldNames } from 'stores/fieldsStore';
+import { useJobCustomerApi } from 'hooks';
+import { IJob, JobsStatus } from 'models';
+import { formattedPhones, formatPhoneAction } from 'utils';
 
-import Phones from './fields/Phones';
-import FieldsAddress from './fields/Address';
+import { CustomersAutocomplete, Phones, FieldsAddress } from './fields';
 
 const { Step } = Steps;
 const { Item, List, useForm } = Form;
@@ -42,7 +38,7 @@ const steps = [
 
 //TODO:
 // - загруженность на выбранную дату
-const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, closeModal }) => {
+export const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, closeModal }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [availability, setAvailability] = useState<boolean>(false);
   const [form] = useForm();
@@ -177,5 +173,3 @@ const FormCreateOpportunity: FC<FormCreateOpportunityProps> = ({ job = null, clo
     </Row>
   );
 };
-
-export default FormCreateOpportunity;

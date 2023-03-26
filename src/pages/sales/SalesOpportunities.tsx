@@ -2,17 +2,14 @@ import React, { FC } from 'react';
 import { Col, Row, Skeleton, Space } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import OpportunitiesHeading from 'components/opportunities/OpportunitiesHeading';
-import OpportunitiesTabs from 'components/opportunities/OpportunitiesTabs';
-import OpportunitiesActivity from 'components/opportunities/OpportunitiesActivity';
-import OpportunitiesInfo from 'components/opportunities/OpportunitiesInfo';
-import jobsService from 'services/collections/jobs.service';
+import { OpportunitiesActivity, OpportunitiesHeading, OpportunitiesInfo, OpportunitiesTabs } from 'components';
+import { jobsService } from 'services';
 
 type Params = {
 	id: any
 }
 
-const SalesOpportunities: FC = () => {
+export const SalesOpportunities: FC = () => {
   const params = useParams<Params>();
   const jobsAction = useQuery(['jobs', params.id], () => jobsService.fetchOne(params.id));
 
@@ -36,4 +33,3 @@ const SalesOpportunities: FC = () => {
   );
 };
 
-export default SalesOpportunities;

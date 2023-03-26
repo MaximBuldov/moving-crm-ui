@@ -1,13 +1,11 @@
 import React from 'react';
 import { Layout } from 'antd';
-import SettingsMenu from 'layouts/SettingsMenu';
+import { Heading, SettingsMenu } from 'layouts';
 import { Outlet } from 'react-router';
 import styles from 'layouts/layouts.module.scss';
 import { settings_routes } from 'routes';
 
-import Heading from './Heading';
-
-export default function SettingsTemplate() {
+export function SettingsTemplate() {
   return (
     <Layout className={styles['settings-container']}>
       <SettingsMenu />

@@ -1,18 +1,16 @@
 import { FC, useState } from 'react';
 import { Col, Input, Row, Select, Space } from 'antd';
-import Heading from 'layouts/Heading';
-import userStore from 'stores/userStore';
 import { useQuery } from '@tanstack/react-query';
-import jobsService from 'services/collections/jobs.service';
-import { fieldsStore } from 'stores';
-import { SALES_ROUTE } from 'routes/consts';
-import LeadsTable from 'components/sales/leadsTable';
 import { useDebounce } from 'use-debounce';
-import { fieldNames } from 'stores/fieldsStore';
-import { private_routes } from 'routes';
+import { private_routes, SALES_ROUTE } from 'routes';
+import { QueryType } from 'models';
+import { fieldNames, fieldsStore, userStore } from 'stores';
+import { Heading } from 'layouts';
+import { jobsService } from 'services';
+import { LeadsTable } from 'components';
 
 //TODO: Revenue
-const SalesMyLeads: FC = () => {
+export const SalesMyLeads: FC = () => {
   const [managerID, setMangerID] = useState<number | undefined>(userStore.data?.id);
   const [opportunity, setOpportunity] = useState<string | undefined>();
   const [source, setSource] = useState<string | undefined>();
@@ -20,7 +18,7 @@ const SalesMyLeads: FC = () => {
   const [customer, setCustomer] = useState<string | undefined>();
   const [debCustomer] = useDebounce(customer, 1000);
 
-  const jobsAction = useQuery(['jobs', { managerID, opportunity, source, debCustomer, page }], () => jobsService.fetchMany({
+  const jobsAction = useQuery([QueryType.JOBS, { managerID, opportunity, source, debCustomer, page }], () => jobsService.fetchMany({
     filters:  { $and: [
       { manager: { id: { $eq: managerID } } },
       { jobStatus: { $eq: opportunity } },
@@ -76,5 +74,3 @@ const SalesMyLeads: FC = () => {
     </Space>
   );
 };
-
-export default SalesMyLeads;

@@ -1,14 +1,12 @@
 import { Button, Col, DatePicker, Divider, Form, Input, Row, Select, Typography } from 'antd';
 import dayjs from 'dayjs';
-import GoogleAutocomplete from 'shared/maps/GoogleAutocomplete';
 import { RangePickerProps } from 'antd/lib/date-picker';
-import { fieldsStore } from 'stores';
-import { JobsStatus } from 'models/fields';
-import useJobCustomerApi from 'hooks/useJobCustomerApi';
-import { fieldNames } from 'stores/fieldsStore';
+import { useJobCustomerApi } from 'hooks';
+import { JobsStatus } from 'models';
+import { GoogleAutocomplete } from 'shared/maps';
+import { fieldsStore, fieldNames } from 'stores';
 
-import CustomersAutocomplete from './fields/CustomersAutocomplete';
-import Phones from './fields/Phones';
+import { CustomersAutocomplete, Phones } from './fields';
 
 const { Item, List } = Form;
 
@@ -16,7 +14,7 @@ interface FormCreateLeadProps {
   closeModal: () => void
 }
 
-const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
+export const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
   const [form] = Form.useForm();
   const { onFinish, setUser, isLoading } = useJobCustomerApi(JobsStatus.NEW_LEAD, closeModal);
 
@@ -141,4 +139,3 @@ const FormCreateLead = ({ closeModal }: FormCreateLeadProps) => {
   );
 };
 
-export default FormCreateLead;

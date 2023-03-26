@@ -40,7 +40,7 @@ const contentList = {
   }
 };
 
-const EstimateNotes = () => {
+export const EstimateNotes = () => {
   const [activeTab, setActiveTab] = useState('internal');
   // const [typedStatus, setTypedStatus] = useState('');
   const [form] = Form.useForm();
@@ -80,4 +80,3 @@ const EstimateNotes = () => {
   );
 };
 
-export default EstimateNotes;

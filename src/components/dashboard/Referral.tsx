@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Col, Progress, Row, Space } from 'antd';
 import { sumBy, groupBy } from 'lodash';
-import { getRandomInt } from 'utils/getRandomInt';
+import { getRandomInt } from 'utils';
 
 interface Data {
 	source: string,
@@ -31,7 +31,7 @@ for (const [key, value] of Object.entries(groupBy(data, el => el.source))) {
     sum: sumBy(value, el => el.value)
   });
 }
-const Referral: FC = () => {
+export const Referral: FC = () => {
 
   return (
     <Space size="middle" direction="vertical" style={{ width: '100%' }}>
@@ -48,4 +48,3 @@ const Referral: FC = () => {
   );
 };
 
-export default Referral;

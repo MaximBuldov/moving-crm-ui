@@ -1,15 +1,10 @@
 import { CheckOutlined, UnorderedListOutlined, MinusOutlined, PieChartOutlined } from '@ant-design/icons';
 import { Row, Space } from 'antd';
-import DashboardActions from 'components/dashboard/DashboardActions';
-import DashboardCard from 'components/dashboard/DashboardCard';
-import DashboardContainer from 'components/dashboard/DashboardContainer';
-import JobRevenue from 'components/dashboard/JobRevenue';
-import OpenItems from 'components/dashboard/OpenItems';
-import Referral from 'components/dashboard/Referral';
-import Heading from 'layouts/Heading';
+import { DashboardActions, DashboardCard, DashboardContainer, JobRevenue, OpenItems, Referral } from 'components';
+import { Heading } from 'layouts';
 import { private_routes } from 'routes';
 
-const SalesDashboard = () => {
+export const SalesDashboard = () => {
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
@@ -36,4 +31,3 @@ const SalesDashboard = () => {
   );
 };
 
-export default SalesDashboard;

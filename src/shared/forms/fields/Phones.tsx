@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Input, Select, FormListFieldData, FormInstance, Form, Row, Button, FormListOperation } from 'antd';
 import { fieldsStore } from 'stores';
-import { formattedPhone } from 'utils/formattedPhone';
+import { formattedPhone } from 'utils';
 import { PlusCircleTwoTone, DeleteOutlined } from '@ant-design/icons';
 
 interface PhonesProps {
@@ -10,7 +10,7 @@ interface PhonesProps {
   actions: FormListOperation
 }
 
-function Phones({ fields, actions }: PhonesProps) {
+export function Phones({ fields, actions }: PhonesProps) {
 
   const { add, remove } = actions;
 
@@ -51,4 +51,3 @@ function Phones({ fields, actions }: PhonesProps) {
   return <>{list}</>;
 }
 
-export default Phones;

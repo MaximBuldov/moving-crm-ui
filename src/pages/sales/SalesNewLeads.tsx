@@ -1,17 +1,15 @@
 import { FC, useState } from 'react';
 import { Select, Space } from 'antd';
-import Heading from 'layouts/Heading';
 import { useQuery } from '@tanstack/react-query';
-import jobsService from 'services/collections/jobs.service';
-import { fieldsStore } from 'stores';
-import { SALES_ROUTE } from 'routes/consts';
-import LeadsTable from 'components/sales/leadsTable';
-import { JobsStatus } from 'models/fields';
-import { fieldNames } from 'stores/fieldsStore';
-import { private_routes } from 'routes';
+import { LeadsTable } from 'components';
+import { Heading } from 'layouts';
+import { JobsStatus } from 'models';
+import { private_routes, SALES_ROUTE } from 'routes';
+import { jobsService } from 'services';
+import { fieldsStore, fieldNames } from 'stores';
 
 //TODO: Revenue
-const SalesMyLeads: FC = () => {
+export const SalesNewLeads: FC = () => {
   const [page, setPage] = useState<number>(1);
   const [source, setSource] = useState<string | undefined>();
   const jobsAction = useQuery(['jobs', { page }], () => jobsService.fetchMany({
@@ -44,4 +42,3 @@ const SalesMyLeads: FC = () => {
   );
 };
 
-export default SalesMyLeads;

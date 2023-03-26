@@ -3,19 +3,15 @@ import { Button, Form, Input, message, Typography } from 'antd';
 import { fieldsStore, userStore } from 'stores';
 import { useMutation, useQueries } from '@tanstack/react-query';
 import { observer } from 'mobx-react-lite';
-import userService from 'services/single/user.service';
 import styles from 'layouts/layouts.module.scss';
-import fieldsService from 'services/single/fields.service';
-import branchesService from 'services/collections/branches.service';
-import usersService from 'services/collections/users.service';
-import { IAccountTypes } from 'models/user';
-
+import { IAccountTypes } from 'models';
+import { branchesService, fieldsService, userService, usersService } from 'services';
 export interface ILoginForm {
 	identifier: string,
 	password: string
 }
 
-const Login = () => {
+export const Login = observer(() => {
   const login = useMutation(userService.login, {
     onSuccess: (data) => {
       userStore.setAuth(data.jwt);
@@ -84,6 +80,5 @@ const Login = () => {
       </Form>
     </div>
   );
-};
+});
 
-export default observer(Login);

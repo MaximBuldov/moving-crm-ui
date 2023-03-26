@@ -3,7 +3,7 @@ import { Button, Col, Row, Switch, Tooltip } from 'antd';
 import { CalculatorTwoTone } from '@ant-design/icons';
 import s from 'components/opportunities/opportunities.module.scss';
 
-const EstimatesRecalculate = () => {
+export const EstimatesRecalculate = () => {
   return (
     <Row align="middle" style={{ marginTop: 15 }} className={s['opp-box-shadow']} justify="space-between">
       <Col><Button type="primary">Recalculate</Button></Col>
@@ -21,4 +21,3 @@ const EstimatesRecalculate = () => {
   );
 };
 
-export default EstimatesRecalculate;

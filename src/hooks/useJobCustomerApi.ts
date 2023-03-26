@@ -1,13 +1,11 @@
 import { message } from 'antd';
-import { ICustomer } from 'models/customer';
-import { JobsStatus } from 'models/fields';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router';
-import { ESTIMATES_EDIT_ROUTE } from 'routes/consts';
-import customersService from 'services/collections/customers.service';
-import jobsService from 'services/collections/jobs.service';
-import { formattedPhones, formatPhoneAction } from 'utils/formattedPhone';
+import { ICustomer, JobsStatus } from 'models';
+import { ESTIMATES_EDIT_ROUTE } from 'routes';
+import { customersService, jobsService } from 'services';
+import { formattedPhones, formatPhoneAction } from 'utils';
 
 interface useJobCustomerApiReturn {
   onFinish: (data: any) => void,
@@ -15,7 +13,7 @@ interface useJobCustomerApiReturn {
   isLoading: boolean,
 }
 
-function useJobCustomerApi(
+export function useJobCustomerApi(
   jobStatus: JobsStatus,
   closeModal?: () => void,
   jobID?: number,
@@ -93,5 +91,3 @@ function useJobCustomerApi(
     onFinish, setUser, isLoading
   };
 }
-
-export default useJobCustomerApi;

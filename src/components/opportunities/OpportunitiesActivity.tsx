@@ -11,7 +11,7 @@ const activityMenuItems = [
   { label: 'Texts', key: 'Texts' }
 ];
 
-const OpportunitiesActivity: FC = () => {
+export const OpportunitiesActivity: FC = () => {
   return (
     <Card
       title="Activity"
@@ -73,4 +73,3 @@ const OpportunitiesActivity: FC = () => {
   );
 };
 
-export default OpportunitiesActivity;

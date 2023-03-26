@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Card, Form, Input, Select, Tag } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { IJob } from 'models/job';
+import { IJob } from 'models';
 
 const { Item } = Form;
 const { Option } = Select;
@@ -10,7 +10,7 @@ interface QuoteInfoProps {
 	data: IJob
 }
 
-const QuoteInfo: FC<QuoteInfoProps> = ({ data: { attributes, id } }) => {
+export const QuoteInfo: FC<QuoteInfoProps> = ({ data: { attributes, id } }) => {
   return (
     <Card
       title={<span><InfoCircleOutlined /> Quote Info</span>}
@@ -80,4 +80,3 @@ const QuoteInfo: FC<QuoteInfoProps> = ({ data: { attributes, id } }) => {
   );
 };
 
-export default QuoteInfo;

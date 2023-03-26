@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
-import { IUser, IUserAttributes } from 'models/user';
+import { IUserAttributes } from 'models/user';
 
 class User {
   data: IUserAttributes | null = null;
@@ -35,6 +35,5 @@ class User {
   }
 }
 
-const userStore = new User();
+export const userStore = new User();
 
-export default userStore;

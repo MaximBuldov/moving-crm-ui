@@ -7,7 +7,7 @@ import { BankOutlined, CompassOutlined, DollarCircleOutlined, LogoutOutlined, Me
 
 const CN = 'profile-menu';
 
-export default function ProfileMenu() {
+export function ProfileMenu() {
   const items: MenuProps['items'] = [
     { label: 'My account', key: 'account', icon: <UserOutlined /> },
     { label: 'Billing Information', key: 'billing', icon: <DollarCircleOutlined /> },

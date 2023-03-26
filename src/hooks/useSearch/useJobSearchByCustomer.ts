@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import jobsService from 'services/collections/jobs.service';
+import { useDebounceState } from 'hooks/useDebounceState';
+import { QueryType } from 'models';
+import { jobsService } from 'services';
 
-import useDebounceState from './useDebounceState';
-
-function useJobSearchByCustomer() {
+export function useJobSearchByCustomer() {
   const { input, setInput } = useDebounceState();
 
-  const jobsAction = useQuery(['jobs', input], () => jobsService.fetchMany({
+  const jobsAction = useQuery([QueryType.JOBS, input], () => jobsService.fetchMany({
     filters: {
       $or: [
         { customer: { name: { $contains: input } } },
@@ -22,5 +22,3 @@ function useJobSearchByCustomer() {
   return { jobsAction, setInput };
 
 }
-
-export default useJobSearchByCustomer;

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Col, Input, Row, Select, Form } from 'antd';
-import GoogleAutocomplete, { GoogleAutocompleteProps } from 'shared/maps/GoogleAutocomplete';
 import { fieldsStore } from 'stores';
-
+import { GoogleAutocompleteProps, GoogleAutocomplete } from 'shared/maps';
 const { Item } = Form;
 
-const FieldsAddress = ({ field }: GoogleAutocompleteProps) => {
+export const FieldsAddress = ({ field }: GoogleAutocompleteProps) => {
   return (
     <Row gutter={16}>
       <Col span={24}>
@@ -49,5 +48,3 @@ const FieldsAddress = ({ field }: GoogleAutocompleteProps) => {
     </Row>
   );
 };
-
-export default FieldsAddress;

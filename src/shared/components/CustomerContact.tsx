@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import { Avatar, Col, Empty, Row, Typography } from 'antd';
-import { ICustomer } from 'models/customer';
+import { ICustomer } from 'models';
 
 interface CustomerContactProps {
 	data?: ICustomer | undefined
 }
 
-const CustomerContact: FC<CustomerContactProps> = ({ data }) => {
+export const CustomerContact: FC<CustomerContactProps> = ({ data }) => {
   const phones = data ? data.attributes.phones?.map(el => (
     <div key={el.id}><a href={`tel:${el.phone}`}>{el.phone}</a> ({el.phoneType})</div>
   )) : <></>;
@@ -24,4 +24,3 @@ const CustomerContact: FC<CustomerContactProps> = ({ data }) => {
   ) : <Empty />;
 };
 
-export default CustomerContact;

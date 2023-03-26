@@ -1,8 +1,7 @@
 import { AutoComplete, Col, Form, Row, Spin } from 'antd';
-import { ICustomer } from 'models/customer';
-import { formatPhoneAction, formattedPhone, formattedPhones } from 'utils/formattedPhone';
-import useCustomerSearchByName from 'hooks/useCustomerSearchByName';
-
+import { useCustomerSearchByName } from 'hooks';
+import { ICustomer } from 'models';
+import { formattedPhones, formatPhoneAction, formattedPhone } from 'utils';
 const { Option } = AutoComplete;
 
 interface CustomersAutocompleteProps {
@@ -11,7 +10,7 @@ interface CustomersAutocompleteProps {
   defaultName?: string
 }
 
-const CustomersAutocomplete = ({ placeholder, setUser, defaultName }: CustomersAutocompleteProps) => {
+export const CustomersAutocomplete = ({ placeholder, setUser, defaultName }: CustomersAutocompleteProps) => {
   const { customersAction, setInput } = useCustomerSearchByName();
   const form = Form.useFormInstance();
 
@@ -55,4 +54,3 @@ const CustomersAutocomplete = ({ placeholder, setUser, defaultName }: CustomersA
   );
 };
 
-export default CustomersAutocomplete;

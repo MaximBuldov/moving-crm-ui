@@ -31,7 +31,7 @@ const jobsData = [
   }
 ];
 
-const EstimateJobs = () => {
+export const EstimateJobs = () => {
   const [data, setData] = useState(jobsData);
 
   const copyCard = (i: number) => {
@@ -78,5 +78,3 @@ const EstimateJobs = () => {
     </Card>
   );
 };
-
-export default EstimateJobs;

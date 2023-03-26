@@ -53,7 +53,7 @@ const data = [
   }
 ];
 
-const EstimatePrice = () => {
+export const EstimatePrice = () => {
   return (
     <Card
       type="inner"
@@ -91,4 +91,3 @@ const EstimatePrice = () => {
   );
 };
 
-export default EstimatePrice;

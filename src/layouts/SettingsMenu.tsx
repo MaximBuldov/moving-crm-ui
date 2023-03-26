@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import styles from 'layouts/layouts.module.scss';
 import { IRoute, settings_routes } from 'routes';
 
-export default function SettingsMenu() {
+export function SettingsMenu() {
   const location = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 

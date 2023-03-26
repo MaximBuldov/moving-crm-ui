@@ -35,7 +35,7 @@ const inboxContent = (
     )} />
 );
 
-const InboxHeader = () => {
+export const InboxHeader = () => {
   return (
     <Popover title="Inbox" content={inboxContent} trigger="click" placement="bottomRight">
       <Badge size="small" count={4}>
@@ -44,5 +44,3 @@ const InboxHeader = () => {
     </Popover>
   );
 };
-
-export default InboxHeader;

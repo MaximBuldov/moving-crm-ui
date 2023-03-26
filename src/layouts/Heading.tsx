@@ -8,7 +8,7 @@ interface HeadingProps {
   routes: IRoute[]
 }
 
-const Heading: FC<HeadingProps> = ({ routes, parent = false }) => {
+export const Heading: FC<HeadingProps> = ({ routes, parent = false }) => {
   const location = useLocation();
   const sortedRoutes: MenuProps['items'] = useMemo(() => parent ? routes.filter(el => el.parent === parent).map(el => ({
     label: <NavLink to={el.path}>{el.name}</NavLink>,
@@ -27,4 +27,3 @@ const Heading: FC<HeadingProps> = ({ routes, parent = false }) => {
   );
 };
 
-export default Heading;

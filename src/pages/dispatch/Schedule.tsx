@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DndContext } from '@dnd-kit/core';
 import { Col, Row } from 'antd';
-import Jobs from 'components/dispatch/Jobs';
-import Resources from 'components/dispatch/Resources';
-import Timesheet from 'components/dispatch/Timesheet';
-import Heading from 'layouts/Heading';
-import { private_routes } from 'routes';
-import { DISPATCH_ROUTE } from 'routes/consts';
+import { Heading } from 'layouts';
+import { private_routes, DISPATCH_ROUTE } from 'routes';
+import { Resources, Timesheet, Jobs } from 'components';
 
-export default function Schedule() {
-  const containers = ['A', 'B', 'C'];
-  const [parent, setParent] = useState(null);
-  // const draggableMarkup = (
-  //   <Resources id="draggable">Drag me</Resources>
-  // );
-
+export function Schedule() {
   function handleDragEnd(event: any) {
     const { over } = event;
-    setParent(over ? over.id : null);
+    console.log(over);
+    //setParent(over ? over.id : null);
   }
 
   return (
@@ -41,9 +33,3 @@ export default function Schedule() {
     </>
   );
 }
-
-// {containers.map((id) => (
-//   <Timesheet key={id} id={id}>
-//     {/* {parent === id ? draggableMarkup : 'Drop here'} */}
-//   </Timesheet>
-// ))}

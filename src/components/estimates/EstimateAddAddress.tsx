@@ -1,11 +1,9 @@
 import React from 'react';
 
-const EstimateAddAddress = () => {
+export const EstimateAddAddress = () => {
   return (
     <div>
 			Create
     </div>
   );
 };
-
-export default EstimateAddAddress;

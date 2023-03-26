@@ -6,5 +6,4 @@ const url = 'jobs';
 class JobsService extends CollectionController {
 }
 
-const jobsService = new JobsService(url, populate);
-export default jobsService;
+export const jobsService = new JobsService(url, populate);

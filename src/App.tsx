@@ -1,11 +1,10 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Template from 'layouts/Template';
-import { IRoute, private_routes, public_routes, settings_routes } from 'routes';
-import { LOGIN_ROUTE, SALES_DASHBOARD_ROUTE, SETTINGS_ROUTE } from 'routes/consts';
+import { IRoute, LOGIN_ROUTE, private_routes, public_routes, SALES_DASHBOARD_ROUTE, SETTINGS_ROUTE, settings_routes } from 'routes';
 import { userStore } from 'stores';
 import { observer } from 'mobx-react-lite';
-import SettingsTemplate from 'layouts/SettingsTemplate';
+import { SettingsTemplate } from 'layouts';
+import Template from 'layouts/Template';
 
 const App = () => {
   const routes = (arr: IRoute[]) => arr.map(({ path, Component }) => <Route path={path} key={path} element={<Component />} />);

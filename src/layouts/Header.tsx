@@ -1,16 +1,11 @@
 import { FC, useState } from 'react';
 import { Badge, Col, Layout, Modal, Row } from 'antd';
-import {
-  BellOutlined,
-  CloudTwoTone,
-  SearchOutlined } from '@ant-design/icons';
+import { BellOutlined, CloudTwoTone, SearchOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { SALES_NEW_LEADS_ROUTE } from 'routes/consts';
-import FormSearch from 'shared/forms/FormSearch';
-import InboxHeader from 'components/header/Inbox';
-import ProfileMenu from 'components/header/ProfileMenu';
 import styles from 'layouts/layouts.module.scss';
-import FormMenu from 'components/header/FormMenu';
+import { InboxHeader, FormMenu, ProfileMenu } from 'components';
+import { SALES_NEW_LEADS_ROUTE } from 'routes';
+import { FormSearch } from 'shared';
 
 const Header: FC = () => {
   const [modal, setModal] = useState<boolean>(false);

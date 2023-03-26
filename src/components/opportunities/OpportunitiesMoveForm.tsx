@@ -2,11 +2,10 @@ import React, { FC } from 'react';
 import { Col, DatePicker, Form, Row, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { IJob } from 'models/job';
-import jobsService from 'services/collections/jobs.service';
-import { fieldsStore } from 'stores';
-import { fieldNames } from 'stores/fieldsStore';
+import { fieldNames, fieldsStore } from 'stores';
 import dayjs from 'dayjs';
+import { jobsService } from 'services';
+import { IJob } from 'models';
 
 const { Item } = Form;
 
@@ -14,7 +13,7 @@ interface OpportunitiesMoveFormProps {
 	job: IJob
 }
 
-const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
+export const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
   const { attributes: { customer, serviceType, moveDate, manager, moveSize }, id } = props.job;
   const [form] = Form.useForm();
   const { mutate } = useMutation(jobsService.updateOne);
@@ -75,4 +74,3 @@ const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
   );
 };
 
-export default OpportunitiesMoveForm;

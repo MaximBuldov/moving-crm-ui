@@ -5,10 +5,9 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { Link } from 'react-router-dom';
 import { LinkOutlined } from '@ant-design/icons';
 import { ColumnsType } from 'antd/es/table';
-import { IJob } from 'models/job';
+import { IJob, IStrapiMeta } from 'models';
+import { SALES_OPPORTUNITIES_ROUTE, CUSTOMERS_DETAILS_ROUTE } from 'routes';
 import { fieldsStore } from 'stores';
-import { CUSTOMERS_DETAILS_ROUTE, SALES_OPPORTUNITIES_ROUTE } from 'routes/consts';
-import { IStrapiMeta } from 'models/response';
 
 dayjs.extend(relativeTime);
 
@@ -101,7 +100,7 @@ interface SalesMyLeadsProps {
 }
 
 //TODO: Revenue
-const LeadsTable = ({ isLoading, data, page, setPage }: SalesMyLeadsProps) => {
+export const LeadsTable = ({ isLoading, data, page, setPage }: SalesMyLeadsProps) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
   const rowSelection = {
     selectedRowKeys,
@@ -126,4 +125,3 @@ const LeadsTable = ({ isLoading, data, page, setPage }: SalesMyLeadsProps) => {
   );
 };
 
-export default LeadsTable;

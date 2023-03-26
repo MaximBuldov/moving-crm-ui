@@ -3,12 +3,12 @@ import { Button, Card, CardProps, Checkbox, Col, Form, Input, InputNumber, messa
 import { observer } from 'mobx-react-lite';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router';
-import branchesService from 'services/collections/branches.service';
-import { formattedPhone, unformattedPhone } from 'utils/formattedPhone';
+import { branchesService } from 'services';
+import { unformattedPhone, formattedPhone } from 'utils';
 
 const { Item, useForm } = Form;
 
-const EditBranch = observer(() => {
+export const EditBranch = observer(() => {
   const { id } = useParams<{ id: any }>();
   const navigate = useNavigate();
   const [form] = useForm();
@@ -192,4 +192,3 @@ const EditBranch = observer(() => {
   );
 });
 
-export default EditBranch;

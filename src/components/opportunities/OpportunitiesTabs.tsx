@@ -4,12 +4,12 @@ import { FileTextTwoTone, MailTwoTone, MessageTwoTone, PhoneTwoTone } from '@ant
 import dayjs from 'dayjs';
 
 import s from './opportunities.module.scss';
-import OpportunitiesMessage from './OpportunitiesMessage';
+import { OpportunitiesMessage } from './OpportunitiesMessage';
 
 const { Item } = Form;
 const { Option } = Select;
 
-const OpportunitiesTabs: FC = () => {
+export const OpportunitiesTabs: FC = () => {
   const disabledHours = () => {
     let arr = [];
     for (let i = 0; i < 25; i++) {
@@ -110,4 +110,3 @@ const OpportunitiesTabs: FC = () => {
   );
 };
 
-export default OpportunitiesTabs;

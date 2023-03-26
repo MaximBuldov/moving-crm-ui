@@ -7,7 +7,7 @@ export interface GoogleAutocompleteProps {
 	field: string
 }
 
-const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ field }) => {
+export const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ field }) => {
   const { map, isLoaded, onLoad, onUnmount, loadError } = useGoogleMaps();
   const form = Form.useFormInstance();
   const [val, setVal] = useState<number>();
@@ -50,4 +50,3 @@ const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ field }) => {
   ) : <Skeleton paragraph={{ rows: 1 }} active />;
 };
 
-export default GoogleAutocomplete;

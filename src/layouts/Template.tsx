@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useNavigate } from 'react-router';
-import { SALES_DASHBOARD_ROUTE } from 'routes/consts';
+import { SALES_DASHBOARD_ROUTE } from 'routes';
 import styles from 'layouts/layouts.module.scss';
 
 import Sider from './Sider';

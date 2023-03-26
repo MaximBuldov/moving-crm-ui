@@ -8,7 +8,7 @@ interface DashboardContainerProps {
 	children: ReactNode
 }
 
-const DashboardContainer: FC<DashboardContainerProps> = ({ span, title, children }) => {
+export const DashboardContainer: FC<DashboardContainerProps> = ({ span, title, children }) => {
   const info = 'Combination of estimated and completed revenue of booked moves for the month based on Service Date (does not include taxes or tips).';
   return (
     <Col span={span}>
@@ -19,4 +19,3 @@ const DashboardContainer: FC<DashboardContainerProps> = ({ span, title, children
   );
 };
 
-export default DashboardContainer;

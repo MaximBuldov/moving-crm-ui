@@ -3,19 +3,18 @@ import { Badge, Button, Col, Modal, Row, Tooltip, Typography } from 'antd';
 import { useNavigate } from 'react-router';
 import { CloseCircleOutlined, ExclamationCircleFilled, EyeOutlined, LeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import FormCreateOpportunity from 'shared/forms/FormCreateOpportunity';
-import { IJob } from 'models/job';
 import { fieldsStore } from 'stores';
-import { JobsStatus } from 'models/fields';
-import { ESTIMATES_EDIT_ROUTE } from 'routes/consts';
 import { useMutation } from '@tanstack/react-query';
-import jobsService from 'services/collections/jobs.service';
+import { IJob, JobsStatus } from 'models';
+import { ESTIMATES_EDIT_ROUTE } from 'routes';
+import { FormCreateOpportunity } from 'shared';
+import { jobsService } from 'services';
 
 interface OpportunitiesHeadingProps {
 	job: IJob
 }
 
-const OpportunitiesHeading: FC<OpportunitiesHeadingProps> = (props) => {
+export const OpportunitiesHeading: FC<OpportunitiesHeadingProps> = (props) => {
   const { attributes: { customer, jobStatus }, id } = props.job;
   const jobsAction = useMutation(jobsService.updateOne);
   const [modal, setModal] = useState(false);
@@ -83,4 +82,3 @@ const OpportunitiesHeading: FC<OpportunitiesHeadingProps> = (props) => {
   );
 };
 
-export default OpportunitiesHeading;

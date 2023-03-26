@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Col, Descriptions, Divider, Empty, Row, Space, Statistic, Table, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import { CreditCardTwoTone, DeleteTwoTone } from '@ant-design/icons';
-import CustomerContact from 'shared/components/CustomerContact';
+import { CustomerContact } from 'shared';
 
 const dataSource = [
   {
@@ -73,7 +73,7 @@ const columns = [
   }
 ];
 
-const CustomerDetails = () => {
+export const CustomerDetails = () => {
   return (
     <Space size="large" direction="vertical" style={{ width:'100%' }}>
       <div className="opp-box-shadow">
@@ -164,4 +164,3 @@ const CustomerDetails = () => {
   );
 };
 
-export default CustomerDetails;

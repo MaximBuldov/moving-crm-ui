@@ -8,7 +8,7 @@ interface OpportunitiesMessageProps {
 	button: string
 }
 
-const OpportunitiesMessage = ({ placeholder, button }: OpportunitiesMessageProps) => {
+export const OpportunitiesMessage = ({ placeholder, button }: OpportunitiesMessageProps) => {
   const [check, setCheck] = useState(false);
   return (
     <>
@@ -31,4 +31,3 @@ const OpportunitiesMessage = ({ placeholder, button }: OpportunitiesMessageProps
   );
 };
 
-export default OpportunitiesMessage;

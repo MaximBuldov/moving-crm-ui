@@ -8,7 +8,7 @@ import {
   WarningTwoTone
 } from '@ant-design/icons';
 
-const OpenItems: FC = () => {
+export const OpenItems: FC = () => {
   return (
     <Row gutter={[8,24]}>
       <Col span={12}>
@@ -33,4 +33,3 @@ const OpenItems: FC = () => {
   );
 };
 
-export default OpenItems;

@@ -1,9 +1,10 @@
-import { useDroppable } from '@dnd-kit/core';
-import { Col, Row, Typography } from 'antd';
 import React from 'react';
+import { Col, Row, Typography } from 'antd';
+
+import { CrewLine } from './CrewLine';
 import styles from './dispatch.module.scss';
 
-interface ICrew {
+export interface ICrew {
   id: number,
   name: string
 }
@@ -29,12 +30,7 @@ const crews: ICrew[] = [
   }
 ];
 
-export default function Timesheet(props: any) {
-  const { isOver, setNodeRef } = useDroppable({
-    id: 'droppable'
-  });
-  
-  console.log({ isOver, setNodeRef });
+export function Timesheet(props: any) {
 
   return (
     <>
@@ -57,20 +53,8 @@ export default function Timesheet(props: any) {
         </Col>
       </Row>
       <div className={styles[`${CN}__container`]}>
-        {crews.map((crew) => renderCrewLine(crew))}
+        {crews.map((crew) => <CrewLine crew={crew} children={props.children} />)}
       </div>
     </>
   );
-
-  function renderCrewLine(crew: ICrew) {
-    return (
-      <Row ref={setNodeRef} className={styles[`${CN}__crew-line`]} key={crew.id}>
-        <Col className={styles[`${CN}__crew-wrap`]} span={5}>
-          <div className={styles[`${CN}__crew-name`]}>{crew.name}</div>
-          <div className={styles[`${CN}__crew`]}>{props.children}</div>
-        </Col>
-        <Col className={styles[`${CN}__crew-timeline`]} span={19}></Col>
-      </Row>
-    );
-  }
 }

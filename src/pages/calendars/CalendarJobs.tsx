@@ -3,13 +3,12 @@ import { Button, Calendar, Drawer, Progress, Space } from 'antd';
 import { CalendarOutlined, CoffeeOutlined, SettingOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
-import { getRandomInt } from 'utils/getRandomInt';
-import Heading from 'layouts/Heading';
-import DrawerPrices from 'components/calendars/DrawerPrices';
-import DrawerJobs from 'components/calendars/DrawerJobs';
 import { private_routes } from 'routes';
+import { getRandomInt } from 'utils';
+import { DrawerPrices, DrawerJobs } from 'components';
+import { Heading } from 'layouts';
 
-const CalendarJobs = () => {
+export const CalendarJobs = () => {
   const [drawerData, setDrawerData] = useState<any>(null);
   const dateCellRender = () => {
     const morning = getRandomInt(4);
@@ -59,4 +58,3 @@ const CalendarJobs = () => {
   );
 };
 
-export default CalendarJobs;

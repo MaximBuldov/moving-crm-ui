@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import customersService from 'services/collections/customers.service';
+import { useDebounceState } from 'hooks/useDebounceState';
+import { QueryType } from 'models';
+import { customersService } from 'services';
 
-import useDebounceState from './useDebounceState';
-
-function useCustomerSearch() {
+export function useCustomerSearch() {
   const { input, setInput } = useDebounceState();
 
-  const customersAction = useQuery(['customers', input], () => customersService.fetchMany({
+  const customersAction = useQuery([QueryType.CUSTOMERS, input], () => customersService.fetchMany({
     filters: {
       $or: [
         { name: { $contains: input } },
@@ -22,5 +22,3 @@ function useCustomerSearch() {
   return { customersAction, setInput };
 
 }
-
-export default useCustomerSearch;
