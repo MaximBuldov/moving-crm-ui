@@ -1,7 +1,6 @@
-import { ILoginForm } from 'pages/Login';
-import { throwError } from 'utils/trowError';
-
-import { $api, $auth } from '../http';
+import { ILoginForm } from 'pages';
+import { $api, $auth } from 'services';
+import { throwError } from 'utils';
 
 class UserService {
 

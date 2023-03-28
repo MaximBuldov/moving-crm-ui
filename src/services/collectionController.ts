@@ -1,6 +1,6 @@
-import { throwError } from 'utils/trowError';
-import { $api } from 'services/http';
-import { AxiosRequestConfig } from 'axios';
+import { throwError } from 'utils';
+
+import { $api } from './http';
 
 export default class CollectionController {
   private url: string;

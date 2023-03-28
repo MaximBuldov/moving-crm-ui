@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { OpportunitiesActivity, OpportunitiesHeading, OpportunitiesInfo, OpportunitiesTabs } from 'components';
 import { jobsService } from 'services';
+import { QueryType } from 'models';
 
 type Params = {
 	id: any
@@ -11,7 +12,7 @@ type Params = {
 
 export const SalesOpportunities: FC = () => {
   const params = useParams<Params>();
-  const jobsAction = useQuery(['jobs', params.id], () => jobsService.fetchOne(params.id));
+  const jobsAction = useQuery([QueryType.JOBS, params.id], () => jobsService.fetchOne(params.id));
 
   return !jobsAction.isLoading ? (
     <Space direction="vertical" style={{ width: '100%' }}>

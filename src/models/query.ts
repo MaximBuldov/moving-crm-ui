@@ -11,7 +11,11 @@ export enum QueryType {
   TRUCKS = 'trucks',
   WORKERS = 'workers',
   CUSTOMERS = 'customers',
-  JOBS = 'jobs'
+  JOBS = 'jobs',
+  BRANCHES = 'branches',
+  COMPANY = 'company',
+  USER = 'user',
+  FIELDS = 'fields'
 }
 
 export interface IStrapiParams {

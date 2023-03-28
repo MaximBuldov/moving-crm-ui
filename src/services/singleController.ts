@@ -1,5 +1,6 @@
-import { throwError } from 'utils/trowError';
-import { $api } from 'services/http';
+import { throwError } from 'utils';
+
+import { $api } from './http';
 
 export default class SingleController {
   private url: string;

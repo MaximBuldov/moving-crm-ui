@@ -7,14 +7,14 @@ const $api = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  paramsSerializer(params) {
-    return qs.stringify(params);
+  paramsSerializer: {
+    serialize: (params: any) => qs.stringify(params)
   }
 });
 
 const $auth = axios.create({ method: 'POST' });
 
-const authInterceptor = config => {
+const authInterceptor = (config: any) => {
   config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
   return config;
 };

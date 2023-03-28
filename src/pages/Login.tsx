@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Button, Form, Input, message, Typography } from 'antd';
 import { fieldsStore, userStore } from 'stores';
-import { useMutation, useQueries } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { observer } from 'mobx-react-lite';
 import styles from 'layouts/layouts.module.scss';
-import { IAccountTypes } from 'models';
+import { IAccountTypes, QueryType } from 'models';
 import { branchesService, fieldsService, userService, usersService } from 'services';
 export interface ILoginForm {
 	identifier: string,
@@ -12,7 +12,7 @@ export interface ILoginForm {
 }
 
 export const Login = observer(() => {
-  const login = useMutation(userService.login, {
+  const login = useMutation([QueryType.USER], userService.login, {
     onSuccess: (data) => {
       userStore.setAuth(data.jwt);
     },
@@ -20,27 +20,40 @@ export const Login = observer(() => {
       message.error(error.message);
     }
   });
-
-  const fields = useQueries({
-    queries: [
-      { queryKey: ['fields'], queryFn: fieldsService.fetch, enabled: userStore.isAuth, staleTime: Infinity },
-      { queryKey: ['branches'], queryFn: branchesService.fetchMany, enabled: userStore.isAuth, staleTime: Infinity },
-      { queryKey: ['managers'], queryFn: () => usersService.fetchMany({
-        filters:  { $and: [
-          { accountType: { $eq: IAccountTypes.MANAGER } }
-        ] }
-      }), enabled: userStore.isAuth, staleTime: Infinity }
-    ]
+  const fieldsActions = useQuery({ 
+    queryKey: [QueryType.FIELDS], 
+    queryFn: fieldsService.fetch, 
+    enabled: userStore.isAuth,
+    staleTime: Infinity, 
+    onSuccess: ({ data }) => fieldsStore.setData(data.attributes)
   });
+  const branchesActions = useQuery([QueryType.BRANCHES], branchesService.fetchMany, 
+    { 
+      enabled: userStore.isAuth,
+      staleTime: Infinity, 
+      onSuccess: ({ data }) => fieldsStore.setBranches(data)
+    }
+  );
+  const workersActions = useQuery(
+    [QueryType.WORKERS, { accountType: IAccountTypes.MANAGER }],
+    () => usersService.fetchMany({
+      filters:  { $and: [ { accountType: { $eq: IAccountTypes.MANAGER } } ] }
+    }), 
+    { 
+      enabled: userStore.isAuth,
+      staleTime: Infinity, 
+      onSuccess: (data) => fieldsStore.setManagers(data)
+    }
+  );
+
+  const isSuccess = branchesActions.isSuccess && fieldsActions.isSuccess && login.isSuccess && workersActions.isSuccess;
+  const isLoading = branchesActions.isLoading && fieldsActions.isLoading && login.isLoading && workersActions.isLoading;
 
   useEffect(() => {
-    if (fields.every(query => query.isSuccess && userStore.isAuth)) {
+    if (isSuccess) {
       userStore.setUser(login?.data?.user);
-      fieldsStore.setData(fields[0].data.data.attributes);
-      fieldsStore.setBranches(fields[1].data.data);
-      fieldsStore.setManagers(fields[2].data);
     }
-  }, [fields, login.data]);
+  }, [isSuccess, login?.data]);
 
   const onFinish = (values: ILoginForm) => {
     login.mutate(values);
@@ -75,7 +88,11 @@ export const Login = observer(() => {
           <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Button loading={login.isLoading || fields.some(query => query.isFetching)} type="primary" htmlType="submit">Submit</Button>
+          <Button 
+            loading={isLoading}
+            type="primary" htmlType="submit">
+              Submit
+          </Button>
         </Form.Item>
       </Form>
     </div>

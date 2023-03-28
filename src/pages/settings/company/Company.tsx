@@ -4,13 +4,14 @@ import React from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { companyService } from 'services';
 import { unformattedPhone, formattedPhone } from 'utils';
+import { QueryType } from 'models';
 
 const { Item, useForm } = Form;
 
 export function Company() {
   const [form] = useForm();
-  const settingsGet = useQuery(['company'], companyService.fetch);
-  const settingsUpdate = useMutation(['company'], companyService.update, {
+  const settingsGet = useQuery([QueryType.COMPANY], companyService.fetch);
+  const settingsUpdate = useMutation([QueryType.COMPANY], companyService.update, {
     onSuccess: () => {
       message.success('Company information has been updated');
     },

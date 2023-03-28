@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router';
 import { branchesService } from 'services';
 import { unformattedPhone, formattedPhone } from 'utils';
+import { QueryType } from 'models';
 
 const { Item, useForm } = Form;
 
@@ -13,14 +14,14 @@ export const EditBranch = observer(() => {
   const navigate = useNavigate();
   const [form] = useForm();
   const queryClient = useQueryClient();
-  const getBranch = useQuery(['branches', { id }], () => branchesService.fetchOne(id), {
+  const getBranch = useQuery([QueryType.BRANCHES, { id }], () => branchesService.fetchOne(id), {
     onSuccess: (data: any) => {
       form.setFieldsValue(data.attributes);
     }
   });
   const updateBranch = useMutation(branchesService.updateOne, {
     onSuccess: (data, variables) => {
-      queryClient.setQueryData(['branches', { id: data.id }], { ...variables.data, id: data.id });
+      queryClient.setQueryData([QueryType.BRANCHES, { id: data.id }], { ...variables.data, id: data.id });
       message.success('Branch updated!');
     }
   });

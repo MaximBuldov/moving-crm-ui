@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 import { SETTINGS_BRANCHES_ROUTE, SETTINGS_BRANCH_CREW_RATES_ROUTE } from 'routes';
 import { branchesService } from 'services';
 import { formattedPhone } from 'utils';
+import { QueryType } from 'models';
 
 export function Branches() {
-  const getBranches = useQuery(['branches'], branchesService.fetchMany);
-  const deleteBranch = useMutation(['branches'], branchesService.deleteOne);
+  const getBranches = useQuery([QueryType.BRANCHES], branchesService.fetchMany);
+  const deleteBranch = useMutation([QueryType.BRANCHES], branchesService.deleteOne);
 
   const columns = [
     {

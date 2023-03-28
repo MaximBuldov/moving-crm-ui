@@ -1,4 +1,4 @@
-import SingleController from 'services/singleController';
+import { SingleController } from 'services';
 
 const url = 'contact';
 

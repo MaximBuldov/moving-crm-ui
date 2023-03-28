@@ -1,4 +1,4 @@
-import CollectionController from 'services/collectionController';
+import { CollectionController } from 'services';
 
 const populate = ['phones','jobs', 'destination'];
 const url = 'customers';

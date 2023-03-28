@@ -3,7 +3,7 @@ import { Select, Space } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import { LeadsTable } from 'components';
 import { Heading } from 'layouts';
-import { JobsStatus } from 'models';
+import { JobsStatus, QueryType } from 'models';
 import { private_routes, SALES_ROUTE } from 'routes';
 import { jobsService } from 'services';
 import { fieldsStore, fieldNames } from 'stores';
@@ -12,7 +12,7 @@ import { fieldsStore, fieldNames } from 'stores';
 export const SalesNewLeads: FC = () => {
   const [page, setPage] = useState<number>(1);
   const [source, setSource] = useState<string | undefined>();
-  const jobsAction = useQuery(['jobs', { page }], () => jobsService.fetchMany({
+  const jobsAction = useQuery([QueryType.JOBS, { page }], () => jobsService.fetchMany({
     filters:  { $and: [
       { jobStatus: { $eq: JobsStatus.NEW_LEAD } },
       { customer: { 

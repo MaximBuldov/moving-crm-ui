@@ -1,4 +1,4 @@
-import CollectionController from 'services/collectionController';
+import { CollectionController } from 'services';
 
 const populate = ['mailingAddress'];
 const url = 'branches';
