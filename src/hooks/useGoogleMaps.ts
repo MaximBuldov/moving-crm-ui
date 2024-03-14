@@ -1,7 +1,6 @@
-import { useLoadScript } from '@react-google-maps/api';
+import { Libraries, useLoadScript } from '@react-google-maps/api';
 import { useCallback, useState } from 'react';
 
-export type Libraries = ('drawing' | 'geometry' | 'localContext' | 'places' | 'visualization')[];
 export const LIBRARIES: Libraries = ['places'];
 
 export const useGoogleMaps = () => {

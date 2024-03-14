@@ -20,15 +20,18 @@ import { EstimateJobs, EstimateNotes, EstimatePrice, EstimatesRecalculate, Estim
 import s from 'components/opportunities/opportunities.module.scss';
 
 type Params = {
-	id: any
+  id: any
 }
 
 export const EstimatesEdit: FC = () => {
   const params = useParams<Params>();
-  const { data, isSuccess, isLoading } = useQuery([QueryType.JOBS, params.id], () => jobsService.fetchOne(params.id));
+  const { data, isSuccess, isLoading } = useQuery({
+    queryKey: [QueryType.JOBS, params.id],
+    queryFn: () => jobsService.fetchOne(params.id)
+  });
 
   return isSuccess ? (
-    <Space direction="vertical" style={{ width:'100%' }}>
+    <Space direction="vertical" style={{ width: '100%' }}>
       <div className={s['opp-box-shadow']}>
         <Row align="middle" justify="space-between">
           <Col>
@@ -84,7 +87,7 @@ export const EstimatesEdit: FC = () => {
 
         </Col>
         <Col span={12}>
-          <Space size="large" direction="vertical" style={{ width: '100%' } } >
+          <Space size="large" direction="vertical" style={{ width: '100%' }} >
             <EstimateJobs />
             <EstimateStops />
             <EstimateNotes />
@@ -92,7 +95,7 @@ export const EstimatesEdit: FC = () => {
 
         </Col>
         <Col span={7}>
-          <Space size="large" direction="vertical" style={{ width: '100%' } }>
+          <Space size="large" direction="vertical" style={{ width: '100%' }}>
             <EstimatesRecalculate />
             <EstimatesWorkload />
             <EstimateTeam />

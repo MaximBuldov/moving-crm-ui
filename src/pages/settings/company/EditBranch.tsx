@@ -14,12 +14,12 @@ export const EditBranch = observer(() => {
   const navigate = useNavigate();
   const [form] = useForm();
   const queryClient = useQueryClient();
-  const getBranch = useQuery([QueryType.BRANCHES, { id }], () => branchesService.fetchOne(id), {
-    onSuccess: (data: any) => {
-      form.setFieldsValue(data.attributes);
-    }
+  const getBranch = useQuery({
+    queryKey: [QueryType.BRANCHES, { id }],
+    queryFn: () => branchesService.fetchOne(id)
   });
-  const updateBranch = useMutation(branchesService.updateOne, {
+  const updateBranch = useMutation({
+    mutationFn: branchesService.updateOne,
     onSuccess: (data, variables) => {
       queryClient.setQueryData([QueryType.BRANCHES, { id: data.id }], { ...variables.data, id: data.id });
       message.success('Branch updated!');
@@ -28,7 +28,7 @@ export const EditBranch = observer(() => {
 
   const cardProps: CardProps = {
     size: 'small',
-    loading: getBranch.isLoading
+    loading: getBranch.isPending
   };
 
   const onFinish = (data: any) => {
@@ -52,6 +52,9 @@ export const EditBranch = observer(() => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
+        initialValues={{
+          ...getBranch.data.attributes
+        }}
       >
         <Space direction="vertical" size="large">
           <Card title="Branch info" {...cardProps}>
@@ -186,7 +189,7 @@ export const EditBranch = observer(() => {
               <Input placeholder="Thumbtack url" />
             </Item>
           </Card>
-          <Button loading={updateBranch.isLoading} size="large" type="primary" htmlType="submit">Save changes</Button>
+          <Button loading={updateBranch.isPending} size="large" type="primary" htmlType="submit">Save changes</Button>
         </Space>
       </Form>
     </Space>

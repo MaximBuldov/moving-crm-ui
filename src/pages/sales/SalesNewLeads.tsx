@@ -12,15 +12,22 @@ import { fieldsStore, fieldNames } from 'stores';
 export const SalesNewLeads: FC = () => {
   const [page, setPage] = useState<number>(1);
   const [source, setSource] = useState<string | undefined>();
-  const jobsAction = useQuery([QueryType.JOBS, { page }], () => jobsService.fetchMany({
-    filters:  { $and: [
-      { jobStatus: { $eq: JobsStatus.NEW_LEAD } },
-      { customer: { 
-        source: { $eq: source }
-      } }
-    ] },
-    pagination: { page }
-  }));
+  const jobsAction = useQuery({
+    queryKey: [QueryType.JOBS, { page }],
+    queryFn: () => jobsService.fetchMany({
+      filters: {
+        $and: [
+          { jobStatus: { $eq: JobsStatus.NEW_LEAD } },
+          {
+            customer: {
+              source: { $eq: source }
+            }
+          }
+        ]
+      },
+      pagination: { page }
+    })
+  });
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
@@ -33,7 +40,7 @@ export const SalesNewLeads: FC = () => {
         onChange={(source) => setSource(source)}
       />
       <LeadsTable
-        isLoading={jobsAction.isLoading}
+        isLoading={jobsAction.isPending}
         data={jobsAction?.data}
         page={page}
         setPage={(page) => setPage(page)}

@@ -73,18 +73,18 @@ export const FormSearch = () => {
   };
 
   const tabs = [
-    { 
+    {
       label: 'Moving',
       key: '1',
-      children: <Input.Search 
-        loading={customersAction.isLoading || jobsAction.isLoading}
+      children: <Input.Search
+        loading={customersAction.isPending || jobsAction.isPending}
         onChange={onMovingSearch}
         placeholder="Enter a job number, phone number, email or partial name"
         size="large"
         enterButton
       />
     },
-    { 
+    {
       label: 'Storage',
       key: '2',
       children: <Input placeholder="Enter an account number, phone number, email or partial name" />
@@ -111,6 +111,7 @@ export const FormSearch = () => {
           size="small"
         />
       </Card>
-    );}
+    );
+  }
 };
 

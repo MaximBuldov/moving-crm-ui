@@ -1,7 +1,11 @@
 import React from 'react';
 import { Card, Col, Row, Statistic } from 'antd';
 
-export const DrawerPrices = ({ title }) => {
+interface DrawerPricesProps {
+  title: string
+}
+
+export const DrawerPrices = ({ title }: DrawerPricesProps) => {
   return (
     <Card title={title} size="small" bordered={false} style={{ backgroundColor: '#fbfbfb' }}>
       <Row gutter={16}>

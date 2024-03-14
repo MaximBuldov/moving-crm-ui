@@ -6,11 +6,13 @@ import { customersService } from 'services';
 export function useCustomerSearchByName() {
   const { input, setInput } = useDebounceState();
 
-  const customersAction = useQuery([QueryType.CUSTOMERS, input], () => customersService.fetchMany({
-    filters: {
-      $and: [{ name: { $contains: input } }]
-    }
-  }), {
+  const customersAction = useQuery({
+    queryKey: [QueryType.CUSTOMERS, input],
+    queryFn: () => customersService.fetchMany({
+      filters: {
+        $and: [{ name: { $contains: input } }]
+      }
+    }),
     enabled: !!input
   });
 

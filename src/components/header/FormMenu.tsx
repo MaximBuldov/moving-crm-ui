@@ -50,24 +50,24 @@ export function FormMenu() {
 
   let ModalComponent;
   switch (modal) {
-  case ModalTypes.SEARCH:
-    ModalComponent = FormSearch;
-    break;
-  case ModalTypes.OPPORTUNITY:
-    ModalComponent = FormCreateOpportunity;
-    break;
-  case ModalTypes.LEAD:
-    ModalComponent = FormCreateLead;
-    break;
-  case ModalTypes.TASK:
-    ModalComponent = FormSearch;
-    break;
-  case ModalTypes.FOLLOW_UP:
-    ModalComponent = FormSearch;
-    break;
-  default:
-    ModalComponent = Empty;
-    break;
+    case ModalTypes.SEARCH:
+      ModalComponent = FormSearch;
+      break;
+    case ModalTypes.OPPORTUNITY:
+      ModalComponent = FormCreateOpportunity;
+      break;
+    case ModalTypes.LEAD:
+      ModalComponent = FormCreateLead;
+      break;
+    case ModalTypes.TASK:
+      ModalComponent = FormSearch;
+      break;
+    case ModalTypes.FOLLOW_UP:
+      ModalComponent = FormSearch;
+      break;
+    default:
+      ModalComponent = Empty;
+      break;
   }
 
   const closeModal = () => {
@@ -80,12 +80,12 @@ export function FormMenu() {
   return (
     <>
       <Popover trigger="click" open={popover} content={createContent} onOpenChange={(visible) => setPopover(visible)} placement="bottomRight">
-        <PlusCircleOutlined className={styles['header-icons']}  />
+        <PlusCircleOutlined className={styles['header-icons']} />
       </Popover>
       <Modal width={900} open={!!modal} destroyOnClose={true} onCancel={closeModal} footer={null}>
         <ModalComponent closeModal={closeModal} />
       </Modal>
     </>
-    
+
   );
 }

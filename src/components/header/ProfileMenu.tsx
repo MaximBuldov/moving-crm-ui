@@ -1,9 +1,9 @@
 import React from 'react';
 import { Popover, Badge, Avatar, Row, Col, Menu, MenuProps } from 'antd';
-import { AvatarSize } from 'antd/lib/avatar/SizeContext';
 import { userStore } from 'stores';
 import styles from 'layouts/layouts.module.scss';
 import { BankOutlined, CompassOutlined, DollarCircleOutlined, LogoutOutlined, MessageOutlined, ReadOutlined, RocketOutlined, UserOutlined } from '@ant-design/icons';
+import { AvatarSize } from 'antd/es/avatar/AvatarContext';
 
 const CN = 'profile-menu';
 
@@ -29,7 +29,7 @@ export function ProfileMenu() {
 
   function renderAvatar(size: AvatarSize) {
     return (
-      <Avatar 
+      <Avatar
         size={size}
         className={styles[`${CN}__user-avatar`]}
       >

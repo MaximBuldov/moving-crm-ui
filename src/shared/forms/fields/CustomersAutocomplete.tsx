@@ -32,7 +32,7 @@ export const CustomersAutocomplete = ({ placeholder, setUser, defaultName }: Cus
   };
 
   return (
-    <Spin spinning={customersAction.isLoading}>
+    <Spin spinning={customersAction.isPending}>
       <AutoComplete
         onSelect={onSelect}
         onSearch={onSearch}

@@ -12,30 +12,30 @@ export const CalendarOffice = () => {
   function getListData(value: any) {
     let listData;
     switch (value.date()) {
-    case 8:
-      listData = [
-        { type: 'warning', content: '10:00am Virtual Survey' },
-        { type: 'success', content: 'This is usual event.' }
-      ];
-      break;
-    case 10:
-      listData = [
-        { type: 'warning', content: 'This is warning event.' },
-        { type: 'success', content: '10:00am Virtual Survey' },
-        { type: 'error', content: 'This is error event.' }
-      ];
-      break;
-    case 15:
-      listData = [
-        { type: 'warning', content: '10:00am Virtual Survey' },
-        { type: 'success', content: 'This is very long usual event。。....' },
-        { type: 'error', content: 'This is error event 1.' },
-        { type: 'error', content: 'This is error event 2.' },
-        { type: 'error', content: 'This is error event 3.' },
-        { type: 'error', content: 'This is error event 4.' }
-      ];
-      break;
-    default:
+      case 8:
+        listData = [
+          { type: 'warning', content: '10:00am Virtual Survey' },
+          { type: 'success', content: 'This is usual event.' }
+        ];
+        break;
+      case 10:
+        listData = [
+          { type: 'warning', content: 'This is warning event.' },
+          { type: 'success', content: '10:00am Virtual Survey' },
+          { type: 'error', content: 'This is error event.' }
+        ];
+        break;
+      case 15:
+        listData = [
+          { type: 'warning', content: '10:00am Virtual Survey' },
+          { type: 'success', content: 'This is very long usual event。。....' },
+          { type: 'error', content: 'This is error event 1.' },
+          { type: 'error', content: 'This is error event 2.' },
+          { type: 'error', content: 'This is error event 3.' },
+          { type: 'error', content: 'This is error event 4.' }
+        ];
+        break;
+      default:
     }
     return listData || [];
   }
@@ -66,7 +66,7 @@ export const CalendarOffice = () => {
       monthOptions.push(
         <Select.Option className="month-item" key={`${index}`}>
           {months[index]}
-        </Select.Option>,
+        </Select.Option>
       );
     }
     const month = value.month();
@@ -77,7 +77,7 @@ export const CalendarOffice = () => {
       options.push(
         <Select.Option key={i} value={i} className="year-item">
           {i}
-        </Select.Option>,
+        </Select.Option>
       );
     }
     return (
@@ -135,7 +135,7 @@ export const CalendarOffice = () => {
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      <Heading routes={private_routes} parent="/calendars"/>
+      <Heading routes={private_routes} parent="/calendars" />
       <Calendar
         dateCellRender={dateCellRender}
         headerRender={CalendarFilters}

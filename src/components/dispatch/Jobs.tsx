@@ -8,8 +8,6 @@ interface EL {
   used: boolean
 }
 
-const CN = 'jobs';
-
 const jobs = [
   {
     id: 1,
@@ -50,7 +48,7 @@ export function Jobs() {
         accordion
         defaultActiveKey={['unscheduled']}
         expandIconPosition="end"
-        expandIcon={({ isActive }) => isActive ? <MinusSquareOutlined /> : <PlusSquareOutlined /> }
+        expandIcon={({ isActive }) => isActive ? <MinusSquareOutlined /> : <PlusSquareOutlined />}
       >
         <Collapse.Panel header="Unscheduled" key="unscheduled" extra={filterButton()}>
           {renderList(jobs)}
@@ -74,4 +72,4 @@ export function Jobs() {
 // const style = transform ? {
 //   transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
 // } : undefined;
-{/* <div ref={setNodeRef} style={style} {...listeners} {...attributes}>{props.children}</div> */}
+// {/* <div ref={setNodeRef} style={style} {...listeners} {...attributes}>{props.children}</div> */ }

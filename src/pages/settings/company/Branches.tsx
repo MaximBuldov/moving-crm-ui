@@ -1,5 +1,5 @@
 import { DeleteTwoTone, DollarCircleOutlined, EditOutlined, MoreOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Popconfirm, Table } from 'antd';
+import { Dropdown, Empty, Menu, Popconfirm, Table } from 'antd';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { SETTINGS_BRANCHES_ROUTE, SETTINGS_BRANCH_CREW_RATES_ROUTE } from 'routes';
@@ -8,8 +8,14 @@ import { formattedPhone } from 'utils';
 import { QueryType } from 'models';
 
 export function Branches() {
-  const getBranches = useQuery([QueryType.BRANCHES], branchesService.fetchMany);
-  const deleteBranch = useMutation([QueryType.BRANCHES], branchesService.deleteOne);
+  const getBranches = useQuery({
+    queryKey: [QueryType.BRANCHES],
+    queryFn: branchesService.fetchMany
+  });
+  const deleteBranch = useMutation({
+    mutationKey: [QueryType.BRANCHES],
+    mutationFn: branchesService.deleteOne
+  });
 
   const columns = [
     {
@@ -51,30 +57,34 @@ export function Branches() {
       title: 'Crew rates',
       dataIndex: 'id',
       key: 'crewRates',
-      render: (id: number) => <Link to={`${SETTINGS_BRANCH_CREW_RATES_ROUTE}/${id}`}>Add Overrides</Link> 
+      render: (id: number) => <Link to={`${SETTINGS_BRANCH_CREW_RATES_ROUTE}/${id}`}>Add Overrides</Link>
     },
     {
       dataIndex: 'id',
       key: 'action',
-      render: (id: number) => <Dropdown placement="bottom" trigger={['click']} overlay={<Menu items={renderMenuItems(id)}/>}><MoreOutlined /></Dropdown>
+      render: (id: number) => <Dropdown placement="bottom" trigger={['click']} overlay={<Menu items={renderMenuItems(id)} />}><MoreOutlined /></Dropdown>
     }
   ];
 
-  return <Table
-    dataSource={getBranches.data.data}
-    columns={columns}
-    pagination={false}
-    rowKey={(record) => record.id}
-    loading={getBranches.isLoading || deleteBranch.isLoading}
-  />;
+  return getBranches.data ? (
+    <Table
+      dataSource={getBranches.data.data}
+      columns={columns}
+      pagination={false}
+      rowKey={(record) => record.id}
+      loading={getBranches.isPending || deleteBranch.isPending}
+    />
+  ) : (
+    <Empty />
+  );
 
   function renderMenuItems(id: number) {
     return [
       { label: <Link to={`${SETTINGS_BRANCHES_ROUTE}/${id}`}>Edit</Link>, key: 'edit', icon: <EditOutlined /> },
       { label: <Link to={`${SETTINGS_BRANCH_CREW_RATES_ROUTE}/${id}`}>Crew rates</Link>, key: 'crewRates', icon: <DollarCircleOutlined /> },
-      { 
-        label: <Popconfirm title="Are you sure？" okText="Yes" cancelText="No" onConfirm={() => deleteBranch.mutate(id) }>Delete</Popconfirm>, 
-        key: 'delete', 
+      {
+        label: <Popconfirm title="Are you sure？" okText="Yes" cancelText="No" onConfirm={() => deleteBranch.mutate(id)}>Delete</Popconfirm>,
+        key: 'delete',
         icon: <DeleteTwoTone twoToneColor="#FF0000" />
       }
     ];

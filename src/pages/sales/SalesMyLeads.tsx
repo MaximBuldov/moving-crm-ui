@@ -18,17 +18,24 @@ export const SalesMyLeads: FC = () => {
   const [customer, setCustomer] = useState<string | undefined>();
   const [debCustomer] = useDebounce(customer, 1000);
 
-  const jobsAction = useQuery([QueryType.JOBS, { managerID, opportunity, source, debCustomer, page }], () => jobsService.fetchMany({
-    filters:  { $and: [
-      { manager: { id: { $eq: managerID } } },
-      { jobStatus: { $eq: opportunity } },
-      { customer: { 
-        name: { $contains: debCustomer },
-        source: { $eq: source }
-      } }
-    ] },
-    pagination: { page }
-  }));
+  const jobsAction = useQuery({
+    queryKey: [QueryType.JOBS, { managerID, opportunity, source, debCustomer, page }],
+    queryFn: () => jobsService.fetchMany({
+      filters: {
+        $and: [
+          { manager: { id: { $eq: managerID } } },
+          { jobStatus: { $eq: opportunity } },
+          {
+            customer: {
+              name: { $contains: debCustomer },
+              source: { $eq: source }
+            }
+          }
+        ]
+      },
+      pagination: { page }
+    })
+  });
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
@@ -57,7 +64,7 @@ export const SalesMyLeads: FC = () => {
           />
         </Col>
         <Col>
-          <Input.Search 
+          <Input.Search
             placeholder="Search leads"
             onSearch={(value) => setCustomer(value)}
             onChange={(event) => setCustomer(event.target.value)}
@@ -66,7 +73,7 @@ export const SalesMyLeads: FC = () => {
         </Col>
       </Row>
       <LeadsTable
-        isLoading={jobsAction.isLoading}
+        isLoading={jobsAction.isPending}
         data={jobsAction.data}
         page={page}
         setPage={(page) => setPage(page)}

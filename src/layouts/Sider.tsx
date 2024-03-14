@@ -18,7 +18,7 @@ import {
   SALES_DASHBOARD_ROUTE, STORAGE_DASHBOARD_ROUTE,
   TASKS_ROUTE,
   SETTINGS_ROUTE,
-  DISPATCH_SCHEDULE_DAY_ROUTE
+  DISPATCH_CALENDAR_ROUTE
 } from 'routes';
 import styles from 'layouts/layouts.module.scss';
 
@@ -44,8 +44,8 @@ const items: MenuProps['items'] = [
     icon: <TeamOutlined />
   },
   {
-    label: 	<NavLink to={DISPATCH_SCHEDULE_DAY_ROUTE}>Dispatch</NavLink>,
-    key: DISPATCH_SCHEDULE_DAY_ROUTE,
+    label: 	<NavLink to={DISPATCH_CALENDAR_ROUTE}>Dispatch</NavLink>,
+    key: DISPATCH_CALENDAR_ROUTE,
     icon: <ApartmentOutlined />
   },
   {

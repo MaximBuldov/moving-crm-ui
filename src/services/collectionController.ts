@@ -2,7 +2,7 @@ import { throwError } from 'utils';
 
 import { $api } from './http';
 
-export default class CollectionController {
+export default class CollectionController<T> {
   private url: string;
   private populate: string[];
 
@@ -31,13 +31,13 @@ export default class CollectionController {
         }
       }
       );
-      return res.data;
+      return res.data as T;
     } catch(error: Error | any) {
       throwError(error);
     }
   };
 
-  fetchOne = async (id: string) => {
+  fetchOne = async (id: string | number) => {
     try {
       const res = await $api.get(this.urlId(id), { params: { populate: this.populate } });
       return res.data.data;

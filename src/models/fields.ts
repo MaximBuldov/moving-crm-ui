@@ -23,5 +23,6 @@ export enum JobsStatus {
 export interface IField {
   id: number;
   label: string;
-  active: boolean
+  value?: string;
+  active?: boolean
 }

@@ -1,37 +1,18 @@
 import React from 'react';
-import { Col, Row, Typography } from 'antd';
+import { Col, Row, Spin, Typography } from 'antd';
+import { crewScheduleStore } from 'stores';
+import { observer } from 'mobx-react-lite';
 
 import { CrewLine } from './CrewLine';
 import styles from './dispatch.module.scss';
 
-export interface ICrew {
-  id: number,
-  name: string
-}
-
 const CN = 'timesheet';
 
-const crews: ICrew[] = [
-  {
-    id: 1,
-    name: 'Crew 1'
-  },
-  {
-    id: 2,
-    name: 'Crew 2'
-  },
-  {
-    id: 3,
-    name: 'Crew 3'
-  },
-  {
-    id: 4,
-    name: 'Crew 4'
-  }
-];
+interface TimesheetProps {
+  isLoading: boolean;
+}
 
-export function Timesheet(props: any) {
-
+export const Timesheet = observer(({ isLoading }: TimesheetProps) => {
   return (
     <>
       <Row>
@@ -53,8 +34,9 @@ export function Timesheet(props: any) {
         </Col>
       </Row>
       <div className={styles[`${CN}__container`]}>
-        {crews.map((crew) => <CrewLine crew={crew} children={props.children} />)}
+        {crewScheduleStore.crews.map((crew) => <CrewLine key={crew.id} crew={crew} />)}
+        {isLoading && <div className="spin-container"><Spin /></div>}
       </div>
     </>
   );
-}
+});

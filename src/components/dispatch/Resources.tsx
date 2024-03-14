@@ -1,59 +1,69 @@
-import React from 'react';
-import { CheckCircleTwoTone, MinusSquareOutlined, PlusSquareOutlined, StopTwoTone } from '@ant-design/icons';
-import { Button, Col, Collapse, Row, Spin, Tooltip, Typography } from 'antd';
+import { MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
+import { Button, Collapse, Typography } from 'antd';
 import { useQuery } from '@tanstack/react-query';
-import { QueryType, IAccountTypes, ITruck, IUserAttributes } from 'models';
+import { QueryType, IAccountTypes, IResources } from 'models';
 import { trucksService, usersService } from 'services';
+import { crewScheduleStore } from 'stores';
+import { observer } from 'mobx-react-lite';
 
-import styles from './dispatch.module.scss';
-import { SingleTruck } from './SingleTruck';
+import { ResourcesList } from './ResourcesList';
 
-const CN = 'resources';
+export const Resources = observer(() => {
+  const workersActions = useQuery({
+    queryFn: () => usersService.fetchMany({
+      filters: {
+        $or: [
+          { accountType: { $eq: IAccountTypes.HELPER } },
+          { accountType: { $eq: IAccountTypes.FOREMAN } }
+        ]
+      }
+    }),
+    queryKey: [QueryType.WORKERS, { accountType: [IAccountTypes.HELPER, IAccountTypes.FOREMAN] }]
+    // onSuccess: (data) => data && crewScheduleStore.setWorkers(data),
+    //staleTime: Infinity
+  });
 
-export function Resources() {
-  const trucksActions = useQuery([QueryType.TRUCKS], trucksService.fetchMany);
-  const workersActions = useQuery([QueryType.WORKERS], () => usersService.fetchMany({
-    filters:  { $or: [
-      { accountType: { $eq: IAccountTypes.HELPER } },
-      { accountType: { $eq: IAccountTypes.FOREMAN } }
-    ] }
-  }));
+  const trucksActions = useQuery({
+    queryKey: [QueryType.TRUCKS],
+    queryFn: trucksService.fetchMany
+    // onSuccess: (data) => data?.data && crewScheduleStore.setTrucks(data.data),
+    //staleTime: Infinity
+  });
+
+  const listsConfig = [
+    {
+      arr: crewScheduleStore.trucks,
+      resourceName: IResources.TRUCKS,
+      isLoading: trucksActions.isPending
+    },
+    {
+      arr: crewScheduleStore.workers,
+      resourceName: IResources.WORKERS,
+      isLoading: workersActions.isPending
+    }
+  ];
 
   return (
     <>
       <Typography.Title level={5}>Resources</Typography.Title>
       <Collapse
         accordion
-        defaultActiveKey={['trucks']}
+        defaultActiveKey={[IResources.TRUCKS]}
         expandIconPosition="end"
-        expandIcon={({ isActive }) => isActive ? <MinusSquareOutlined /> : <PlusSquareOutlined /> }
+        expandIcon={({ isActive }) => isActive ? <MinusSquareOutlined /> : <PlusSquareOutlined />}
       >
-        <Collapse.Panel
-          header="Truks"
-          key="truks"
-          extra={renderFilterButton()}
-        >
-          {trucksActions.data?.data.length 
-            ? trucksActions.data?.data.map((el: ITruck) => <SingleTruck truck={el}/>)
-            : <Spin />
-          }
-        </Collapse.Panel>
-        <Collapse.Panel header="Crew members" key="crew" extra={renderFilterButton()}>
-          {renderWorker(workersActions?.data)}
-        </Collapse.Panel>
+        {listsConfig.map(({ arr, resourceName, isLoading }) => (
+          <Collapse.Panel
+            header={resourceName}
+            key={resourceName}
+            extra={renderFilterButton()}
+          >
+            <ResourcesList key={resourceName} arr={arr} resourceName={resourceName} isLoading={isLoading} />
+          </Collapse.Panel>
+        ))}
       </Collapse>
     </>
   );
-
-  function renderWorker(arr: IUserAttributes[]) {
-    return arr?.length ? arr.map((el: IUserAttributes) => (
-      <Row key={el.id} className={styles[`${CN}__list-el`]}>
-        <Col span={2}>{el.blocked && <CheckCircleTwoTone />}</Col>
-        <Col span={20}>{el.fullName}</Col>
-        <Col span={2}><Tooltip title="Mark as unavailable"><StopTwoTone /></Tooltip></Col>
-      </Row>
-    )) : <Spin />;
-  }
 
   function renderFilterButton() {
     return (
@@ -66,4 +76,5 @@ export function Resources() {
       </Button>
     );
   }
-}
+});
+

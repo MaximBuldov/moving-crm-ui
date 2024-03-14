@@ -10,8 +10,13 @@ const { Item, useForm } = Form;
 
 export function Company() {
   const [form] = useForm();
-  const settingsGet = useQuery([QueryType.COMPANY], companyService.fetch);
-  const settingsUpdate = useMutation([QueryType.COMPANY], companyService.update, {
+  const settingsGet = useQuery({
+    queryKey: [QueryType.COMPANY],
+    queryFn: companyService.fetch
+  });
+  const settingsUpdate = useMutation({
+    mutationKey: [QueryType.COMPANY],
+    mutationFn: companyService.update,
     onSuccess: () => {
       message.success('Company information has been updated');
     },
@@ -26,7 +31,7 @@ export function Company() {
   };
 
   return (
-    <Card style={{ maxWidth: '800px' }} loading={settingsGet.isLoading}>
+    <Card style={{ maxWidth: '800px' }} loading={settingsGet.isPending}>
       {settingsGet.isSuccess ? (
         <Form
           form={form}
@@ -91,7 +96,7 @@ export function Company() {
               </Item>
             </Col>
           </Row>
-          <Button loading={settingsUpdate.isLoading} type="primary" htmlType="submit">Save changes</Button>
+          <Button loading={settingsUpdate.isPending} type="primary" htmlType="submit">Save changes</Button>
         </Form>
       ) : (
         <Empty />

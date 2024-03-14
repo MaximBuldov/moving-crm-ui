@@ -10,13 +10,15 @@ import { IJob } from 'models';
 const { Item } = Form;
 
 interface OpportunitiesMoveFormProps {
-	job: IJob
+  job: IJob
 }
 
 export const OpportunitiesMoveForm: FC<OpportunitiesMoveFormProps> = (props) => {
   const { attributes: { customer, serviceType, moveDate, manager, moveSize }, id } = props.job;
   const [form] = Form.useForm();
-  const { mutate } = useMutation(jobsService.updateOne);
+  const { mutate } = useMutation({
+    mutationFn: jobsService.updateOne
+  });
   const onValuesChange = (data: any) => {
     mutate({ id, data });
   };

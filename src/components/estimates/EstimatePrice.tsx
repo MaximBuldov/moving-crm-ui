@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col, Row, Select, Space, Table } from 'antd';
+import { Card, Col, Row, Select, Space } from 'antd';
 import { PlusCircleTwoTone } from '@ant-design/icons';
 
 const rate = 180;

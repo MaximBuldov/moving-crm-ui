@@ -13,12 +13,12 @@ const Template: FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     switch (location.pathname) {
-    case '/':
-      navigate(SALES_DASHBOARD_ROUTE, { replace: true });
-      break;
-    case '/sales':
-      navigate(SALES_DASHBOARD_ROUTE);
-      break;
+      case '/':
+        navigate(SALES_DASHBOARD_ROUTE, { replace: true });
+        break;
+      case '/sales':
+        navigate(SALES_DASHBOARD_ROUTE);
+        break;
     }
   }, [location.pathname, navigate]);
   return (

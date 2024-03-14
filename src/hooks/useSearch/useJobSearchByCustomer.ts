@@ -6,16 +6,18 @@ import { jobsService } from 'services';
 export function useJobSearchByCustomer() {
   const { input, setInput } = useDebounceState();
 
-  const jobsAction = useQuery([QueryType.JOBS, input], () => jobsService.fetchMany({
-    filters: {
-      $or: [
-        { customer: { name: { $contains: input } } },
-        { customer: { email: { $contains: input } } },
-        { id: { $eq: input } },
-        { customer: { phones: { phone: { $contains: input } } } }
-      ]
-    }
-  }), {
+  const jobsAction = useQuery({
+    queryKey: [QueryType.JOBS, input],
+    queryFn: () => jobsService.fetchMany({
+      filters: {
+        $or: [
+          { customer: { name: { $contains: input } } },
+          { customer: { email: { $contains: input } } },
+          { id: { $eq: input } },
+          { customer: { phones: { phone: { $contains: input } } } }
+        ]
+      }
+    }),
     enabled: !!input
   });
 

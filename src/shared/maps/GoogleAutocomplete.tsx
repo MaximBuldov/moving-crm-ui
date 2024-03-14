@@ -1,22 +1,20 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Autocomplete } from '@react-google-maps/api';
 import { Input, Form, Skeleton } from 'antd';
 import { useGoogleMaps } from 'hooks/useGoogleMaps';
 
 export interface GoogleAutocompleteProps {
-	field: string
+  field: string
 }
 
 export const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ field }) => {
   const { map, isLoaded, onLoad, onUnmount, loadError } = useGoogleMaps();
   const form = Form.useFormInstance();
-  const [val, setVal] = useState<number>();
 
   const onPlaceChanged = () => {
     if (map !== null) {
       const address = map.getPlace()?.formatted_address;
       form.setFieldValue(field, { address });
-      setVal(11);
     }
   };
 
@@ -29,7 +27,7 @@ export const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ field }) => {
         name={[field, 'address']}
         label={`${capitalize(field)} address`}
       >
-        <Input placeholder="Enter address"/>
+        <Input placeholder="Enter address" />
       </Form.Item>
     );
   }
@@ -44,7 +42,7 @@ export const GoogleAutocomplete: FC<GoogleAutocompleteProps> = ({ field }) => {
         name={[field, 'address']}
         label={`${capitalize(field)} address`}
       >
-        <Input placeholder="Search address..."/>
+        <Input placeholder="Search address..." />
       </Form.Item>
     </Autocomplete>
   ) : <Skeleton paragraph={{ rows: 1 }} active />;

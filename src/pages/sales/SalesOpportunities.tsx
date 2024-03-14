@@ -7,14 +7,17 @@ import { jobsService } from 'services';
 import { QueryType } from 'models';
 
 type Params = {
-	id: any
+  id: any
 }
 
 export const SalesOpportunities: FC = () => {
   const params = useParams<Params>();
-  const jobsAction = useQuery([QueryType.JOBS, params.id], () => jobsService.fetchOne(params.id));
+  const jobsAction = useQuery({
+    queryKey: [QueryType.JOBS, params.id],
+    queryFn: () => jobsService.fetchOne(params.id)
+  });
 
-  return !jobsAction.isLoading ? (
+  return !jobsAction.isPending ? (
     <Space direction="vertical" style={{ width: '100%' }}>
       <OpportunitiesHeading job={jobsAction.data} />
       <Row gutter={16}>

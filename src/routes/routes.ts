@@ -1,14 +1,15 @@
 import { FunctionComponent } from 'react';
-import { Login, Home, SalesDashboard, SalesMyLeads, SalesOpportunities, EstimatesEdit, CalendarJobs, CalendarOffice, CustomerDetails, Settings, Company, CompanyAuditActivity, Branches, EditBranch, Schedule, SalesNewLeads } from 'pages';
+import { Login, Home, SalesDashboard, SalesMyLeads, SalesOpportunities, EstimatesEdit, CalendarJobs, CalendarOffice, CustomerDetails, Settings, Company, CompanyAuditActivity, Branches, EditBranch, SalesNewLeads, DispatchSchedule, DispatchCalendar } from 'pages';
 
-import { CAL_JOBS_ROUTE, CAL_OFFICE_ROUTE, CAL_ROUTE, CUSTOMERS_DETAILS_ROUTE, CUSTOMERS_ROUTE, CUSTOMER_SERVICE_RATINGS_ROUTE, CUSTOMER_SERVICE_ROUTE, CUSTOMER_SERVICE_TICKET_ROUTE, DISPATCH_CALENDAR_ROUTE, DISPATCH_ROUTE, DISPATCH_SCHEDULE_DAY_ROUTE, ESTIMATES_EDIT_ID_ROUTE, HOME_ROUTE, LOGIN_ROUTE, SALES_DASHBOARD_ROUTE, SALES_FOLLOW_UPS_ROUTE, SALES_MY_LEADS_ROUTE, SALES_NEW_LEADS_ROUTE, SALES_OPPORTUNITIES_ID_ROUTE, SALES_ROUTE, SETTINGS_BRANCHES_ROUTE, SETTINGS_BRANCH_ID_ROUTE, SETTINGS_COMPANY_AUDIT_ACTIVITY_ROUTE, SETTINGS_COMPANY_ROUTE, SETTINGS_ROUTE, STORAGE_ACCOUNTS_ROUTE, STORAGE_AGING_ROUTE, STORAGE_CONTAINERS_ROUTE, STORAGE_DASHBOARD_ROUTE, STORAGE_INVOICES_ROUTE, STORAGE_ROUTE, TASKS_ROUTE } from './consts';
+import { CAL_JOBS_ROUTE, CAL_OFFICE_ROUTE, CAL_ROUTE, CUSTOMERS_DETAILS_ROUTE, CUSTOMERS_ROUTE, CUSTOMER_SERVICE_RATINGS_ROUTE, CUSTOMER_SERVICE_ROUTE, CUSTOMER_SERVICE_TICKET_ROUTE, DISPATCH_CALENDAR_ROUTE, DISPATCH_ROUTE, DISPATCH_SCHEDULE_DAY_ROUTE, DISPATCH_SCHEDULE_ROUTE, ESTIMATES_EDIT_ID_ROUTE, HOME_ROUTE, LOGIN_ROUTE, SALES_DASHBOARD_ROUTE, SALES_FOLLOW_UPS_ROUTE, SALES_MY_LEADS_ROUTE, SALES_NEW_LEADS_ROUTE, SALES_OPPORTUNITIES_ID_ROUTE, SALES_ROUTE, SETTINGS_BRANCHES_ROUTE, SETTINGS_BRANCH_ID_ROUTE, SETTINGS_COMPANY_AUDIT_ACTIVITY_ROUTE, SETTINGS_COMPANY_ROUTE, SETTINGS_ROUTE, STORAGE_ACCOUNTS_ROUTE, STORAGE_AGING_ROUTE, STORAGE_CONTAINERS_ROUTE, STORAGE_DASHBOARD_ROUTE, STORAGE_INVOICES_ROUTE, STORAGE_ROUTE, TASKS_ROUTE } from './consts';
 
 export interface IRoute {
 	path: string,
 	Component: FunctionComponent,
 	parent?: string,
 	name?: string,
-	child?: boolean
+	child?: boolean,
+  breadcrumbs?: string
 }
 
 export const public_routes: IRoute[] = [
@@ -127,16 +128,21 @@ export const private_routes: IRoute[] = [
     name: 'Invoices'
   },
   {
-    path: DISPATCH_SCHEDULE_DAY_ROUTE,
-    Component: Schedule,
+    path: DISPATCH_CALENDAR_ROUTE,
+    Component: DispatchCalendar,
     parent: DISPATCH_ROUTE,
+    name: 'Dispatch Calendar'
+  },
+  {
+    path: DISPATCH_SCHEDULE_DAY_ROUTE,
+    Component: DispatchSchedule,
     name: 'Dispatch Schedule'
   },
   {
-    path: DISPATCH_CALENDAR_ROUTE,
-    Component: Schedule,
+    path: DISPATCH_SCHEDULE_ROUTE,
+    Component: DispatchSchedule,
     parent: DISPATCH_ROUTE,
-    name: 'Dispatch calendar'
+    name: 'Dispatch Schedule'
   }
 ];
 

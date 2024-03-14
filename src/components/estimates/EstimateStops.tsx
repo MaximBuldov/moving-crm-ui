@@ -85,15 +85,15 @@ export const EstimateStops = () => {
 
   let ModalComponent;
   switch (modalContent) {
-  case 'fullMap':
-    ModalComponent = EstimateStopsFullMap;
-    break;
-  case 'addAddress':
-    ModalComponent = EstimateAddAddress;
-    break;
-  default:
-    ModalComponent = Empty;
-    break;
+    case 'fullMap':
+      ModalComponent = EstimateStopsFullMap;
+      break;
+    case 'addAddress':
+      ModalComponent = EstimateAddAddress;
+      break;
+    default:
+      ModalComponent = Empty;
+      break;
   }
 
   return (

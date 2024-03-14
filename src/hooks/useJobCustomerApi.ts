@@ -22,14 +22,13 @@ export function useJobCustomerApi(
   const [user, setUser] = useState<ICustomer | null>(null);
   const navigate = useNavigate();
 
-  const customerPOST = useMutation(customersService.createOne, {
-    onSuccess: (customer, data) => createNewJob(customer, data),
-    onError: (error: Error) => {
-      message.error(error.message);
-    }
+  const customerPOST = useMutation({
+    mutationFn: customersService.createOne,
+    onSuccess: (customer, data) => createNewJob(customer, data)
   });
 
-  const customerUPDATE = useMutation(customersService.updateOne, {
+  const customerUPDATE = useMutation({
+    mutationFn: customersService.updateOne,
     onSuccess: (customer, data) => {
       if (jobID) {
         data.data.jobStatus = jobStatus;
@@ -38,13 +37,11 @@ export function useJobCustomerApi(
       if (user) {
         createNewJob(customer, data.data); //старый пользователь - новая работа
       }
-    },
-    onError: (error: Error) => {
-      message.error(error.message);
     }
   });
 
-  const jobPOST = useMutation(jobsService.createOne, {
+  const jobPOST = useMutation({
+    mutationFn: jobsService.createOne,
     onSuccess: (data) => {
       message.success('Created!');
       closeModal && closeModal();
@@ -55,7 +52,8 @@ export function useJobCustomerApi(
     }
   });
 
-  const jobUPDATE = useMutation(jobsService.updateOne, {
+  const jobUPDATE = useMutation({
+    mutationFn: jobsService.updateOne,
     onSuccess: (data) => {
       message.success('Created!');
       closeModal && closeModal();
@@ -85,7 +83,7 @@ export function useJobCustomerApi(
     }
   };
 
-  const isLoading = customerPOST.isLoading || jobPOST.isLoading;
+  const isLoading = customerPOST.isPending || jobPOST.isPending;
 
   return {
     onFinish, setUser, isLoading

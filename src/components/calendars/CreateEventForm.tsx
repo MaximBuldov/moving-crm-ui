@@ -1,16 +1,12 @@
 import React from 'react';
 import { Button, Col, DatePicker, Form, Input, Row, Select, TimePicker } from 'antd';
 const { Item } = Form;
-const  { Option } = Select;
+const { Option } = Select;
 
 export const CreateEventForm = () => {
-  const onFinish = () => {
-    console.log();
-  };
   return (
     <Form
       name="create-event-form"
-      onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
       initialValues={{
@@ -41,7 +37,7 @@ export const CreateEventForm = () => {
         name="date"
         rules={[{ required: true }]}
       >
-        <DatePicker style={{ width: '100%' }}/>
+        <DatePicker style={{ width: '100%' }} />
       </Item>
       <Row gutter={16}>
         <Col span={12}>
@@ -49,7 +45,7 @@ export const CreateEventForm = () => {
             label="Start time"
             name="startTime"
           >
-            <TimePicker use12Hours format="HH:mm" style={{ width: '100%' }} minuteStep={30}/>
+            <TimePicker use12Hours format="HH:mm" style={{ width: '100%' }} minuteStep={30} />
           </Item>
         </Col>
         <Col span={12}>
@@ -76,7 +72,7 @@ export const CreateEventForm = () => {
       </Item>
       <Item>
         <Button type="primary" htmlType="submit">
-					Submit
+          Submit
         </Button>
       </Item>
     </Form>

@@ -15,7 +15,9 @@ export enum QueryType {
   BRANCHES = 'branches',
   COMPANY = 'company',
   USER = 'user',
-  FIELDS = 'fields'
+  FIELDS = 'fields',
+  CREWS = 'crews',
+  CREWS_SCEDULE = 'crews-scedule'
 }
 
 export interface IStrapiParams {
@@ -26,4 +28,9 @@ export interface IStrapiParams {
   pagination?: IStrapiMeta,
   publicationState?: any,
   locale?: any
+}
+
+export interface IStrapiResponse<T> {
+  data: T[];
+  meta: IStrapiMeta;
 }

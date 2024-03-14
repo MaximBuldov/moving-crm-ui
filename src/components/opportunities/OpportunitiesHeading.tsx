@@ -11,12 +11,12 @@ import { FormCreateOpportunity } from 'shared';
 import { jobsService } from 'services';
 
 interface OpportunitiesHeadingProps {
-	job: IJob
+  job: IJob
 }
 
 export const OpportunitiesHeading: FC<OpportunitiesHeadingProps> = (props) => {
   const { attributes: { customer, jobStatus }, id } = props.job;
-  const jobsAction = useMutation(jobsService.updateOne);
+  const jobsAction = useMutation({ mutationFn: jobsService.updateOne });
   const [modal, setModal] = useState(false);
   const navigation = useNavigate();
 
@@ -37,7 +37,7 @@ export const OpportunitiesHeading: FC<OpportunitiesHeadingProps> = (props) => {
               <Button type="primary" icon={<LeftOutlined />} onClick={() => navigation(-1)} />
             </Col>
             <Col>
-              <Typography.Title style={{ marginBottom:'8px' }} level={2}>
+              <Typography.Title style={{ marginBottom: '8px' }} level={2}>
                 {customer?.data ? customer.data.attributes.name : 'Customer name Error'}
               </Typography.Title>
             </Col>
